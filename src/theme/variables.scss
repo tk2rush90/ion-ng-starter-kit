@@ -1,2 +1,8 @@
 // For information on how to create your own theme, please see:
 // http://ionicframework.com/docs/theming/
+
+:root {
+  --ion-text-color: inherit;
+  --ion-background-color: inherit;
+  --ion-font-family: 'Pretendard Variable', 'Noto Sans KR', 'Roboto', sans-serif;
+}
