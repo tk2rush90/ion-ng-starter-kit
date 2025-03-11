@@ -1,0 +1,7 @@
+{
+  "name": "ion-ng-starter-kit",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
