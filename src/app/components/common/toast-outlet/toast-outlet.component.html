@@ -1,0 +1,6 @@
+@for (_toast of toasts; track _toast) {
+  <app-toast-message
+    (click)="_toast.close()"
+    [innerText]="_toast.message"
+  ></app-toast-message>
+}

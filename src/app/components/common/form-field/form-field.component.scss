@@ -1,0 +1,49 @@
+app-form-field {
+  // input 설정
+  .control-container:has(input) {
+    @apply h-12 gap-4 rounded-3xl border border-black/15 bg-white px-4;
+
+    input {
+      @apply h-full w-0 shrink grow bg-transparent;
+    }
+  }
+
+  .control-container:has(input:focus) {
+    @apply border-2 border-primary-500;
+
+    .input-close {
+      @apply block;
+    }
+  }
+
+  // select 설정
+  .control-container:has(select) {
+    @apply h-12 cursor-pointer gap-4 rounded-3xl border border-black/15 bg-white px-4;
+
+    select {
+      @apply h-full w-0 shrink grow appearance-none bg-transparent;
+    }
+
+    .select-button {
+      @apply block;
+    }
+  }
+
+  .control-container:has(select:focus) {
+    @apply border-2 border-primary-500;
+  }
+
+  // textarea 설정
+  .control-container:has(textarea) {
+    @apply min-h-12 rounded-3xl border border-black/15 bg-white px-4 py-2;
+
+    textarea {
+      @apply w-0 shrink grow bg-transparent;
+    }
+  }
+
+  // textarea 설정
+  .control-container:has(textarea:focus) {
+    @apply border-2 border-primary-500;
+  }
+}

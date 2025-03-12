@@ -1,0 +1,12 @@
+<div class="flex-center-start">
+  <!-- Render label -->
+  <ng-content select="label"></ng-content>
+
+  @if (required) {
+    <app-icon-asterisk class="size-3 text-red-500"></app-icon-asterisk>
+  }
+</div>
+
+<div class="flex-col-stretch">
+  <ng-content></ng-content>
+</div>

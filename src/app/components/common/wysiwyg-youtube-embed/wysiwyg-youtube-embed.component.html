@@ -1,0 +1,24 @@
+<form (ngSubmit)="submitToSave(); close()" [formGroup]="formGroup">
+  <app-form-field>
+    <label> URL </label>
+
+    <input
+      autocomplete="off"
+      spellcheck="false"
+      placeholder="동영상 링크를 입력하세요"
+      formControlName="url"
+    />
+
+    @if (formGroup.hasError("required", "url")) {
+      <app-field-error> 동영상 링크를 입력하세요 </app-field-error>
+    }
+
+    @if (formGroup.hasError("pattern", "url")) {
+      <app-field-error> 동영상 링크가 올바르지 않습니다 </app-field-error>
+    }
+  </app-form-field>
+
+  <div class="flex-center-end">
+    <button type="submit" class="flat-button primary">추가</button>
+  </div>
+</form>

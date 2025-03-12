@@ -1,0 +1,24 @@
+<div class="break-keep">
+  <ng-content></ng-content>
+</div>
+
+<div class="flex-center-end gap-1">
+  @if (displayCancelButton) {
+    <button
+      (click)="clickCancel.emit(); close()"
+      type="button"
+      class="stroke-button"
+    >
+      {{ overrideCancelLabel || "취소" }}
+    </button>
+  }
+
+  <button
+    (click)="clickConfirm.emit(); close()"
+    type="button"
+    class="flat-button {{ theme }}"
+    appAutoFocus
+  >
+    {{ overrideConfirmLabel || "확인" }}
+  </button>
+</div>

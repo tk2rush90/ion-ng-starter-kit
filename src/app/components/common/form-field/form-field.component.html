@@ -1,0 +1,30 @@
+<div
+  class="flex-center-start label mx-4 translate-y-1/2 bg-white px-1.5 text-black/50 empty:hidden"
+>
+  <!-- Render label -->
+  <ng-content select="label"></ng-content>
+
+  @if (required) {
+    <app-icon-asterisk class="size-3 text-red-500"></app-icon-asterisk>
+  }
+</div>
+
+<!-- Render input, textarea, select -->
+<div
+  class="control-container flex w-full items-center justify-center transition-all"
+>
+  <ng-content select="input, textarea, select"></ng-content>
+
+  <button type="button" class="input-close hidden text-black/50">
+    <app-icon-x-mark class="size-4"></app-icon-x-mark>
+  </button>
+
+  <button type="button" class="select-button hidden">
+    <app-icon-chevron-down class="size-4"></app-icon-chevron-down>
+  </button>
+</div>
+
+<div class="bottom-container">
+  <!-- Render hints and errors -->
+  <ng-content></ng-content>
+</div>

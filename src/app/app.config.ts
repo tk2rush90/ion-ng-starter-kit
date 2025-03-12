@@ -1,4 +1,4 @@
-import { ApplicationConfig } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import {
   PreloadAllModules,
   provideRouter,
@@ -14,12 +14,14 @@ import {
   provideClientHydration,
   withEventReplay,
 } from '@angular/platform-browser';
+import { IonicStorageModule } from '@ionic/storage-angular';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular(),
     provideRouter(routes, withPreloading(PreloadAllModules)),
+    importProvidersFrom(IonicStorageModule.forRoot()),
     provideClientHydration(withEventReplay()),
   ],
 };

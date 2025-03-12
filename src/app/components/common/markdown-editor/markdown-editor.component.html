@@ -1,0 +1,447 @@
+<div
+  class="flex w-auto shrink grow basis-auto flex-nowrap items-center overflow-auto"
+>
+  <!-- Prevent mousedown to keep focus on textarea -->
+  <button
+    (click)="insertHeading(1)"
+    (mousedown)="$event.preventDefault()"
+    type="button"
+    class="flex-center h-8 w-8 shrink-0 grow-0 select-none text-zinc-500 transition-colors hover:text-zinc-800"
+  >
+    <app-icon-format-h1 class="h-5 w-5"></app-icon-format-h1>
+  </button>
+
+  <button
+    (click)="insertHeading(2)"
+    (mousedown)="$event.preventDefault()"
+    type="button"
+    class="flex-center h-8 w-8 shrink-0 grow-0 select-none text-zinc-500 transition-colors hover:text-zinc-800"
+  >
+    <app-icon-format-h2 class="h-5 w-5"></app-icon-format-h2>
+  </button>
+
+  <button
+    (click)="insertHeading(3)"
+    (mousedown)="$event.preventDefault()"
+    type="button"
+    class="flex-center h-8 w-8 shrink-0 grow-0 select-none text-zinc-500 transition-colors hover:text-zinc-800"
+  >
+    <app-icon-format-h3 class="h-5 w-5"></app-icon-format-h3>
+  </button>
+
+  <button
+    (click)="toggleBold()"
+    (mousedown)="$event.preventDefault()"
+    type="button"
+    class="flex-center h-8 w-8 shrink-0 grow-0 select-none text-zinc-500 transition-colors hover:text-zinc-800"
+  >
+    <app-icon-format-bold class="h-5 w-5"></app-icon-format-bold>
+  </button>
+
+  <button
+    (click)="toggleItalic()"
+    (mousedown)="$event.preventDefault()"
+    type="button"
+    class="flex-center h-8 w-8 shrink-0 grow-0 select-none text-zinc-500 transition-colors hover:text-zinc-800"
+  >
+    <app-icon-format-italic class="h-5 w-5"></app-icon-format-italic>
+  </button>
+
+  <button
+    (click)="toggleStrike()"
+    (mousedown)="$event.preventDefault()"
+    type="button"
+    class="flex-center h-8 w-8 shrink-0 grow-0 select-none text-zinc-500 transition-colors hover:text-zinc-800"
+  >
+    <app-icon-format-strikethrough
+      class="h-5 w-5"
+    ></app-icon-format-strikethrough>
+  </button>
+
+  <button
+    (click)="insertList('unordered')"
+    (mousedown)="$event.preventDefault()"
+    type="button"
+    class="flex-center h-8 w-8 shrink-0 grow-0 select-none text-zinc-500 transition-colors hover:text-zinc-800"
+  >
+    <app-icon-format-list-bulleted
+      class="h-5 w-5"
+    ></app-icon-format-list-bulleted>
+  </button>
+
+  <button
+    (click)="insertList('ordered')"
+    (mousedown)="$event.preventDefault()"
+    type="button"
+    class="flex-center h-8 w-8 shrink-0 grow-0 select-none text-zinc-500 transition-colors hover:text-zinc-800"
+  >
+    <app-icon-format-list-numbered
+      class="h-5 w-5"
+    ></app-icon-format-list-numbered>
+  </button>
+
+  <button
+    (click)="toggleQuote()"
+    (mousedown)="$event.preventDefault()"
+    type="button"
+    class="flex-center h-8 w-8 shrink-0 grow-0 select-none text-zinc-500 transition-colors hover:text-zinc-800"
+  >
+    <app-icon-format-quote class="h-5 w-5"></app-icon-format-quote>
+  </button>
+
+  <button
+    (click)="imageUploader.click()"
+    (mousedown)="$event.preventDefault()"
+    type="button"
+    class="flex-center h-8 w-8 shrink-0 grow-0 select-none text-zinc-500 transition-colors hover:text-zinc-800"
+  >
+    <app-icon-photo class="h-5 w-5"></app-icon-photo>
+  </button>
+
+  <button
+    (click)="insertLink()"
+    (mousedown)="$event.preventDefault()"
+    type="button"
+    class="flex-center h-8 w-8 shrink-0 grow-0 select-none text-zinc-500 transition-colors hover:text-zinc-800"
+  >
+    <app-icon-link class="h-5 w-5"></app-icon-link>
+  </button>
+
+  <button
+    (click)="toggleScrollSync()"
+    (mousedown)="$event.preventDefault()"
+    type="button"
+    class="flex-center h-8 w-8 shrink-0 grow-0 select-none text-zinc-500 transition-colors hover:text-zinc-800"
+  >
+    @if (scrollSynced) {
+      <app-icon-sync class="h-5 w-5"></app-icon-sync>
+    } @else {
+      <app-icon-sync-disabled class="h-5 w-5"></app-icon-sync-disabled>
+    }
+  </button>
+</div>
+
+<div class="flex-col-stretch">
+  @if (viewType === "mirror") {
+    <div
+      class="flex max-h-96 min-h-40 items-stretch rounded border border-zinc-300"
+    >
+      <div class="w-0 shrink grow basis-0 p-4">
+        <ng-container [ngTemplateOutlet]="textareaEditor"></ng-container>
+      </div>
+
+      <div class="w-px bg-zinc-300"></div>
+
+      <div class="w-0 shrink grow basis-0 p-4">
+        <ng-container [ngTemplateOutlet]="preview"></ng-container>
+      </div>
+    </div>
+  } @else {
+    <div class="min-h-20 rounded border border-zinc-300 p-4">
+      @switch (viewType) {
+        @case ("editor") {
+          <ng-container [ngTemplateOutlet]="textareaEditor"></ng-container>
+        }
+
+        @case ("preview") {
+          <ng-container [ngTemplateOutlet]="preview"></ng-container>
+        }
+      }
+    </div>
+  }
+
+  <div class="flex items-start justify-between">
+    <div class="relative z-10 -my-px ml-1 flex items-center gap-0.5">
+      <button
+        (click)="changeViewType('editor')"
+        [class.border-t]="viewType !== 'editor'"
+        [class.bg-zinc-100]="viewType !== 'editor'"
+        [class.text-zinc-400]="viewType !== 'editor'"
+        class="flex-center h-6 rounded-b border-x border-b border-zinc-300 bg-white px-1 text-xs"
+        type="button"
+      >
+        에디터
+      </button>
+
+      <button
+        (click)="changeViewType('preview')"
+        [class.border-t]="viewType !== 'preview'"
+        [class.bg-zinc-100]="viewType !== 'preview'"
+        [class.text-zinc-400]="viewType !== 'preview'"
+        class="flex-center h-6 rounded-b border-x border-b border-zinc-300 bg-white px-1 text-xs"
+        type="button"
+      >
+        미리보기
+      </button>
+
+      <button
+        (click)="changeViewType('mirror')"
+        [class.border-t]="viewType !== 'mirror'"
+        [class.bg-zinc-100]="viewType !== 'mirror'"
+        [class.text-zinc-400]="viewType !== 'mirror'"
+        class="flex-center h-6 rounded-b border-x border-b border-zinc-300 bg-white px-1 text-xs"
+        type="button"
+      >
+        라이브 미리보기
+      </button>
+    </div>
+
+    <button
+      (click)="openGuide()"
+      (mousedown)="$event.preventDefault()"
+      type="button"
+      class="flex-center h-8 w-8 select-none text-zinc-500 transition-colors hover:text-zinc-800"
+    >
+      <app-icon-question-mark-circle
+        class="h-5 w-5"
+      ></app-icon-question-mark-circle>
+    </button>
+  </div>
+
+  <input
+    #imageUploader
+    (uploaded)="onFileUploaded($event)"
+    (hasInvalidFiles)="onInvalidFileType()"
+    hidden="hidden"
+    type="file"
+    accept="image/*"
+    appFileUploader
+    multiple
+  />
+</div>
+
+<ng-template #textareaEditor>
+  <textarea
+    (pasteImages)="onFileUploaded($event)"
+    (selectionChange)="syncScrollPosition()"
+    (scroll)="syncScrollPosition()"
+    (keydown)="updateContent($event); editorKeydown.emit($event)"
+    (keyup)="updateContent($event); editorKeyup.emit($event)"
+    (input)="updateContent($event); editorInput.emit($any($event))"
+    [value]="content"
+    spellcheck="false"
+    class="block max-h-full min-h-full w-full overflow-auto text-sm"
+    appSelectionChangeDetector
+    appTextareaResizer
+    appMarkdownTextarea
+  ></textarea>
+</ng-template>
+
+<ng-template #preview>
+  <div
+    #previewContainer
+    [innerHTML]="renderedContent"
+    class="prose prose-sm prose-blue max-h-full max-w-none overflow-auto break-all"
+  ></div>
+</ng-template>
+
+<ng-template #guide>
+  <app-backdrop class="bg-black/50"></app-backdrop>
+
+  <app-modal class="w-full max-w-[740px]">
+    <div class="flex-col-stretch gap-4">
+      <div class="flex-center-end">
+        <button
+          (click)="guideOverlayRef?.close()"
+          type="button"
+          class="flex-center h-8 w-8"
+        >
+          <app-icon-x-mark class="h-5 w-5"></app-icon-x-mark>
+        </button>
+      </div>
+
+      <table class="w-full border-collapse align-middle text-sm">
+        <colgroup>
+          <col class="w-1/2" />
+          <col class="w-1/2" />
+        </colgroup>
+
+        <tr>
+          <th class="p-2 text-left text-base">에디터</th>
+
+          <th class="p-2 text-left text-base">미리보기</th>
+        </tr>
+
+        <tr>
+          <td class="border-t border-zinc-200 p-2"># 제목1</td>
+
+          <td class="border-t border-zinc-200 p-2">
+            <div
+              [innerHTML]="exampleHeading1"
+              class="prose prose-sm prose-blue"
+            ></div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="border-t border-zinc-200 p-2">## 제목2</td>
+
+          <td class="border-t border-zinc-200 p-2">
+            <div
+              [innerHTML]="exampleHeading2"
+              class="prose prose-sm prose-blue"
+            ></div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="border-t border-zinc-200 p-2">### 제목3</td>
+
+          <td class="border-t border-zinc-200 p-2">
+            <div
+              [innerHTML]="exampleHeading3"
+              class="prose prose-sm prose-blue"
+            ></div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="border-t border-zinc-200 p-2">#### 제목4</td>
+
+          <td class="border-t border-zinc-200 p-2">
+            <div
+              [innerHTML]="exampleHeading4"
+              class="prose prose-sm prose-blue"
+            ></div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="border-t border-zinc-200 p-2">##### 제목5</td>
+
+          <td class="border-t border-zinc-200 p-2">
+            <div
+              [innerHTML]="exampleHeading5"
+              class="prose prose-sm prose-blue"
+            ></div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="border-t border-zinc-200 p-2">###### 제목6</td>
+
+          <td class="border-t border-zinc-200 p-2">
+            <div
+              [innerHTML]="exampleHeading6"
+              class="prose prose-sm prose-blue"
+            ></div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="border-t border-zinc-200 p-2">**굵게**</td>
+
+          <td class="border-t border-zinc-200 p-2">
+            <div
+              [innerHTML]="exampleBold"
+              class="prose prose-sm prose-blue"
+            ></div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="border-t border-zinc-200 p-2">_기울기_</td>
+
+          <td class="border-t border-zinc-200 p-2">
+            <div
+              [innerHTML]="exampleItalic"
+              class="prose prose-sm prose-blue"
+            ></div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="border-t border-zinc-200 p-2">~~취소선~~</td>
+
+          <td class="border-t border-zinc-200 p-2">
+            <div
+              [innerHTML]="exampleStrike"
+              class="prose prose-sm prose-blue"
+            ></div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="border-t border-zinc-200 p-2">`code`</td>
+
+          <td class="border-t border-zinc-200 p-2">
+            <div
+              [innerHTML]="exampleInlineCode"
+              class="prose prose-sm prose-blue"
+            ></div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="border-t border-zinc-200 p-2">
+            1. 첫 번째<br />
+            1. 두 번째<br />
+            1. 세 번째
+          </td>
+
+          <td class="border-t border-zinc-200 p-2">
+            <div
+              [innerHTML]="exampleOrderedList"
+              class="prose prose-sm prose-blue"
+            ></div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="border-t border-zinc-200 p-2">
+            - 첫 번째<br />
+            - 두 번째<br />
+            - 세 번째
+          </td>
+
+          <td class="border-t border-zinc-200 p-2">
+            <div
+              [innerHTML]="exampleUnorderedList"
+              class="prose prose-sm prose-blue"
+            ></div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="border-t border-zinc-200 p-2">
+            &gt; 일찍 일어나는 새가<br />
+            &gt; 벌레를 잡는다
+          </td>
+
+          <td class="border-t border-zinc-200 p-2">
+            <div
+              [innerHTML]="exampleQuote"
+              class="prose prose-sm prose-blue"
+            ></div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="border-t border-zinc-200 p-2">
+            ![대체 텍스트](https://picsum.photos/id/1/50/50)
+          </td>
+
+          <td class="border-t border-zinc-200 p-2">
+            <div
+              [innerHTML]="exampleImage"
+              class="prose prose-sm prose-blue"
+            ></div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="border-t border-zinc-200 p-2">
+            [링크 텍스트](https://google.com)
+          </td>
+
+          <td class="border-t border-zinc-200 p-2">
+            <div
+              [innerHTML]="exampleLink"
+              class="prose prose-sm prose-blue"
+            ></div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </app-modal>
+</ng-template>
