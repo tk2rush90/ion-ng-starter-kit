@@ -8,6 +8,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { DeletedAccount } from '../../../data/deleted-account';
 import { StartByKakao } from '../../../data/start-by-kakao';
 
+/** @deprecated 세부 서비스로 분할 예정 */
 @Injectable({
   providedIn: 'root',
 })

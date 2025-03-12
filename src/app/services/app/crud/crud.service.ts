@@ -113,7 +113,7 @@ export abstract class CrudService<
     throw new Error('Delete method is not implemented');
   }
 
-  protected _handleCreateObservable(observable: Observable<C>): void {
+  protected handleCreateObservable(observable: Observable<C>): void {
     if (this.createLoading) {
       return;
     }
@@ -130,7 +130,7 @@ export abstract class CrudService<
       });
   }
 
-  protected _handleFetchObservable(observable: Observable<R>): void {
+  protected handleFetchObservable(observable: Observable<R>): void {
     if (this.fetchLoading) {
       return;
     }
@@ -151,7 +151,7 @@ export abstract class CrudService<
       });
   }
 
-  protected _handleUpdateObservable(observable: Observable<U>): void {
+  protected handleUpdateObservable(observable: Observable<U>): void {
     if (this.updateLoading) {
       return;
     }
@@ -168,7 +168,7 @@ export abstract class CrudService<
       });
   }
 
-  protected _handleDeleteObservable(observable: Observable<D>): void {
+  protected handleDeleteObservable(observable: Observable<D>): void {
     if (this.deleteLoading) {
       return;
     }

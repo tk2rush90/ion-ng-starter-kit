@@ -58,7 +58,7 @@ export abstract class PagingListService<Data> {
     throw new Error('Fetch method is not implemented');
   }
 
-  protected _handleFetchObservable(
+  protected handleFetchObservable(
     observable: Observable<PagingResult<Data>>,
   ): void {
     if (this.fetchLoading) {
