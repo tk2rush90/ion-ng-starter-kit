@@ -1,0 +1,11 @@
+app-radio {
+  .radio-button.selected {
+    &:not(.disabled) {
+      @apply border-transparent bg-primary-500;
+    }
+
+    &.disabled {
+      @apply border-transparent bg-black/15;
+    }
+  }
+}

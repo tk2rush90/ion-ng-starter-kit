@@ -1,14 +1,11 @@
 import {
-  AfterContentInit,
   Component,
-  ContentChild,
-  DestroyRef,
   HostListener,
   Input,
+  ViewEncapsulation,
 } from '@angular/core';
 import { RadioGroupService } from '../../../../services/app/radio-group/radio-group.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { RadioButtonComponent } from './radio-button/radio-button.component';
 
 /** A component which can be used as an option for `RadioGroupComponent` */
 @Component({
@@ -19,33 +16,27 @@ import { RadioButtonComponent } from './radio-button/radio-button.component';
   host: {
     class: 'cursor-pointer select-none',
   },
+  encapsulation: ViewEncapsulation.None,
 })
-export class RadioComponent implements AfterContentInit {
+export class RadioComponent {
   /** Value of radio to apply when selected */
   @Input({ required: true }) value: any;
-
-  /** Radio button that contains selected indicator */
-  @ContentChild(RadioButtonComponent, { descendants: true })
-  button?: RadioButtonComponent;
 
   /** Selected status */
   selected = false;
 
-  constructor(
-    private readonly destroyRef: DestroyRef,
-    private readonly radioGroupService: RadioGroupService,
-  ) {}
-
-  ngAfterContentInit() {
+  constructor(private readonly radioGroupService: RadioGroupService) {
     this.radioGroupService.value$
-      .pipe(takeUntilDestroyed(this.destroyRef))
+      .pipe(takeUntilDestroyed())
       .subscribe((value) => {
         this.selected = this.value === value;
 
-        if (this.button) {
-          this.button.selected = this.selected;
-        }
+        console.log(value);
       });
+  }
+
+  get disabled(): boolean {
+    return this.radioGroupService.disabled;
   }
 
   @HostListener('click')
