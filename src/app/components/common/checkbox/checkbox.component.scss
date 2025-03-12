@@ -1,0 +1,11 @@
+app-checkbox {
+  .checkbox-button.checked {
+    &:not(.disabled) {
+      @apply border-transparent bg-primary-500;
+    }
+  }
+
+  .checkbox-button.disabled {
+    @apply border-transparent bg-black/15;
+  }
+}

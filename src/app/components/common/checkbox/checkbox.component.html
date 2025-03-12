@@ -1,1 +1,11 @@
 <ng-content></ng-content>
+
+<div
+  [class.checked]="checked"
+  [class.disabled]="disabled"
+  class="checkbox-button flex-center size-5 rounded"
+>
+  @if (checked) {
+    <app-icon-check class="size-3.5 text-white"></app-icon-check>
+  }
+</div>

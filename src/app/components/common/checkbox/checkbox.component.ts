@@ -5,14 +5,16 @@ import {
   HostListener,
   Input,
   Output,
+  ViewEncapsulation,
 } from '@angular/core';
 import { AppControlValueAccessor } from '../../../abstracts/app-control-value-accessor';
 import { CheckboxService } from '../../../services/app/checkbox/checkbox.service';
+import { IconCheckComponent } from '../../icons/icon-check/icon-check.component';
 
 /** A component of checkbox with label and button */
 @Component({
   selector: 'app-checkbox',
-  imports: [],
+  imports: [IconCheckComponent],
   templateUrl: './checkbox.component.html',
   styleUrl: './checkbox.component.scss',
   host: {
@@ -23,6 +25,7 @@ import { CheckboxService } from '../../../services/app/checkbox/checkbox.service
     ['[class.headwind-checked]']: 'checked',
   },
   providers: [CheckboxService],
+  encapsulation: ViewEncapsulation.None,
 })
 export class CheckboxComponent extends AppControlValueAccessor {
   /** Emits when `checked` status has changed */
