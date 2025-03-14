@@ -1,6 +1,6 @@
 import { HttpInterceptorFn } from '@angular/common/http';
-import { LocalStorageUtil } from '../utils/local-storage-util';
-import { ACCESS_TOKEN_KEY } from '../constants/storage-keys';
+import { inject } from '@angular/core';
+import { SignedMemberService } from '../services/app/signed-member/signed-member.service';
 
 /**
  * Intercept request and set Authorization header.
@@ -8,10 +8,12 @@ import { ACCESS_TOKEN_KEY } from '../constants/storage-keys';
  * @param next
  */
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
+  const signedMemberService = inject(SignedMemberService);
+
   return next(
     req.clone({
       setHeaders: {
-        Authorization: LocalStorageUtil.get(ACCESS_TOKEN_KEY),
+        Authorization: signedMemberService.member?.accessToken || '',
       },
     }),
   );

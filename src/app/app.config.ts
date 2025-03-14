@@ -15,11 +15,18 @@ import {
   withEventReplay,
 } from '@angular/platform-browser';
 import { IonicStorageModule } from '@ionic/storage-angular';
+import {
+  provideHttpClient,
+  withFetch,
+  withInterceptors,
+} from '@angular/common/http';
+import { authInterceptor } from './interceptors/auth.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular(),
+    provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
     provideRouter(routes, withPreloading(PreloadAllModules)),
     importProvidersFrom(IonicStorageModule.forRoot()),
     provideClientHydration(withEventReplay()),

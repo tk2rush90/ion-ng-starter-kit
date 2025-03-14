@@ -97,18 +97,22 @@ export abstract class CrudService<
     this.onceFetched$.next(value);
   }
 
+  /** POST 요청 처리 */
   create(...params: any[]): void {
     throw new Error('Create method is not implemented');
   }
 
+  /** GET 요청 처리 */
   fetch(...params: any[]): void {
     throw new Error('Fetch method is not implemented');
   }
 
+  /** PUT 요청 처리 */
   update(...params: any[]): void {
     throw new Error('Update method is not implemented');
   }
 
+  /** DELETE 요청 처리 */
   delete(...params: any[]): void {
     throw new Error('Delete method is not implemented');
   }

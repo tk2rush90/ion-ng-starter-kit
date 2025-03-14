@@ -1,5 +1,5 @@
 import { AfterViewInit, Directive, ElementRef, OnDestroy } from '@angular/core';
-import { isBrowser } from '../../../utils/platform';
+import { AngularPlatform } from '../../../utils/platform.utils';
 
 @Directive({
   selector: '[appAutoFocus]',
@@ -11,7 +11,7 @@ export class AutoFocusDirective implements AfterViewInit, OnDestroy {
   constructor(private readonly elementRef: ElementRef<HTMLElement>) {}
 
   ngAfterViewInit() {
-    if (isBrowser()) {
+    if (AngularPlatform.isBrowser) {
       // NG0100 오류 방지를 위해 `setTimeout()` 사용
       this.focusTimeout = setTimeout(() => {
         this.elementRef.nativeElement.focus();

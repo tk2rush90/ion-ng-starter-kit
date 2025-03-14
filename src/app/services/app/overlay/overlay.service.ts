@@ -9,7 +9,7 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 import { OverlayOutletComponent } from '../../../components/common/overlay-outlet/overlay-outlet.component';
-import { isBrowser } from '../../../utils/platform';
+import { AngularPlatform } from '../../../utils/platform.utils';
 import { OVERLAY_REF } from '../../../tokens/overlay-ref';
 
 /** Options to open overlay */
@@ -87,7 +87,7 @@ export class OverlayService implements OnDestroy {
 
   constructor(private readonly applicationRef: ApplicationRef) {
     this.eventTimeout = setTimeout(() => {
-      if (isBrowser()) {
+      if (AngularPlatform.isBrowser) {
         window.addEventListener(
           'mousedown',
           (event) => {

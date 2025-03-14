@@ -6,10 +6,10 @@ import {
   HostListener,
   Output,
 } from '@angular/core';
-import { Platform } from '../../../utils/platform';
 import { Logger } from '../../../utils/logger.utils';
 import { TextareaHistoryService } from '../../../services/app/textarea-history/textarea-history.service';
 import { MarkdownTextArea } from '../../../models/markdown-textarea';
+import { isMac } from '../../../utils/platform.utils';
 
 /** A directive that creates textarea for Markdown editor */
 @Directive({
@@ -94,7 +94,7 @@ export class MarkdownTextareaDirective implements AfterContentInit {
   @HostListener('keydown', ['$event'])
   onHostKeydown(event: KeyboardEvent): void {
     // Get command key by platform.
-    const commandKey = Platform.isApple ? event.metaKey : event.ctrlKey;
+    const commandKey = isMac() ? event.metaKey : event.ctrlKey;
 
     this.logger.log(`Key: '${event.key}' is down`);
 

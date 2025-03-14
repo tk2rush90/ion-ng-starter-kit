@@ -6,7 +6,7 @@ import {
   OnDestroy,
   Output,
 } from '@angular/core';
-import { isBrowser } from '../../../utils/platform';
+import { AngularPlatform } from '../../../utils/platform.utils';
 
 /** A directive to create element that can be detected when intersecting in view */
 @Directive({
@@ -26,7 +26,7 @@ export class IntersectionDetectorDirective implements AfterViewInit, OnDestroy {
   constructor(private readonly elementRef: ElementRef) {}
 
   ngAfterViewInit() {
-    if (isBrowser()) {
+    if (AngularPlatform.isBrowser) {
       // Create `IntersectionObserver`
       this.intersectionObserver = new IntersectionObserver((records) => {
         records.forEach((_record) => {

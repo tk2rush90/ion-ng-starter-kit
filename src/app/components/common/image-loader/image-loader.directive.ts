@@ -6,7 +6,7 @@ import {
   HostListener,
   OnDestroy,
 } from '@angular/core';
-import { isBrowser } from '../../../utils/platform';
+import { AngularPlatform } from '../../../utils/platform.utils';
 
 /**
  * A directive to load image element.
@@ -40,7 +40,7 @@ export class ImageLoaderDirective implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    if (isBrowser()) {
+    if (AngularPlatform.isBrowser) {
       this.mutationObserver = new MutationObserver((records) => {
         records.forEach((_record) => {
           if (_record.attributeName?.toLowerCase() === 'src') {

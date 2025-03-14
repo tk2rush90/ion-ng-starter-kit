@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { isBrowser } from '../../../utils/platform';
+import { AngularPlatform } from '../../../utils/platform.utils';
 import { Logger } from '../../../utils/logger.utils';
 
 /** An interface for data that contains information about detecting clicking */
@@ -26,7 +26,7 @@ export class ClickDetectorService {
   private readonly logger = new Logger('ClickDetectorService');
 
   constructor() {
-    if (isBrowser()) {
+    if (AngularPlatform.isBrowser) {
       window.addEventListener('mousedown', this.mousedownListener);
       window.addEventListener('mouseup', this.mouseupListener);
     }

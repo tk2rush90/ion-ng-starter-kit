@@ -8,7 +8,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { ProseMirrorService } from '../../../services/app/prose-mirror/prose-mirror.service';
-import { Platform } from '../../../utils/platform';
+import { AngularPlatform } from '../../../utils/platform.utils';
 import { IconBoldComponent } from '../../icons/icon-bold/icon-bold.component';
 import { IconItalicComponent } from '../../icons/icon-italic/icon-italic.component';
 import { IconUnderlineComponent } from '../../icons/icon-underline/icon-underline.component';
@@ -81,7 +81,7 @@ export class WysiwygEditorComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    if (Platform.isBrowser && this.editorContainerElementRef) {
+    if (AngularPlatform.isBrowser && this.editorContainerElementRef) {
       this.proseMirrorService.createView(
         this.editorContainerElementRef.nativeElement,
       );

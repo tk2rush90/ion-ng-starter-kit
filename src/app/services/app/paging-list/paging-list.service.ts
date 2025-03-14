@@ -2,13 +2,13 @@ import { DestroyRef, EventEmitter, inject, Injectable } from '@angular/core';
 import { BehaviorSubject, finalize, Observable, takeUntil } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { HttpErrorResponse } from '@angular/common/http';
-import { PagingResult } from '../../../data/paging-result';
+import { PagingResultDto } from '../../../dto/paging-result-dto';
 
 @Injectable()
 export abstract class PagingListService<Data> {
   fetchLoading$ = new BehaviorSubject(false);
 
-  fetched = new EventEmitter<PagingResult<Data>>();
+  fetched = new EventEmitter<PagingResultDto<Data>>();
 
   fetchFailed = new EventEmitter<HttpErrorResponse>();
 
@@ -59,7 +59,7 @@ export abstract class PagingListService<Data> {
   }
 
   protected handleFetchObservable(
-    observable: Observable<PagingResult<Data>>,
+    observable: Observable<PagingResultDto<Data>>,
   ): void {
     if (this.fetchLoading) {
       return;

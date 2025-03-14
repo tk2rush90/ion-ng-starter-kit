@@ -1,5 +1,5 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { Platform } from '../../../utils/platform';
+import { isMac } from '../../../utils/platform.utils';
 import { Logger } from '../../../utils/logger.utils';
 
 /** A snapshot data of textarea value for history */
@@ -75,7 +75,7 @@ export class TextareaHistoryService implements OnDestroy {
    * @param event - Keyboard event.
    */
   private readonly keydownListener = (event: KeyboardEvent) => {
-    const commandKey = Platform.isApple ? event.metaKey : event.ctrlKey;
+    const commandKey = isMac() ? event.metaKey : event.ctrlKey;
 
     if (
       (commandKey && event.key.toLowerCase() === 'y') ||

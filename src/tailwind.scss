@@ -6,6 +6,25 @@
   @apply outline-none;
 }
 
+// 자동 완성용
+.flex-center { }
+.flex-center-between { }
+.flex-center-end { }
+.flex-center-start { }
+.flex-start-start { }
+.flex-start-end { }
+.flex-start-between { }
+.flex-col-stretch { }
+.flex-col-center { }
+.flex-col-end { }
+.flex-col-start { }
+.y-extendable-0 { }
+.y-extendable-auto { }
+.x-extendable-0 { }
+.x-extendable-auto { }
+.y-non-extendable { }
+.x-non-extendable { }
+
 @layer base {
   .flex-center {
     @apply flex flex-row items-center justify-center;

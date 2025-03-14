@@ -1,5 +1,5 @@
 import { Inject, Injectable, NgZone } from '@angular/core';
-import { isBrowser } from '../../../utils/platform';
+import { AngularPlatform } from '../../../utils/platform.utils';
 import { io, Socket } from 'socket.io-client';
 import { SOCKET_CONNECTION_URI } from '../../../tokens/socket-connection-uri';
 
@@ -18,7 +18,7 @@ export class SocketService {
     @Inject(SOCKET_CONNECTION_URI) private readonly uri: string,
     private readonly ngZone: NgZone,
   ) {
-    if (isBrowser()) {
+    if (AngularPlatform.isBrowser) {
       this.ngZone.runOutsideAngular(() => {
         this.socket = io(this.uri, {
           closeOnBeforeunload: true,
@@ -34,7 +34,7 @@ export class SocketService {
    * @param listener - Listener to be called on event triggered.
    */
   on(eventName: string, listener: (...payload: any) => void): void {
-    if (isBrowser()) {
+    if (AngularPlatform.isBrowser) {
       // Switch on event.
       this.socket?.on(eventName, listener);
 
@@ -48,7 +48,7 @@ export class SocketService {
    * @param eventName - Event name.
    */
   off(eventName: string): void {
-    if (isBrowser()) {
+    if (AngularPlatform.isBrowser) {
       // Switch off event.
       this.socket?.off(eventName, this.listenersMap.get(eventName));
 
@@ -63,7 +63,7 @@ export class SocketService {
    * @param payload - Any payload to pass.
    */
   emit(eventName: string, ...payload: any): void {
-    if (isBrowser()) {
+    if (AngularPlatform.isBrowser) {
       this.socket?.emit(eventName, ...payload);
     }
   }

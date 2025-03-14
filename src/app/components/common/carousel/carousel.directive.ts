@@ -9,7 +9,7 @@ import {
   QueryList,
 } from '@angular/core';
 import { CarouselItemDirective } from './carousel-item/carousel-item.directive';
-import { isBrowser } from '../../../utils/platform';
+import { AngularPlatform } from '../../../utils/platform.utils';
 import anime, { AnimeInstance } from 'animejs';
 import { Platform } from '@ionic/angular/standalone';
 
@@ -49,7 +49,7 @@ export class CarouselDirective implements OnDestroy {
     this.startSliding = this.startSliding.bind(this);
     this.moveSlide = this.moveSlide.bind(this);
 
-    if (isBrowser()) {
+    if (AngularPlatform.isBrowser) {
       this.elementRef.nativeElement.addEventListener(
         'mousedown',
         this.startSliding,
@@ -86,7 +86,7 @@ export class CarouselDirective implements OnDestroy {
   }
 
   ngOnDestroy() {
-    if (isBrowser()) {
+    if (AngularPlatform.isBrowser) {
       this.elementRef.nativeElement.removeEventListener(
         'mousedown',
         this.startSliding,
