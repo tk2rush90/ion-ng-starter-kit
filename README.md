@@ -102,7 +102,7 @@ public class GoogleOauthPlugin extends Plugin {
 
   @PluginMethod()
   public void signIn(PluginCall call) {
-    GetGoogleIdOption getGoogleIdOption = new GetGoogleIdOption.Builder().setFilterByAuthorizedAccounts(true).setServerClientId("588950841496-i6vd05a8f2k8lvid5pj8evrobksn7tc6.apps.googleusercontent.com").setAutoSelectEnabled(true).build();
+    GetGoogleIdOption getGoogleIdOption = new GetGoogleIdOption.Builder().setFilterByAuthorizedAccounts(true).setServerClientId("${GOOGLE_WEB_CLIENT_ID}").setAutoSelectEnabled(true).build();
 
     GetCredentialRequest getCredentialRequest = new GetCredentialRequest.Builder().addCredentialOption(getGoogleIdOption).build();
 
