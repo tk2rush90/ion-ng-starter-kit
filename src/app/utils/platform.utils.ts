@@ -8,6 +8,8 @@ import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 export class AngularPlatform {
   private static platformId: any;
 
+  private static _locale = 'ko';
+
   static get isServer(): boolean {
     return isPlatformServer(this.platformId);
   }
@@ -16,8 +18,16 @@ export class AngularPlatform {
     return isPlatformBrowser(this.platformId);
   }
 
+  static get locale(): string {
+    return this._locale;
+  }
+
   static setPlatformId(platformId: any) {
     this.platformId = platformId;
+  }
+
+  static setLocale(locale: string) {
+    this._locale = locale || 'ko';
   }
 }
 
