@@ -40,12 +40,15 @@ import { DOCUMENT } from '@angular/common';
 import { MarkdownService } from '../markdown/markdown.service';
 import { getNode } from './utils/get-node';
 import { fileToBase64 } from '../../../utils/file.utils';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class ProseMirrorService implements OnDestroy {
   files: ProseMirrorFile[] = [];
 
   onReady = new EventEmitter<void>();
+
+  canAttachImage$ = new BehaviorSubject(true);
 
   draggingFileUrls: string[] = [];
 
@@ -146,6 +149,8 @@ export class ProseMirrorService implements OnDestroy {
       }),
   });
 
+  view?: EditorView;
+
   private resetDraggingTimeout: any;
 
   private readonly state: EditorState;
@@ -238,7 +243,14 @@ export class ProseMirrorService implements OnDestroy {
     });
   }
 
-  view?: EditorView;
+  /** 이미지 첨부 가능 여부 플래그. WysiwygEditorComponent의 이미지 첨부 버튼은 제거되지 않기 때문에 별도 제거 필요 */
+  get canAttachImage(): boolean {
+    return this.canAttachImage$.value;
+  }
+
+  set canAttachImage(value: boolean) {
+    this.canAttachImage$.next(value);
+  }
 
   ngOnDestroy() {
     this.view?.destroy();
@@ -411,20 +423,30 @@ export class ProseMirrorService implements OnDestroy {
       handlePaste: (view, event) => {
         const items = event.clipboardData?.items;
 
+        event.preventDefault();
+
         if (items) {
-          for (let i = 0; i < items.length; i++) {
-            const item = items[i];
+          const hasFiles = event.clipboardData?.types.includes('Files');
 
-            if (item.type.startsWith('image/')) {
-              const file = item.getAsFile();
+          if (this.canAttachImage && hasFiles) {
+            const file = event.clipboardData.files[0];
 
-              if (file) {
-                this.insertImageFile(view, file);
+            if (file.type.startsWith('image/')) {
+              this.insertImageFile(view, file);
 
-                event.preventDefault();
+              return true;
+            }
+          } else {
+            // 이미지 첨부 비활성화 시 텍스트/HTML로 붙여넣기 시도
+            const text = event.clipboardData?.getData('text/plain');
+            const html = event.clipboardData?.getData('text/html');
 
-                return true;
-              }
+            if (html) {
+              this.insertHTMLAtSelection(view, html, !this.canAttachImage);
+              return true;
+            } else if (text) {
+              this.insertTextAtSelection(view, text);
+              return true;
             }
           }
         }
@@ -436,20 +458,32 @@ export class ProseMirrorService implements OnDestroy {
       handleDrop: (view, event) => {
         const dataTransfer = event.dataTransfer;
 
-        if (dataTransfer?.files?.length) {
-          const file = dataTransfer.files[0];
+        event.preventDefault();
 
-          fileToBase64(file).then((base64) => {
-            const dragging = this.draggingFileUrls.includes(base64);
+        if (dataTransfer?.items) {
+          const hasFiles = dataTransfer.types.includes('Files');
 
-            // 드래그 중인 파일이 아닐 경우 files에 추가
-            if (!dragging && file.type.startsWith('image/')) {
-              this.files.push({
-                originalFile: file,
-                objectUrl: base64,
-              });
+          if (this.canAttachImage && hasFiles) {
+            const file = dataTransfer.files[0];
+
+            if (file.type.startsWith('image/')) {
+              this.insertImageFile(view, file);
+
+              return true;
             }
-          });
+          } else {
+            // 이미지 첨부 비활성화 시 텍스트/HTML로 붙여넣기 시도
+            const text = event.dataTransfer?.getData('text/plain');
+            const html = event.dataTransfer?.getData('text/html');
+
+            if (html) {
+              this.insertHTMLAtSelection(view, html, !this.canAttachImage);
+              return true;
+            } else if (text) {
+              this.insertTextAtSelection(view, text);
+              return true;
+            }
+          }
         }
 
         clearTimeout(this.resetDraggingTimeout);
@@ -981,5 +1015,36 @@ export class ProseMirrorService implements OnDestroy {
     }
 
     return false;
+  }
+
+  insertHTMLAtSelection(
+    view: EditorView,
+    html: string,
+    removeAllImages = false,
+  ): void {
+    const { state, dispatch } = view;
+    const parser = DOMParser.fromSchema(this.schema);
+    const block = this.document.createElement('div');
+
+    block.innerHTML = html;
+
+    if (removeAllImages) {
+      // 이미지 노드 삭제 로직
+      const images = block.querySelectorAll('img');
+
+      images.forEach((img) => {
+        img.remove();
+      });
+    }
+
+    const doc = parser.parseSlice(block);
+    const transaction = state.tr.replaceSelection(doc);
+    dispatch(transaction);
+  }
+
+  insertTextAtSelection(view: EditorView, text: string): void {
+    const { state, dispatch } = view;
+    const transaction = state.tr.insertText(text, state.selection.from);
+    dispatch(transaction);
   }
 }

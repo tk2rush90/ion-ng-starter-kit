@@ -73,6 +73,10 @@ export class ImageNodeView extends BaseNodeView {
     }
   }
 
+  selectNode() {
+    this.dom.classList.add('ProseMirror-selectednode');
+  }
+
   destroy() {
     if (!this.proseMirrorService.draggingFileUrls.includes(this.image.src)) {
       this.proseMirrorService.removeFileByObjectUrl(this.image.src);
