@@ -1,11 +1,14 @@
 import {
   ApplicationRef,
   ComponentRef,
+  DestroyRef,
   Injectable,
   OnDestroy,
   ViewContainerRef,
 } from '@angular/core';
 import { ToastOutletComponent } from '../../../components/common/toast-outlet/toast-outlet.component';
+import { TranslateService } from '@ngx-translate/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 /** An interface of toast message */
 export interface ToastMessage {
@@ -39,7 +42,11 @@ export class ToastService implements OnDestroy {
 
   private readonly renderTimeout: any;
 
-  constructor(private readonly applicationRef: ApplicationRef) {
+  constructor(
+    private readonly destroyRef: DestroyRef,
+    private readonly applicationRef: ApplicationRef,
+    private readonly translateService: TranslateService,
+  ) {
     // 앱 초기 렌더링 대기
     this.renderTimeout = setTimeout(() => {
       if (!this.toastOutletRef) {
@@ -78,6 +85,30 @@ export class ToastService implements OnDestroy {
     this.toasts.push(toastMessage);
 
     return toastMessage;
+  }
+
+  /**
+   * ngx-translate 패키지를 이용한 번역본 Toast로 표시
+   * @param message - translateKey 사용
+   * @param duration
+   */
+  openTranslated({
+    message,
+    duration = 3000,
+  }: ToastOptions): Promise<ToastMessage> {
+    return new Promise((resolve) => {
+      this.translateService
+        .get(message)
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe((translatedMessage) => {
+          const toastMessage = this.open({
+            message: translatedMessage,
+            duration,
+          });
+
+          resolve(toastMessage);
+        });
+    });
   }
 
   /**
