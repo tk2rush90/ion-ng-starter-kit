@@ -61,8 +61,6 @@ import { WysiwygYoutubeEmbedComponent } from '../wysiwyg-youtube-embed/wysiwyg-y
 export class WysiwygEditorComponent implements AfterViewInit {
   @Input() placeholder = '';
 
-  @Input() viewMode: 'dark' | 'light' = 'light';
-
   @ViewChild('editorContainer')
   editorContainerElementRef?: ElementRef<HTMLElement>;
 
@@ -75,10 +73,6 @@ export class WysiwygEditorComponent implements AfterViewInit {
     private readonly overlayService: OverlayService,
     private readonly proseMirrorService: ProseMirrorService,
   ) {}
-
-  get isDarkMode(): boolean {
-    return this.viewMode === 'dark';
-  }
 
   ngAfterViewInit() {
     if (AngularPlatform.isBrowser && this.editorContainerElementRef) {

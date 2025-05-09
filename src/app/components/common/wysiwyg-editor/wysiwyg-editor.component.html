@@ -1,14 +1,13 @@
 <div class="y-extendable-auto p-2 pb-56">
   <div
     #editorContainer
-    [class.prose-invert]="isDarkMode"
-    class="prose prose-cyan max-w-none text-justify"
+    class="prose prose-cyan max-w-none text-justify dark:prose-invert"
   ></div>
 </div>
 
 <div class="sticky bottom-0 bg-transparent p-2 backdrop-blur-sm">
   <div
-    class="flex-center-start no-scrollbar flex-nowrap gap-0.5 overflow-auto rounded-md bg-gray-700 p-2"
+    class="flex-center-start no-scrollbar flex-nowrap gap-0.5 overflow-auto rounded-md p-2"
   >
     <app-wysiwyg-editor-button (clickButton)="toggleHeading(1)">
       <app-icon-heading-1 class="size-5"></app-icon-heading-1>
