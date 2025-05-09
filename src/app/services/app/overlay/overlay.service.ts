@@ -35,7 +35,7 @@ export interface OverlayOptions {
   /** Set to prevent closing overlay by Escape key */
   preventKeyboardClosing?: boolean;
 
-  parentOverlayRef?: OverlayRef;
+  parentOverlayRef?: OverlayRef | null;
 }
 
 /** Reference of opened overlay */
@@ -63,6 +63,8 @@ export interface OverlayRef<C = any> {
 
   /** Close overlay */
   close: () => void;
+
+  parentOverlayRef?: OverlayRef | null;
 }
 
 /** A service to open overlays */
@@ -254,6 +256,7 @@ export class OverlayService implements OnDestroy {
       close: () => {
         this.close(overlayRef);
       },
+      parentOverlayRef: options.parentOverlayRef,
     };
 
     // Create `EmbeddedView`.
