@@ -626,7 +626,9 @@ export class ProseMirrorService implements OnDestroy {
       );
 
       if (!match) {
-        this.toastService.open('잘못된 유튜브 영상 링크입니다');
+        this.toastService.open({
+          message: '잘못된 유튜브 영상 링크입니다',
+        });
         return false;
       }
 

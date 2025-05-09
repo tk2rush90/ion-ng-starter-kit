@@ -163,9 +163,9 @@ export class WysiwygEditorComponent implements AfterViewInit {
   }
 
   openInvalidFilesError(numberOfFiles: number): void {
-    this.toastService.open(
-      `${numberOfFiles} 개의 허용되지 않는 파일이 무시되었습니다`,
-    );
+    this.toastService.open({
+      message: `${numberOfFiles} 개의 허용되지 않는 파일이 무시되었습니다`,
+    });
   }
 
   openWysiwygYoutubeEmbed(): void {

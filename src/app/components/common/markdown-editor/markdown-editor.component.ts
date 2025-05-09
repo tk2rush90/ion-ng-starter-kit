@@ -229,10 +229,14 @@ export class MarkdownEditorComponent implements OnInit {
     this.scrollSynced = !this.scrollSynced;
 
     if (this.scrollSynced) {
-      this.toastService.open('스크롤이 동기화 되었습니다');
+      this.toastService.open({
+        message: '스크롤이 동기화 되었습니다',
+      });
       this.syncScrollPosition();
     } else {
-      this.toastService.open('스크롤 동기화가 해제 되었습니다');
+      this.toastService.open({
+        message: '스크롤 동기화가 해제 되었습니다',
+      });
     }
   }
 

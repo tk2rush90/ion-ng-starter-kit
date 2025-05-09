@@ -22,6 +22,11 @@ export interface ToastMessage {
   close: () => void;
 }
 
+export interface ToastOptions {
+  message: string;
+  duration?: number;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -57,7 +62,7 @@ export class ToastService implements OnDestroy {
    * @param message - Message to display.
    * @param duration - Duration in milliseconds until auto close.
    */
-  open(message: string, duration = 3000): void {
+  open({ message, duration = 3000 }: ToastOptions): ToastMessage {
     // Create ToastMessage.
     const toastMessage: ToastMessage = {
       message,
@@ -71,6 +76,8 @@ export class ToastService implements OnDestroy {
     };
 
     this.toasts.push(toastMessage);
+
+    return toastMessage;
   }
 
   /**

@@ -11,6 +11,7 @@ import { StartByGoogleAccessTokenService } from '../../../services/app/start-by-
 import { SignedMemberService } from '../../../services/app/signed-member/signed-member.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ToastService } from '../../../services/app/toast/toast.service';
+import { AngularPlatform } from '../../../utils/platform.utils';
 import TokenResponse = google.accounts.oauth2.TokenResponse;
 
 @Component({
@@ -54,13 +55,17 @@ export class GoogleOauthButtonComponent {
     this.startByGoogleIdTokenService.createFailed
       .pipe(takeUntilDestroyed())
       .subscribe((err) => {
-        this.toastService.open(err.error.ko);
+        this.toastService.open({
+          message: err.error[AngularPlatform.locale],
+        });
       });
 
     this.startByGoogleAccessTokenService.createFailed
       .pipe(takeUntilDestroyed())
       .subscribe((err) => {
-        this.toastService.open(err.error.ko);
+        this.toastService.open({
+          message: err.error[AngularPlatform.locale],
+        });
       });
   }
 
