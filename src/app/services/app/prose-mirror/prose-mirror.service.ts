@@ -25,12 +25,12 @@ import {
 import { dropCursor } from 'prosemirror-dropcursor';
 import colors from 'tailwindcss/colors';
 import {
+  InputRule,
   inputRules,
   textblockTypeInputRule,
   wrappingInputRule,
 } from 'prosemirror-inputrules';
 import { ToastService } from '../toast/toast.service';
-import { isMark } from './utils/is-mark';
 import { getMark } from './utils/get-mark';
 import { YoutubeEmbedNodeView } from './node-view/youtube-embed-node-view';
 import { ProseMirrorFile } from '../../../data/prose-mirror-file';
@@ -138,6 +138,7 @@ export class ProseMirrorService implements OnDestroy {
         },
       })
       .addToEnd('code', {
+        inclusive: false,
         parseDOM: [{ tag: 'code' }],
         toDOM: () => {
           return ['code', 0];
@@ -187,6 +188,29 @@ export class ProseMirrorService implements OnDestroy {
               /^\s*([-+*])\s$/,
               this.schema.nodes['bullet_list'],
             ),
+            // `` 기호를 코드로 변환하는 룰
+            new InputRule(/(?:^|\s)`([^`]+)`$/, (state, match, start, end) => {
+              const [fullText, codeText] = match;
+              const { tr } = state;
+
+              if (codeText) {
+                // 1️⃣ 백틱 전체 구간 삭제
+                tr.delete(start, end);
+
+                // 2️⃣ 순수 코드 텍스트 삽입
+                tr.insertText(codeText, start);
+
+                // 3️⃣ 삽입한 순수 텍스트에만 마크 적용
+                tr.addMark(
+                  start,
+                  start + codeText.length,
+                  this.schema.marks['code'].create(),
+                );
+
+                return tr;
+              }
+              return null;
+            }),
             textblockTypeInputRule(/^```$/, this.schema.nodes['code_block']),
             textblockTypeInputRule(
               new RegExp('^(#{1,6})\\s$'),
@@ -306,11 +330,79 @@ export class ProseMirrorService implements OnDestroy {
           dispatch(state.tr.setSelection(newSelection));
 
           return true;
-        } else if (event.key === ' ' && isMark(view, 'link')) {
-          this.removeMarkBySpace(view, 'link', event);
-        } else if (event.key === ' ' && isMark(view, 'code')) {
-          this.removeMarkBySpace(view, 'code', event);
+        } else if (event.key === 'Enter') {
+          const { state, dispatch } = view;
+          const { $from } = state.selection;
+          const parent = $from.parent;
+          const parentType = parent.type;
+          const paragraphType = state.schema.nodes['paragraph'];
+
+          if (parentType.name === 'code_block') {
+            event.preventDefault(); // 기본 Enter 동작 방지
+
+            let canExitCodeBlock = false; // 코드 블럭 벗어날 수 있는지 여부
+            let focusToPrevious = false; // 이전 블럭으로 커서 이동 여부
+
+            // 1. 코드 블록이 비어 있는 경우
+            if (parent.content.size === 0) {
+              canExitCodeBlock = true;
+            } else {
+              // 2. 코드 블록의 마지막/첫번째 줄이 비어 있는 경우
+              const codeBlockText = parent.textContent;
+              const lines = codeBlockText.split('\n'); // 텍스트 내용을 줄 단위로 분할
+              const lastLine = lines[lines.length - 1];
+              const firstLine = lines[0];
+
+              // 커서가 코드 블록의 마지막/첫번째 위치에 있고, 마지막/첫번째 줄이 비어 있는지 확인
+              if (
+                $from.parentOffset === parent.content.size &&
+                lastLine.trim() === ''
+              ) {
+                canExitCodeBlock = true;
+              } else if (
+                $from.pos === $from.start() &&
+                firstLine.trim() === ''
+              ) {
+                canExitCodeBlock = true;
+                focusToPrevious = true;
+              }
+            }
+
+            if (canExitCodeBlock) {
+              const paragraph = paragraphType.create();
+              const transaction = state.tr.replaceWith(
+                $from.pos - 1,
+                $from.pos + 1,
+                paragraph,
+              );
+
+              if (focusToPrevious) {
+                transaction.setSelection(
+                  TextSelection.create(transaction.doc, $from.pos),
+                );
+              } else {
+                transaction.setSelection(
+                  TextSelection.create(transaction.doc, $from.pos + 1),
+                );
+              }
+
+              dispatch(transaction);
+
+              return true;
+            }
+
+            // 3. 코드 블록에 내용이 있는 경우, 기본 Enter 동작 허용 (새 줄 추가 - <br/> 태그)
+            return false;
+          }
         }
+
+        // `inclusive`: false 속성으로 인해 필요 없어졌을 듯?
+        // else if (event.key === ' ' && isMark(view, 'link')) {
+        //   this.removeMarkBySpace(view, 'link', event);
+        // }
+        // else if (event.key === ' ' && isMark(view, 'code')) {
+        //   this.removeMarkBySpace(view, 'code', event);
+        // }
 
         return false;
       },
