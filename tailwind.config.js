@@ -20,6 +20,9 @@ module.exports = {
           "monospace",
         ],
       },
+      spacing: {
+        18: "4.5rem",
+      },
       screens: {
         xs: "375px",
         sm: "425px",
