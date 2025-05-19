@@ -6,13 +6,12 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
+import { AnimationOptions } from '../data/animation-options';
 
-/**
- * Create animation trigger that slide in from bottom and out to bottom.
- * @param name - Animation name to use.
- * @return AnimationTriggerMetadata for slideInOutRight.
- */
-export function slideInOutBottom(name: string): AnimationTriggerMetadata {
+export function slideInOutBottom({
+  name = 'slideInOutBottom',
+  timing = '.15s ease-out',
+}: Partial<AnimationOptions> = {}): AnimationTriggerMetadata {
   return trigger(name, [
     state(
       'void',
@@ -23,12 +22,12 @@ export function slideInOutBottom(name: string): AnimationTriggerMetadata {
     transition(
       'void => *',
       animate(
-        '.15s ease-out',
+        timing,
         style({
           transform: 'translateY(0)',
         }),
       ),
     ),
-    transition('* => void', animate('.15s ease-out')),
+    transition('* => void', animate(timing)),
   ]);
 }

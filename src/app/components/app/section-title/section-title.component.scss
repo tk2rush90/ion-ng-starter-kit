@@ -1,0 +1,7 @@
+app-section-title {
+  @apply flex items-center justify-start gap-1 text-xl font-medium;
+
+  .app-icon {
+    @apply size-6;
+  }
+}

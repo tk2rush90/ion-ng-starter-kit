@@ -1,0 +1,39 @@
+<div class="flex-col-stretch gap-2">
+  <div class="flex-col-stretch">
+    <div class="flex-center-between gap-4 text-sm">
+      <div class="text-primary-500">
+        {{ post.wall.name }}
+      </div>
+
+      <app-icon-label class="text-black/50">
+        {{ post.createdAt | createdBefore }}
+        <app-icon-clock></app-icon-clock>
+      </app-icon-label>
+    </div>
+
+    <div class="font-medium">
+      {{ post.title }}
+    </div>
+  </div>
+
+  <div class="line-clamp-2 text-black/50">
+    {{ post.rawContent }}
+  </div>
+</div>
+
+<div class="flex-center-between">
+  <app-icon-label>
+    <app-icon-message-bubble></app-icon-message-bubble>
+    {{ post.numberOfComments }}
+  </app-icon-label>
+
+  <app-icon-label [class.text-fuchsia-500]="post.isLiked">
+    <app-icon-heart [fill]="post.isLiked"></app-icon-heart>
+    {{ post.numberOfLikes }}
+  </app-icon-label>
+
+  <app-icon-label>
+    <app-icon-eye></app-icon-eye>
+    {{ post.numberOfViewers }}
+  </app-icon-label>
+</div>

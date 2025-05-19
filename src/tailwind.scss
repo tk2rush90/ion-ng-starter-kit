@@ -7,23 +7,50 @@
 }
 
 // 자동 완성용
-.flex-center { }
-.flex-center-between { }
-.flex-center-end { }
-.flex-center-start { }
-.flex-start-start { }
-.flex-start-end { }
-.flex-start-between { }
-.flex-col-stretch { }
-.flex-col-center { }
-.flex-col-end { }
-.flex-col-start { }
-.y-extendable-0 { }
-.y-extendable-auto { }
-.x-extendable-0 { }
-.x-extendable-auto { }
-.y-non-extendable { }
-.x-non-extendable { }
+.flex-center {
+}
+.flex-center-between {
+}
+.flex-center-end {
+}
+.flex-center-start {
+}
+.flex-start-start {
+}
+.flex-start-end {
+}
+.flex-start-between {
+}
+.flex-col-stretch {
+}
+.flex-col-center {
+}
+.flex-col-end {
+}
+.flex-col-start {
+}
+.y-extendable-0 {
+}
+.y-extendable-auto {
+}
+.x-extendable-0 {
+}
+.x-extendable-auto {
+}
+.y-non-extendable {
+}
+.x-non-extendable {
+}
+.flat-button {
+  &.no-padding {
+  }
+  &.primary {
+  }
+}
+.stroke-button {
+}
+.transparent-button {
+}
 
 @layer base {
   .flex-center {
@@ -106,5 +133,25 @@
 
   .icon-button {
     @apply flex-center size-8 rounded-full;
+  }
+
+  .flat-button {
+    @apply flex-center h-10 rounded-full px-4;
+
+    &.no-padding {
+      @apply px-0;
+    }
+
+    &.primary {
+      @apply bg-primary-500 text-white;
+    }
+  }
+
+  .stroke-button {
+    @apply flex-center h-10 rounded-full border border-solid border-black/15 px-4;
+  }
+
+  .transparent-button {
+    @apply flex h-10 cursor-pointer flex-row items-center justify-center rounded-full px-4 hover:bg-black/[0.03] active:bg-black/[0.05];
   }
 }

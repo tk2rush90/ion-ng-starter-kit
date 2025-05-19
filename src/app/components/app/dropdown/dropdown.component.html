@@ -1,0 +1,26 @@
+<button
+  (click)="openDropdownOptions()"
+  type="button"
+  class="stroke-button gap-1"
+>
+  <ng-content></ng-content>
+
+  <app-icon-chevron-down class="-mr-1.5 size-5"></app-icon-chevron-down>
+</button>
+
+<ng-template #dropdownOptions>
+  <app-backdrop @fadeInOut></app-backdrop>
+
+  <app-bottom-sheet
+    @fadeInOut
+    @slideInOutBottomFull
+    class="md:max-w-xs"
+    modalTitle="옵션"
+    displayCloseButton
+  >
+    <app-dropdown-options
+      (clickOption)="onClickOption($event)"
+      [options]="options"
+    ></app-dropdown-options>
+  </app-bottom-sheet>
+</ng-template>

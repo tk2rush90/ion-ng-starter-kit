@@ -1,0 +1,76 @@
+<nav class="flex-col-stretch gap-1">
+  <a
+    [routerLink]="['/']"
+    [routerLinkActiveOptions]="{
+      paths: 'exact',
+      queryParams: 'ignored',
+      matrixParams: 'ignored',
+      fragment: 'ignored',
+    }"
+    routerLinkActive="active"
+    class="transparent-button"
+  >
+    <app-icon-house></app-icon-house>
+    홈
+  </a>
+
+  <a
+    [routerLink]="['/wall/list']"
+    routerLinkActive="active"
+    class="transparent-button"
+  >
+    <app-icon-layout-dashboard></app-icon-layout-dashboard>
+    담벼락
+  </a>
+
+  <a
+    [routerLink]="['/search']"
+    routerLinkActive="active"
+    class="transparent-button"
+  >
+    <app-icon-search></app-icon-search>
+    검색
+  </a>
+
+  <a
+    [routerLink]="['/notification']"
+    routerLinkActive="active"
+    class="transparent-button"
+  >
+    <app-icon-bell></app-icon-bell>
+    알림
+  </a>
+
+  <a
+    [routerLink]="['/settings']"
+    routerLinkActive="active"
+    class="transparent-button"
+  >
+    <app-icon-settings></app-icon-settings>
+    설정
+  </a>
+</nav>
+
+@if (appProfile) {
+  <div class="h-px w-full bg-black/15"></div>
+
+  <div class="flex-center-start gap-1 px-4 text-xl font-medium">
+    <app-icon-layout-dashboard class="size-6"></app-icon-layout-dashboard>
+
+    내 담벼락
+  </div>
+}
+
+<div class="h-px w-full bg-black/15"></div>
+
+<footer
+  class="flex flex-row flex-wrap items-start gap-x-3 gap-y-1.5 whitespace-nowrap px-4 text-xs text-black/50"
+>
+  <a>Attributions</a>
+
+  <a>Privacy Policy</a>
+
+  <a>Terms Of Service</a>
+
+  <div>ⓒ Appresso, 2025</div>
+</footer>

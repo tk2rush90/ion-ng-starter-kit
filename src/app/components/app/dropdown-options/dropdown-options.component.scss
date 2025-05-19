@@ -1,0 +1,7 @@
+app-dropdown-options {
+  @apply flex flex-col items-stretch gap-1 px-4 pb-4;
+
+  .transparent-button {
+    @apply justify-start;
+  }
+}

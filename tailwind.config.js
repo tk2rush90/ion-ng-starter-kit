@@ -22,6 +22,8 @@ module.exports = {
       },
       spacing: {
         18: "4.5rem",
+        62: "15.5rem",
+        240: "60rem",
       },
       screens: {
         xs: "375px",

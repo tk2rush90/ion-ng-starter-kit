@@ -1,0 +1,14 @@
+<app-home-banner></app-home-banner>
+
+<app-section-header>
+  <app-section-title>
+    <app-icon-house aria-hidden="true"></app-icon-house>
+    홈
+  </app-section-title>
+
+  <app-dropdown (optionChange)="onOptionChange($event)" [options]="options">
+    {{ currentOption.label }}
+  </app-dropdown>
+</app-section-header>
+
+<app-post-list [order]="order"></app-post-list>

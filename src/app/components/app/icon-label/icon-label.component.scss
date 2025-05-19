@@ -1,0 +1,7 @@
+app-icon-label {
+  @apply flex items-center justify-center gap-1 text-sm;
+
+  .app-icon {
+    @apply size-4;
+  }
+}

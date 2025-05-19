@@ -1,0 +1,21 @@
+app-sidebar {
+  @apply flex w-62 flex-col items-stretch gap-4;
+
+  .transparent-button {
+    @apply justify-between;
+
+    .app-icon {
+      @apply size-5;
+    }
+
+    &.active {
+      @apply bg-primary-500/10 text-primary-500;
+    }
+  }
+
+  footer {
+    a {
+      @apply hover:text-black/75 active:text-black;
+    }
+  }
+}

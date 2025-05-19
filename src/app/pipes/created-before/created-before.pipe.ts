@@ -1,12 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import {
-  DAY,
-  HOUR,
-  MINUTE,
-  SECOND,
-  WEEK,
-  YEAR,
-} from '../../constants/milliseconds';
+import { DAY, HOUR, MINUTE, WEEK, YEAR } from '../../constants/milliseconds';
 
 /** A pipe to convert time like `~ minutes ago` */
 @Pipe({
@@ -37,8 +30,6 @@ export class CreatedBeforePipe implements PipeTransform {
         return `${Math.floor(millisecondsDistance / HOUR)}시간 전`;
       } else if (millisecondsDistance > MINUTE) {
         return `${Math.floor(millisecondsDistance / MINUTE)}분 전`;
-      } else if (millisecondsDistance > SECOND * 5) {
-        return `${Math.floor(millisecondsDistance / SECOND)}초 전`;
       } else {
         return '방금 전';
       }

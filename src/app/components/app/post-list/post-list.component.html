@@ -1,0 +1,21 @@
+@for (item of data; track item.id) {
+  <a
+    [routerLink]="['/post/detail', item.id]"
+    [queryParams]="{ wallId }"
+    queryParamsHandling="merge"
+  >
+    <app-post-item [post]="item"></app-post-item>
+  </a>
+} @empty {
+  @if (!fetchLoading && onceFetched) {
+    <!-- todo 글이 없습니다 -->
+  }
+}
+
+@if (fetchLoading) {
+  <!-- todo 로딩 -->
+} @else if (nextCursor) {
+  <div (intersect)="fetch()" appIntersectionDetector></div>
+} @else if (!isEmpty) {
+  <!-- todo 마지막입니다 -->
+}

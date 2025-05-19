@@ -1,0 +1,9 @@
+@for (option of options; track option.value) {
+  <button
+    (click)="onClickOption(option)"
+    type="button"
+    class="transparent-button"
+  >
+    {{ option.label }}
+  </button>
+}

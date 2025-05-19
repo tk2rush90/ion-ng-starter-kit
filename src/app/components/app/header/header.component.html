@@ -1,0 +1,27 @@
+<a [routerLink]="['/']">
+  <app-icon-pilo-logo class="h-7"></app-icon-pilo-logo>
+</a>
+
+<div class="flex-center-end gap-2">
+  @if (appProfile) {
+    <button type="button" class="flat-button primary">
+      <app-icon-feather class="size-5"></app-icon-feather>
+
+      작성하기
+    </button>
+
+    @if (avatar) {
+      <app-avatar
+        [avatar]="avatar"
+        class="size-10"
+        color=""
+        useSilhouette
+      ></app-avatar>
+    } @else {
+      <!-- 아바타 설정 전 까지 플레이스홀더 설정 -->
+      <div class="size-10 animate-pulse rounded-full bg-black/[0.03]"></div>
+    }
+  } @else {
+    <button type="button" class="flat-button primary">로그인</button>
+  }
+</div>
