@@ -6,9 +6,6 @@ import { IconAsteriskComponent } from '../../icons/icon-asterisk/icon-asterisk.c
   imports: [IconAsteriskComponent],
   templateUrl: './value-field.component.html',
   styleUrl: './value-field.component.scss',
-  host: {
-    class: 'app-form-field flex-col-stretch gap-1',
-  },
 })
 export class ValueFieldComponent {
   @Input({ transform: booleanAttribute }) required = false;

@@ -2,16 +2,16 @@ import {
   AfterViewInit,
   booleanAttribute,
   Component,
+  computed,
+  DOCUMENT,
   ElementRef,
-  HostBinding,
-  HostListener,
-  Inject,
-  Input,
+  inject,
+  input,
   Renderer2,
+  signal,
   ViewEncapsulation,
-  DOCUMENT
 } from '@angular/core';
-import { IconXMarkComponent } from '../../icons/icon-x-mark/icon-x-mark.component';
+import { IconXComponent } from '../../icons/icon-x/icon-x.component';
 import { IconAsteriskComponent } from '../../icons/icon-asterisk/icon-asterisk.component';
 import { IconChevronDownComponent } from '../../icons/icon-chevron-down/icon-chevron-down.component';
 
@@ -20,37 +20,51 @@ import { AngularPlatform } from '../../../utils/platform.utils';
 /** A component to create form field */
 @Component({
   selector: 'app-form-field',
-  imports: [
-    IconXMarkComponent,
-    IconAsteriskComponent,
-    IconChevronDownComponent,
-  ],
+  imports: [IconXComponent, IconAsteriskComponent, IconChevronDownComponent],
   templateUrl: './form-field.component.html',
   styleUrl: './form-field.component.scss',
-  host: {
-    class: 'flex-col-start',
-  },
   encapsulation: ViewEncapsulation.None,
+  host: {
+    '(click)': `onClick()`,
+    '(mouseleave)': `onMouseLeave()`,
+    '(mouseup)': `onMouseUp($event)`,
+    '(mousedown)': `onMouseDown($event)`,
+    '[class]': `classes()`,
+  },
 })
 export class FormFieldComponent implements AfterViewInit {
-  @Input({ transform: booleanAttribute }) required = false;
+  required = input(false, {
+    transform: booleanAttribute,
+  });
 
-  /** Focused status of control element */
-  @HostBinding('class.focused') focused = false;
+  focused = signal(false);
 
-  /** Disabled status of control element */
-  @HostBinding('class.disabled') disabled = false;
+  disabled = signal(false);
+
+  classes = computed(() => {
+    const classes: any = {};
+
+    if (this.focused()) {
+      classes['focused'] = true;
+    }
+
+    if (this.disabled()) {
+      classes['disabled'] = true;
+    }
+
+    return classes;
+  });
 
   isPickerOpened = false;
 
   /** 현재 요소에 mousedown이 실행됐는지 감지하기 위함. mouseup이 실행되거나 마우스가 현재 요소를 벗어나면 `false` 처리 */
   isMouseDown = false;
 
-  constructor(
-    @Inject(DOCUMENT) private readonly document: Document,
-    private readonly renderer: Renderer2,
-    private readonly elementRef: ElementRef<HTMLElement>,
-  ) {}
+  private readonly document = inject(DOCUMENT);
+
+  private readonly renderer = inject(Renderer2);
+
+  private readonly elementRef = inject(ElementRef<HTMLElement>);
 
   ngAfterViewInit() {
     if (AngularPlatform.isBrowser) {
@@ -71,7 +85,6 @@ export class FormFieldComponent implements AfterViewInit {
     }
   }
 
-  @HostListener('mousedown', ['$event'])
   onMouseDown(event: Event): void {
     this.isMouseDown = true;
 
@@ -84,7 +97,6 @@ export class FormFieldComponent implements AfterViewInit {
     }
   }
 
-  @HostListener('mouseup', ['$event'])
   onMouseUp(event: Event): void {
     this.isMouseDown = false;
 
@@ -110,7 +122,6 @@ export class FormFieldComponent implements AfterViewInit {
     }
   }
 
-  @HostListener('mouseleave')
   onMouseLeave(): void {
     this.isMouseDown = false;
 
@@ -124,12 +135,20 @@ export class FormFieldComponent implements AfterViewInit {
     }
   }
 
-  @HostListener('click', ['$event'])
   onClick(): void {
-    this.elementRef.nativeElement
-      .querySelector<
-        HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-      >('input,textarea')
-      ?.focus();
+    (
+      this.elementRef.nativeElement.querySelector('input,textarea') as
+        | HTMLInputElement
+        | HTMLTextAreaElement
+    )?.focus();
+  }
+
+  resetValue(): void {
+    const input = this.elementRef.nativeElement.querySelector('input');
+
+    if (input) {
+      input.value = '';
+      input.dispatchEvent(new Event('input'));
+    }
   }
 }

@@ -1,0 +1,250 @@
+@if (hasView) {
+  @if (
+    (hasBlockNode("code_block") && isCursorInCodeBlock()) || isCursorInHeading()
+  ) {
+    <button
+      @fadeIn
+      @slideInBottom
+      (mousedown)="
+        $event.stopPropagation(); $event.preventDefault(); toggleParagraph()
+      "
+      class="x-non-extendable relative flex w-8 items-center justify-center transition-all"
+      type="button"
+    >
+      <app-icon-pilcrow class="size-4"></app-icon-pilcrow>
+    </button>
+  }
+
+  @if (hasBlockNode("code_block") && isCursorInCodeBlock()) {
+    <button
+      @fadeIn
+      @slideInBottom
+      (mousedown)="
+        $event.stopPropagation(); $event.preventDefault(); addParagraph()
+      "
+      class="x-non-extendable relative flex w-8 items-center justify-center transition-all"
+      type="button"
+    >
+      <app-icon-pilcrow-plus class="size-4"></app-icon-pilcrow-plus>
+    </button>
+  }
+
+  @if (hasBlockNode("heading")) {
+    <button
+      @fadeIn
+      @slideInBottom
+      (mousedown)="
+        $event.stopPropagation(); $event.preventDefault(); toggleHeading(2)
+      "
+      [class.is-active]="isCursorInHeading(2)"
+      class="x-non-extendable relative flex w-8 items-center justify-center transition-all"
+      type="button"
+    >
+      <app-icon-heading-1 class="size-4"></app-icon-heading-1>
+    </button>
+
+    <button
+      @fadeIn
+      @slideInBottom
+      (mousedown)="
+        $event.stopPropagation(); $event.preventDefault(); toggleHeading(3)
+      "
+      [class.is-active]="isCursorInHeading(3)"
+      class="x-non-extendable relative flex w-8 items-center justify-center transition-all"
+      type="button"
+    >
+      <app-icon-heading-2 class="size-4"></app-icon-heading-2>
+    </button>
+
+    <button
+      @fadeIn
+      @slideInBottom
+      (mousedown)="
+        $event.stopPropagation(); $event.preventDefault(); toggleHeading(4)
+      "
+      [class.is-active]="isCursorInHeading(4)"
+      class="x-non-extendable relative flex w-8 items-center justify-center transition-all"
+      type="button"
+    >
+      <app-icon-heading-3 class="size-4"></app-icon-heading-3>
+    </button>
+  }
+
+  @if (hasBlockNode("code_block") && !isCursorInCodeBlock()) {
+    <button
+      @fadeIn
+      @slideInBottom
+      (mousedown)="
+        $event.stopPropagation(); $event.preventDefault(); setCodeBlock()
+      "
+      class="x-non-extendable relative flex w-8 items-center justify-center transition-all"
+      type="button"
+    >
+      <app-icon-braces class="size-4"></app-icon-braces>
+    </button>
+  }
+
+  @if (hasBlockNode("blockquote")) {
+    @if (isCursorInBlockquote()) {
+      <button
+        @fadeIn
+        @slideInBottom
+        (mousedown)="
+          $event.stopPropagation(); $event.preventDefault(); insertBlockQuote()
+        "
+        class="x-non-extendable relative flex w-8 items-center justify-center transition-all"
+        type="button"
+      >
+        <app-icon-quote-plus
+          strokeWidth="1.5"
+          class="size-6"
+        ></app-icon-quote-plus>
+      </button>
+
+      <button
+        @fadeIn
+        @slideInBottom
+        (mousedown)="
+          $event.stopPropagation(); $event.preventDefault(); unwrapBlockquote()
+        "
+        class="x-non-extendable relative flex w-8 items-center justify-center transition-all"
+        type="button"
+      >
+        <app-icon-quote-minus
+          strokeWidth="1.5"
+          class="size-6"
+        ></app-icon-quote-minus>
+      </button>
+    } @else {
+      <button
+        @fadeIn
+        @slideInBottom
+        (mousedown)="
+          $event.stopPropagation(); $event.preventDefault(); insertBlockQuote()
+        "
+        class="x-non-extendable relative flex w-8 items-center justify-center transition-all"
+        type="button"
+      >
+        <app-icon-quote class="size-4"></app-icon-quote>
+      </button>
+    }
+  }
+
+  @if (
+    !hasBlockNode("code_block") ||
+    (hasBlockNode("code_block") && !isCursorInCodeBlock())
+  ) {
+    <button
+      @fadeIn
+      @slideInBottom
+      (mousedown)="
+        $event.stopPropagation(); $event.preventDefault(); toggleBold()
+      "
+      [class.is-active]="isBoldActive()"
+      class="x-non-extendable relative flex w-8 items-center justify-center transition-all"
+      type="button"
+    >
+      <app-icon-bold class="size-4"></app-icon-bold>
+    </button>
+
+    <button
+      @fadeIn
+      @slideInBottom
+      (mousedown)="
+        $event.stopPropagation(); $event.preventDefault(); toggleItalic()
+      "
+      [class.is-active]="isItalic()"
+      class="x-non-extendable relative flex w-8 items-center justify-center transition-all"
+      type="button"
+    >
+      <app-icon-italic class="size-4"></app-icon-italic>
+    </button>
+
+    <button
+      @fadeIn
+      @slideInBottom
+      (mousedown)="
+        $event.stopPropagation(); $event.preventDefault(); toggleUnderline()
+      "
+      [class.is-active]="isUnderlineActive()"
+      class="x-non-extendable relative flex w-8 items-center justify-center transition-all"
+      type="button"
+    >
+      <app-icon-underline class="size-4"></app-icon-underline>
+    </button>
+
+    <button
+      @fadeIn
+      @slideInBottom
+      (mousedown)="
+        $event.stopPropagation(); $event.preventDefault(); toggleLineThrough()
+      "
+      [class.is-active]="isStrike()"
+      class="x-non-extendable relative flex w-8 items-center justify-center transition-all"
+      type="button"
+    >
+      <app-icon-strike-through class="size-4"></app-icon-strike-through>
+    </button>
+
+    @if (isExpanded()) {
+      <button
+        @fadeIn
+        @slideInBottom
+        (mousedown)="
+          $event.stopPropagation(); $event.preventDefault(); toggleCode()
+        "
+        [class.is-active]="isCode()"
+        class="x-non-extendable relative flex w-8 items-center justify-center transition-all"
+        type="button"
+      >
+        <app-icon-code class="size-4"></app-icon-code>
+      </button>
+    }
+
+    @if (isLink() || isExpanded()) {
+      <button
+        @fadeIn
+        @slideInBottom
+        (mousedown)="
+          $event.stopPropagation(); $event.preventDefault(); openLinkEditor()
+        "
+        [class.is-active]="isLink()"
+        class="x-non-extendable relative flex w-8 items-center justify-center transition-all"
+        type="button"
+      >
+        <app-icon-link class="size-3.5"></app-icon-link>
+      </button>
+    }
+
+    @if (isLink()) {
+      <button
+        @fadeIn
+        @slideInBottom
+        (mousedown)="
+          $event.stopPropagation(); $event.preventDefault(); removeLink()
+        "
+        class="x-non-extendable relative flex w-8 items-center justify-center transition-all"
+        type="button"
+      >
+        <app-icon-unlink class="size-3.5"></app-icon-unlink>
+      </button>
+    }
+  }
+}
+
+<ng-template #linkEditor let-url="url">
+  <app-backdrop @fadeInOut></app-backdrop>
+
+  <app-bottom-sheet
+    @fadeInOut
+    @slideInOutBottomFull
+    class="md:max-w-sm"
+    modalTitle="링크"
+    displayCloseButton
+  >
+    <app-wysiwyg-link-editor
+      (saved)="onLinkSaved($event)"
+      [url]="url"
+    ></app-wysiwyg-link-editor>
+  </app-bottom-sheet>
+</ng-template>

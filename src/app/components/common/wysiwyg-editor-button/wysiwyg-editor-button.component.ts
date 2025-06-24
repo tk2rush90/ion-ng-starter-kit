@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 
+/** @deprecated */
 @Component({
   selector: 'app-wysiwyg-editor-button',
   imports: [],

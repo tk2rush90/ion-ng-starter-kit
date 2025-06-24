@@ -1,38 +1,36 @@
 import {
   booleanAttribute,
   Component,
-  EventEmitter,
-  Inject,
-  Input,
-  Output,
+  inject,
+  input,
+  output,
 } from '@angular/core';
 import { OVERLAY_REF } from '../../../tokens/overlay-ref';
-import { OverlayRef } from '../../../services/app/overlay/overlay.service';
 import { AutoFocusDirective } from '../auto-focus/auto-focus.directive';
+import { SheetActionsComponent } from '../../app/sheet-actions/sheet-actions.component';
 
 @Component({
   selector: 'app-confirm',
-  imports: [AutoFocusDirective],
+  imports: [AutoFocusDirective, SheetActionsComponent],
   templateUrl: './confirm.component.html',
   styleUrl: './confirm.component.scss',
-  host: {
-    class: 'flex-col-stretch gap-4',
-  },
 })
 export class ConfirmComponent {
-  @Input({ required: true }) theme = 'primary';
+  theme = input('primary');
 
-  @Input() overrideCancelLabel = '';
+  overrideCancelLabel = input('');
 
-  @Input() overrideConfirmLabel = '';
+  overrideConfirmLabel = input('');
 
-  @Input({ transform: booleanAttribute }) displayCancelButton = false;
+  displayCancelButton = input(false, {
+    transform: booleanAttribute,
+  });
 
-  @Output() clickCancel = new EventEmitter<void>();
+  clickCancel = output<void>();
 
-  @Output() clickConfirm = new EventEmitter<void>();
+  clickConfirm = output<void>();
 
-  constructor(@Inject(OVERLAY_REF) private readonly overlayRef: OverlayRef) {}
+  private readonly overlayRef = inject(OVERLAY_REF);
 
   close(): void {
     this.overlayRef.close();

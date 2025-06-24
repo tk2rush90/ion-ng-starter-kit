@@ -1,9 +1,9 @@
 <button
-  (click)="
+  (mousedown)="
     $event.preventDefault(); $event.stopPropagation(); clickButton.emit()
   "
   type="button"
-  class="flex-center x-non-extendable button-effect size-7 rounded"
+  class="flex-center h-full w-6"
 >
   <ng-content></ng-content>
 </button>

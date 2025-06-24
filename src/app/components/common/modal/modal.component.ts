@@ -9,13 +9,13 @@ import {
   OnDestroy,
 } from '@angular/core';
 import { OverlayRef } from '../../../services/app/overlay/overlay.service';
-import { IconXMarkComponent } from '../../icons/icon-x-mark/icon-x-mark.component';
+import { IconXComponent } from '../../icons/icon-x/icon-x.component';
 import { OVERLAY_REF } from '../../../tokens/overlay-ref';
 
 /** A modal container */
 @Component({
   selector: 'app-modal',
-  imports: [IconXMarkComponent],
+  imports: [IconXComponent],
   templateUrl: './modal.component.html',
   styleUrl: './modal.component.scss',
   host: {

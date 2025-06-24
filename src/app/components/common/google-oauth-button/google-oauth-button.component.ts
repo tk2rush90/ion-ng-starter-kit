@@ -1,4 +1,10 @@
-import { Component, EventEmitter, HostListener, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  HostListener,
+  inject,
+  Output,
+} from '@angular/core';
 import { IconGoogleLogoComponent } from '../../icons/icon-google-logo/icon-google-logo.component';
 import { OAUTH_PREVIOUS_URL_KEY } from '../../../constants/storage-keys';
 import { Location } from '@angular/common';
@@ -20,7 +26,7 @@ import TokenResponse = google.accounts.oauth2.TokenResponse;
   templateUrl: './google-oauth-button.component.html',
   styleUrl: './google-oauth-button.component.scss',
   host: {
-    class: 'stroke-button gap-2',
+    class: 'flat-button primary',
     type: 'button',
     role: 'button',
   },
@@ -29,15 +35,25 @@ import TokenResponse = google.accounts.oauth2.TokenResponse;
 export class GoogleOauthButtonComponent {
   @Output() loginSuccess = new EventEmitter<void>();
 
-  constructor(
-    private readonly location: Location,
-    private readonly storage: Storage,
-    private readonly platform: Platform,
-    private readonly startByGoogleIdTokenService: StartByGoogleIdTokenService,
-    private readonly startByGoogleAccessTokenService: StartByGoogleAccessTokenService,
-    private readonly signedMemberService: SignedMemberService,
-    private readonly toastService: ToastService,
-  ) {
+  private readonly location = inject(Location);
+
+  private readonly storage = inject(Storage);
+
+  private readonly platform = inject(Platform);
+
+  private readonly startByGoogleIdTokenService = inject(
+    StartByGoogleIdTokenService,
+  );
+
+  private readonly startByGoogleAccessTokenService = inject(
+    StartByGoogleAccessTokenService,
+  );
+
+  private readonly signedMemberService = inject(SignedMemberService);
+
+  private readonly toastService = inject(ToastService);
+
+  constructor() {
     this.startByGoogleIdTokenService.created
       .pipe(takeUntilDestroyed())
       .subscribe((member) => {

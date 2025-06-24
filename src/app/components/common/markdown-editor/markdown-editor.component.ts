@@ -36,7 +36,7 @@ import {
   OverlayRef,
   OverlayService,
 } from '../../../services/app/overlay/overlay.service';
-import { IconXMarkComponent } from '../../icons/icon-x-mark/icon-x-mark.component';
+import { IconXComponent } from '../../icons/icon-x/icon-x.component';
 import { IconSyncComponent } from '../../icons/icon-sync/icon-sync.component';
 import { IconSyncDisabledComponent } from '../../icons/icon-sync-disabled/icon-sync-disabled.component';
 import { ToastService } from '../../../services/app/toast/toast.service';
@@ -73,7 +73,7 @@ export interface MarkdownEditorAttachment {
     IconQuestionMarkCircleComponent,
     BackdropComponent,
     ModalComponent,
-    IconXMarkComponent,
+    IconXComponent,
     IconSyncComponent,
     IconSyncDisabledComponent,
   ],

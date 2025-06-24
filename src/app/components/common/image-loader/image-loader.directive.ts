@@ -1,9 +1,9 @@
 import {
-  AfterViewInit,
   Directive,
   ElementRef,
   HostBinding,
   HostListener,
+  inject,
   OnDestroy,
 } from '@angular/core';
 import { AngularPlatform } from '../../../utils/platform.utils';
@@ -21,7 +21,7 @@ import { AngularPlatform } from '../../../utils/platform.utils';
   },
   exportAs: 'imageLoader',
 })
-export class ImageLoaderDirective implements AfterViewInit, OnDestroy {
+export class ImageLoaderDirective implements OnDestroy {
   /** Image successfully loaded status */
   imageLoaded = false;
 
@@ -31,15 +31,9 @@ export class ImageLoaderDirective implements AfterViewInit, OnDestroy {
 
   private mutationObserver?: MutationObserver;
 
-  constructor(private readonly elementRef: ElementRef<HTMLImageElement>) {}
+  private readonly elementRef = inject(ElementRef<HTMLElement>);
 
-  /** Bind `opacity` according to image loaded status */
-  @HostBinding('style.opacity')
-  get opacity(): number {
-    return this.imageLoaded ? 1 : 0;
-  }
-
-  ngAfterViewInit() {
+  constructor() {
     if (AngularPlatform.isBrowser) {
       this.mutationObserver = new MutationObserver((records) => {
         records.forEach((_record) => {
@@ -57,6 +51,12 @@ export class ImageLoaderDirective implements AfterViewInit, OnDestroy {
     }
   }
 
+  /** Bind `opacity` according to image loaded status */
+  @HostBinding('style.opacity')
+  get opacity(): number {
+    return this.imageLoaded ? 1 : 0;
+  }
+
   ngOnDestroy() {
     this.mutationObserver?.disconnect();
   }
@@ -66,6 +66,7 @@ export class ImageLoaderDirective implements AfterViewInit, OnDestroy {
   onImageLoad(): void {
     this.transition = true;
     this.imageLoaded = true;
+    this.imageError = false;
   }
 
   @HostListener('error')

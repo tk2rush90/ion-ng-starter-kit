@@ -1,0 +1,35 @@
+<form
+  (ngSubmit)="submitToSave()"
+  [formGroup]="formGroup"
+  class="flex-col-stretch"
+>
+  <div class="flex-col-stretch px-4 pb-4">
+    <app-form-field>
+      <label>URL</label>
+
+      <input
+        type="url"
+        autocomplete="off"
+        spellcheck="false"
+        formControlName="url"
+        appAutoFocus
+        appImeInput
+      />
+
+      @if (formGroup.hasError("required", "url")) {
+        <app-field-error>URL을 입력해주세요</app-field-error>
+      }
+    </app-form-field>
+  </div>
+
+  <app-sheet-actions justify="right">
+    <button
+      (click)="$event.stopPropagation()"
+      [disabled]="formGroup.invalid"
+      type="submit"
+      class="flat-button primary"
+    >
+      저장하기
+    </button>
+  </app-sheet-actions>
+</form>

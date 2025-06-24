@@ -1,24 +1,24 @@
-<div class="break-keep">
+<div class="break-keep px-6 pb-6">
   <ng-content></ng-content>
 </div>
 
-<div class="flex-center-end gap-1">
-  @if (displayCancelButton) {
+<app-sheet-actions justify="right">
+  @if (displayCancelButton()) {
     <button
       (click)="clickCancel.emit(); close()"
       type="button"
       class="stroke-button"
     >
-      {{ overrideCancelLabel || "취소" }}
+      {{ overrideCancelLabel() || "취소" }}
     </button>
   }
 
   <button
     (click)="clickConfirm.emit(); close()"
     type="button"
-    class="flat-button {{ theme }}"
+    class="flat-button {{ theme() }}"
     appAutoFocus
   >
-    {{ overrideConfirmLabel || "확인" }}
+    {{ overrideConfirmLabel() || "확인" }}
   </button>
-</div>
+</app-sheet-actions>
