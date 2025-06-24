@@ -5,8 +5,9 @@ import {
   Inject,
   Input,
   numberAttribute,
+  DOCUMENT
 } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
+
 
 /**
  * 텍스트 입력에 따라 화면 중앙에 커서가 위치하게 하는 Directive

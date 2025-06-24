@@ -1,5 +1,5 @@
-import { inject, Injectable } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
+import { inject, Injectable, DOCUMENT } from '@angular/core';
+
 
 /** 메타 태그 관리 위한 기본 서비스 */
 @Injectable({

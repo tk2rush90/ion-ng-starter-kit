@@ -1,6 +1,6 @@
-import { Inject, Injectable } from '@angular/core';
+import { Inject, Injectable, DOCUMENT } from '@angular/core';
 import { Meta, MetaDefinition, Title } from '@angular/platform-browser';
-import { DOCUMENT } from '@angular/common';
+
 
 /**
  * Available values for robots meta tag.

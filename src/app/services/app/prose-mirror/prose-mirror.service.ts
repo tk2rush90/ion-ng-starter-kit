@@ -1,4 +1,4 @@
-import { EventEmitter, Inject, Injectable, OnDestroy } from '@angular/core';
+import { EventEmitter, Inject, Injectable, OnDestroy, DOCUMENT } from '@angular/core';
 import {
   EditorState,
   NodeSelection,
@@ -36,7 +36,7 @@ import { YoutubeEmbedNodeView } from './node-view/youtube-embed-node-view';
 import { ProseMirrorFile } from '../../../data/prose-mirror-file';
 import { ImageNodeView } from './node-view/image-node-view';
 import { ProseMirrorNodeJson } from '../../../data/prose-mirror-node-json';
-import { DOCUMENT } from '@angular/common';
+
 import { MarkdownService } from '../markdown/markdown.service';
 import { getNode } from './utils/get-node';
 import { fileToBase64 } from '../../../utils/file.utils';

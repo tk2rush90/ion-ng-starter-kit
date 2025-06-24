@@ -9,11 +9,12 @@ import {
   Input,
   Renderer2,
   ViewEncapsulation,
+  DOCUMENT
 } from '@angular/core';
 import { IconXMarkComponent } from '../../icons/icon-x-mark/icon-x-mark.component';
 import { IconAsteriskComponent } from '../../icons/icon-asterisk/icon-asterisk.component';
 import { IconChevronDownComponent } from '../../icons/icon-chevron-down/icon-chevron-down.component';
-import { DOCUMENT } from '@angular/common';
+
 import { AngularPlatform } from '../../../utils/platform.utils';
 
 /** A component to create form field */
