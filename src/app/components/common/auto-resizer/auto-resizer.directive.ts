@@ -3,25 +3,27 @@ import {
   booleanAttribute,
   Directive,
   ElementRef,
-  HostListener,
   inject,
   input,
 } from '@angular/core';
 
 /** A directive that makes textarea to be resized by its content */
 @Directive({
-  selector: 'textarea[appTextareaResizer]',
+  selector: 'textarea[appAutoResizer]',
   standalone: true,
   host: {
-    '(window:resize)': `onWindowResize()`,
+    '(window:resize)': `resize()`,
+    '(input)': `resize()`,
+    '(focus)': `resize()`,
+    '(blur)': `resize()`,
     '(keydown.enter)': `onEnterKeyDown($event)`,
     '(paste)': `onPasteOrDrop($event)`,
     '(drop)': `onPasteOrDrop($event)`,
     rows: '1',
-    class: 'resize-none no-scrollbar',
+    class: 'resize-none',
   },
 })
-export class TextareaResizerDirective implements AfterViewInit {
+export class AutoResizerDirective implements AfterViewInit {
   disableLineBreaks = input(false, {
     transform: booleanAttribute,
   });
@@ -30,17 +32,6 @@ export class TextareaResizerDirective implements AfterViewInit {
 
   ngAfterViewInit() {
     // Set initial size after view init.
-    this.resize();
-  }
-
-  /** Listen `input` event of host element to resize height */
-  @HostListener('input')
-  onHostInput(): void {
-    this.resize();
-  }
-
-  /** Listen `resize` event of `window` to resize height */
-  onWindowResize(): void {
     this.resize();
   }
 

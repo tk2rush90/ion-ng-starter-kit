@@ -1,4 +1,4 @@
-import { DestroyRef, Directive, OnInit } from '@angular/core';
+import { DestroyRef, Directive, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -6,11 +6,11 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   selector: '[appKeepHrefLang]',
 })
 export class KeepHrefLangDirective implements OnInit {
-  constructor(
-    private readonly destroyRef: DestroyRef,
-    private readonly routerLink: RouterLink,
-    private readonly activatedRoute: ActivatedRoute,
-  ) {}
+  private readonly destroyRef = inject(DestroyRef);
+
+  private readonly routerLink = inject(RouterLink);
+
+  private readonly activatedRoute = inject(ActivatedRoute);
 
   ngOnInit() {
     this.activatedRoute.queryParamMap

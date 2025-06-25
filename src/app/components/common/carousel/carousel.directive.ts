@@ -1,12 +1,13 @@
 import {
-  ContentChildren,
+  computed,
+  contentChildren,
   Directive,
   ElementRef,
   HostListener,
-  Input,
+  inject,
+  input,
   numberAttribute,
   OnDestroy,
-  QueryList,
 } from '@angular/core';
 import { CarouselItemDirective } from './carousel-item/carousel-item.directive';
 import { AngularPlatform } from '../../../utils/platform.utils';
@@ -17,14 +18,23 @@ import { Platform } from '@ionic/angular/standalone';
   selector: '[appCarousel]',
   standalone: true,
   exportAs: 'carousel',
+  host: {
+    '(window:mouseup)': `stopSliding($event)`,
+    '(window:pointerup)': `stopSliding($event)`,
+    '(window:pointerleave)': `stopSliding($event)`,
+    '(window:pointercancel)': `stopSliding($event)`,
+  },
 })
 export class CarouselDirective implements OnDestroy {
-  @Input({ transform: numberAttribute }) gap = 0;
+  gap = input(0, {
+    transform: numberAttribute,
+  });
 
-  @Input({ transform: numberAttribute }) itemWidth = 0;
+  itemWidth = input(0, {
+    transform: numberAttribute,
+  });
 
-  @ContentChildren(CarouselItemDirective)
-  carouselItemDirectives?: QueryList<CarouselItemDirective>;
+  carouselItemDirectives = contentChildren(CarouselItemDirective);
 
   startX = 0;
 
@@ -38,14 +48,25 @@ export class CarouselDirective implements OnDestroy {
 
   slideIndex = 0;
 
+  width = computed(() => {
+    return this.itemWidth() > 0
+      ? this.itemWidth()
+      : this.elementRef.nativeElement.offsetWidth;
+  });
+
+  transform = computed(() => {
+    return `translate(${this.storedX + this.movedX - this.startX + this.slideIndex * -this.gap()}px)`;
+  });
+
   private resizeTimer: any;
 
   private animeInstance?: AnimeInstance;
 
-  constructor(
-    private readonly elementRef: ElementRef<HTMLDivElement>,
-    private readonly platform: Platform,
-  ) {
+  private readonly elementRef = inject(ElementRef<HTMLDivElement>);
+
+  private readonly platform = inject(Platform);
+
+  constructor() {
     this.startSliding = this.startSliding.bind(this);
     this.moveSlide = this.moveSlide.bind(this);
 
@@ -71,18 +92,8 @@ export class CarouselDirective implements OnDestroy {
     }
   }
 
-  get width(): number {
-    return this.itemWidth > 0
-      ? this.itemWidth
-      : this.elementRef.nativeElement.offsetWidth;
-  }
-
   get carouselItemsLength(): number {
-    return this.carouselItemDirectives?.length || 0;
-  }
-
-  get transform(): string {
-    return `translate(${this.storedX + this.movedX - this.startX + this.slideIndex * -this.gap}px)`;
+    return this.carouselItemDirectives()?.length || 0;
   }
 
   ngOnDestroy() {
@@ -151,16 +162,12 @@ export class CarouselDirective implements OnDestroy {
     clearTimeout(this.resizeTimer);
 
     this.resizeTimer = setTimeout(() => {
-      this.storedX = -this.slideIndex * this.width;
+      this.storedX = -this.slideIndex * this.width();
 
       this.updateCarouselTransform();
     }, 10);
   }
 
-  @HostListener('window:mouseup', ['$event'])
-  @HostListener('window:pointerup', ['$event'])
-  @HostListener('window:pointerleave', ['$event'])
-  @HostListener('window:pointercancel', ['$event'])
   stopSliding(event: Event): void {
     if (this.isSliding) {
       this.isSliding = false;
@@ -188,7 +195,8 @@ export class CarouselDirective implements OnDestroy {
         return;
       }
 
-      const canMove = Math.abs((this.movedX - this.startX) / this.width) > 0.2;
+      const canMove =
+        Math.abs((this.movedX - this.startX) / this.width()) > 0.2;
       const isLeft = this.movedX - this.startX > 0;
 
       this.movedX = 0;
@@ -198,20 +206,20 @@ export class CarouselDirective implements OnDestroy {
         this.animate(0);
       } else if (
         this.storedX + this.movedX <
-        this.width * -(this.carouselItemsLength - 1)
+        this.width() * -(this.carouselItemsLength - 1)
       ) {
-        this.animate(this.width * -(this.carouselItemsLength - 1));
+        this.animate(this.width() * -(this.carouselItemsLength - 1));
       } else {
-        const currentX = this.storedX / this.width;
+        const currentX = this.storedX / this.width();
 
         if (canMove) {
           if (isLeft) {
-            this.animate(this.width * Math.ceil(currentX));
+            this.animate(this.width() * Math.ceil(currentX));
           } else {
-            this.animate(this.width * Math.floor(currentX));
+            this.animate(this.width() * Math.floor(currentX));
           }
         } else {
-          this.animate(this.width * -this.slideIndex);
+          this.animate(this.width() * -this.slideIndex);
         }
       }
     }
@@ -236,7 +244,7 @@ export class CarouselDirective implements OnDestroy {
 
   updateSlideIndex(): void {
     const movedX = Math.min(
-      Math.max(this.storedX / this.width, -this.carouselItemsLength),
+      Math.max(this.storedX / this.width(), -this.carouselItemsLength),
       0,
     );
 
@@ -244,9 +252,9 @@ export class CarouselDirective implements OnDestroy {
   }
 
   updateCarouselTransform(): void {
-    this.carouselItemDirectives?.forEach(
+    this.carouselItemDirectives()?.forEach(
       (_carouselItemDirective) =>
-        (_carouselItemDirective.transform = this.transform),
+        (_carouselItemDirective.transform = this.transform()),
     );
   }
 }

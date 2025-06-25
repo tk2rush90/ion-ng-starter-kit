@@ -1,10 +1,10 @@
 import {
+  computed,
   Directive,
   ElementRef,
-  HostBinding,
-  HostListener,
   inject,
   OnDestroy,
+  signal,
 } from '@angular/core';
 import { AngularPlatform } from '../../../utils/platform.utils';
 
@@ -13,21 +13,36 @@ import { AngularPlatform } from '../../../utils/platform.utils';
  * When image it not loaded, it will be transparent.
  */
 @Directive({
-  selector: 'img[appImageLoader]',
+  selector: 'img[appImageHandler]',
   standalone: true,
   host: {
-    '[class.transition-opacity]': 'transition',
-    '[class.hidden]': 'imageError',
+    '(error)': `onImageError()`,
+    '(load)': `onImageLoad()`,
+    '[class]': `classes()`,
+    '[style]': `styles()`,
   },
-  exportAs: 'imageLoader',
+  exportAs: 'imageHandler',
 })
-export class ImageLoaderDirective implements OnDestroy {
+export class ImageHandlerDirective implements OnDestroy {
   /** Image successfully loaded status */
-  imageLoaded = false;
+  imageLoaded = signal(false);
 
-  imageError = false;
+  imageError = signal(false);
 
-  transition = false;
+  transition = signal(false);
+
+  styles = computed(() => {
+    return {
+      opacity: this.imageLoaded() ? 1 : 0,
+    };
+  });
+
+  classes = computed(() => {
+    return {
+      'transition-opacity': this.transition(),
+      hidden: this.imageError(),
+    };
+  });
 
   private mutationObserver?: MutationObserver;
 
@@ -38,9 +53,9 @@ export class ImageLoaderDirective implements OnDestroy {
       this.mutationObserver = new MutationObserver((records) => {
         records.forEach((_record) => {
           if (_record.attributeName?.toLowerCase() === 'src') {
-            this.imageLoaded = false;
-            this.imageError = false;
-            this.transition = false;
+            this.imageLoaded.set(false);
+            this.imageError.set(false);
+            this.transition.set(false);
           }
         });
       });
@@ -51,27 +66,18 @@ export class ImageLoaderDirective implements OnDestroy {
     }
   }
 
-  /** Bind `opacity` according to image loaded status */
-  @HostBinding('style.opacity')
-  get opacity(): number {
-    return this.imageLoaded ? 1 : 0;
-  }
-
   ngOnDestroy() {
     this.mutationObserver?.disconnect();
   }
 
-  /** Listen `load` event of `img` element. It marks `imageLoaded` as `true` */
-  @HostListener('load')
   onImageLoad(): void {
-    this.transition = true;
-    this.imageLoaded = true;
-    this.imageError = false;
+    this.transition.set(true);
+    this.imageLoaded.set(true);
+    this.imageError.set(false);
   }
 
-  @HostListener('error')
   onImageError(): void {
-    this.imageError = true;
-    this.imageLoaded = false;
+    this.imageError.set(true);
+    this.imageLoaded.set(false);
   }
 }

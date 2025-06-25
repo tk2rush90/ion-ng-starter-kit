@@ -1,0 +1,101 @@
+@mixin theme-styles($style, $weight) {
+  @each $color
+    in (
+      "slate",
+      "gray",
+      "zinc",
+      "neutral",
+      "stone",
+      "red",
+      "orange",
+      "amber",
+      "yellow",
+      "lime",
+      "green",
+      "emerald",
+      "teal",
+      "cyan",
+      "sky",
+      "blue",
+      "indigo",
+      "violet",
+      "purple",
+      "fuchsia",
+      "pink",
+      "rose"
+    )
+  {
+    // 각 색상에 대해 data-theme 속성 선택자 규칙을 생성합니다.
+    &[data-theme="#{$color}"] {
+      @apply #{$style}-#{$color}-#{$weight};
+    }
+  }
+}
+
+@mixin hover-theme-styles($style, $weight) {
+  @each $color
+    in (
+      "slate",
+      "gray",
+      "zinc",
+      "neutral",
+      "stone",
+      "red",
+      "orange",
+      "amber",
+      "yellow",
+      "lime",
+      "green",
+      "emerald",
+      "teal",
+      "cyan",
+      "sky",
+      "blue",
+      "indigo",
+      "violet",
+      "purple",
+      "fuchsia",
+      "pink",
+      "rose"
+    )
+  {
+    // 각 색상에 대해 data-theme 속성 선택자 규칙을 생성합니다.
+    &[data-theme="#{$color}"] {
+      @apply hover:#{$style}-#{$color}-#{$weight};
+    }
+  }
+}
+
+@mixin active-theme-styles($style, $weight) {
+  @each $color
+    in (
+      "slate",
+      "gray",
+      "zinc",
+      "neutral",
+      "stone",
+      "red",
+      "orange",
+      "amber",
+      "yellow",
+      "lime",
+      "green",
+      "emerald",
+      "teal",
+      "cyan",
+      "sky",
+      "blue",
+      "indigo",
+      "violet",
+      "purple",
+      "fuchsia",
+      "pink",
+      "rose"
+    )
+  {
+    // 각 색상에 대해 data-theme 속성 선택자 규칙을 생성합니다.
+    &[data-theme="#{$color}"] {
+      @apply active:#{$style}-#{$color}-#{$weight};
+    }
+  }
+}

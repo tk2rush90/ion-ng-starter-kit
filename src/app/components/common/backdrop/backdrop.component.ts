@@ -10,8 +10,7 @@ import { Component } from '@angular/core';
   templateUrl: './backdrop.component.html',
   styleUrl: './backdrop.component.scss',
   host: {
-    class:
-      'fixed top-0 left-0 right-0 bottom-0 block pointer-events-auto overlay-close-detector',
+    class: 'overlay-close-detector',
   },
 })
 export class BackdropComponent {}

@@ -1,4 +1,10 @@
-import { AfterViewInit, Directive, ElementRef, OnDestroy } from '@angular/core';
+import {
+  AfterViewInit,
+  Directive,
+  ElementRef,
+  inject,
+  OnDestroy,
+} from '@angular/core';
 import { AngularPlatform } from '../../../utils/platform.utils';
 
 @Directive({
@@ -8,7 +14,7 @@ import { AngularPlatform } from '../../../utils/platform.utils';
 export class AutoFocusDirective implements AfterViewInit, OnDestroy {
   private focusTimeout: any;
 
-  constructor(private readonly elementRef: ElementRef<HTMLElement>) {}
+  private readonly elementRef = inject(ElementRef<HTMLElement>);
 
   ngAfterViewInit() {
     if (AngularPlatform.isBrowser) {

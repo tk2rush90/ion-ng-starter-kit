@@ -1,10 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  HostListener,
-  inject,
-  Output,
-} from '@angular/core';
+import { Component, HostListener, inject, output } from '@angular/core';
 import { IconGoogleLogoComponent } from '../../icons/icon-google-logo/icon-google-logo.component';
 import { OAUTH_PREVIOUS_URL_KEY } from '../../../constants/storage-keys';
 import { Location } from '@angular/common';
@@ -16,8 +10,8 @@ import { StartByGoogleIdTokenService } from '../../../services/app/start-by-goog
 import { StartByGoogleAccessTokenService } from '../../../services/app/start-by-google-access-token/start-by-google-access-token.service';
 import { SignedMemberService } from '../../../services/app/signed-member/signed-member.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ToastService } from '../../../services/app/toast/toast.service';
 import { AngularPlatform } from '../../../utils/platform.utils';
+import { FlatButtonDirective } from '../flat-button/flat-button.directive';
 import TokenResponse = google.accounts.oauth2.TokenResponse;
 
 @Component({
@@ -26,14 +20,21 @@ import TokenResponse = google.accounts.oauth2.TokenResponse;
   templateUrl: './google-oauth-button.component.html',
   styleUrl: './google-oauth-button.component.scss',
   host: {
-    class: 'flat-button primary',
     type: 'button',
     role: 'button',
   },
   providers: [StartByGoogleIdTokenService, StartByGoogleAccessTokenService],
+  hostDirectives: [
+    {
+      directive: FlatButtonDirective,
+      inputs: ['theme', 'size', 'mode'],
+    },
+  ],
 })
 export class GoogleOauthButtonComponent {
-  @Output() loginSuccess = new EventEmitter<void>();
+  loginSuccess = output();
+
+  loginError = output<string>();
 
   private readonly location = inject(Location);
 
@@ -51,7 +52,7 @@ export class GoogleOauthButtonComponent {
 
   private readonly signedMemberService = inject(SignedMemberService);
 
-  private readonly toastService = inject(ToastService);
+  private readonly flatButtonDirective = inject(FlatButtonDirective);
 
   constructor() {
     this.startByGoogleIdTokenService.created
@@ -70,19 +71,15 @@ export class GoogleOauthButtonComponent {
 
     this.startByGoogleIdTokenService.createFailed
       .pipe(takeUntilDestroyed())
-      .subscribe((err) => {
-        this.toastService.open({
-          message: err.error[AngularPlatform.locale],
-        });
-      });
+      .subscribe((err) =>
+        this.loginError.emit(err.error[AngularPlatform.locale]),
+      );
 
     this.startByGoogleAccessTokenService.createFailed
       .pipe(takeUntilDestroyed())
-      .subscribe((err) => {
-        this.toastService.open({
-          message: err.error[AngularPlatform.locale],
-        });
-      });
+      .subscribe((err) =>
+        this.loginError.emit(err.error[AngularPlatform.locale]),
+      );
   }
 
   @HostListener('click')

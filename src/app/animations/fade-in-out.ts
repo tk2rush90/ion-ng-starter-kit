@@ -7,12 +7,15 @@ import {
   trigger,
 } from '@angular/animations';
 
-/**
- * Create animation trigger for fadeInOut.
- * @param name - Trigger name to use.
- * @return Animation trigger for fadeInOut.
- */
-export function fadeInOut(name: string): AnimationTriggerMetadata {
+export function fadeInOut({
+  name = 'fadeInOut',
+  fadeIn = '.15s',
+  fadeOut = '.15s',
+}: {
+  name?: string;
+  fadeIn?: string;
+  fadeOut?: string;
+} = {}): AnimationTriggerMetadata {
   return trigger(name, [
     state(
       'void',
@@ -23,12 +26,12 @@ export function fadeInOut(name: string): AnimationTriggerMetadata {
     transition(
       'void => *',
       animate(
-        '.15s',
+        fadeIn,
         style({
           opacity: 1,
         }),
       ),
     ),
-    transition('* => void', animate('.15s')),
+    transition('* => void', animate(fadeOut)),
   ]);
 }

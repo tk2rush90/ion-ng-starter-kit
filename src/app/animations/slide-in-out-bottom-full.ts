@@ -1,26 +1,21 @@
 import {
   animate,
-  AnimationTriggerMetadata,
   state,
   style,
   transition,
   trigger,
 } from '@angular/animations';
 
-export function slideInOutBottom({
-  name = 'slideInOutBottom',
+export const slideInOutBottomFull = ({
+  name = 'slideInOutBottomFull',
   slideIn = '.15s ease-out',
   slideOut = '.15s ease-out',
-}: {
-  name?: string;
-  slideIn?: string;
-  slideOut?: string;
-} = {}): AnimationTriggerMetadata {
+}: { name?: string; slideIn?: string; slideOut?: string } = {}) => {
   return trigger(name, [
     state(
       'void',
       style({
-        transform: 'translateY(10%)',
+        transform: 'translateY(100%)',
       }),
     ),
     transition(
@@ -34,4 +29,4 @@ export function slideInOutBottom({
     ),
     transition('* => void', animate(slideOut)),
   ]);
-}
+};

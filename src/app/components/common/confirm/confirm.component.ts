@@ -7,16 +7,33 @@ import {
 } from '@angular/core';
 import { OVERLAY_REF } from '../../../tokens/overlay-ref';
 import { AutoFocusDirective } from '../auto-focus/auto-focus.directive';
-import { SheetActionsComponent } from '../../app/sheet-actions/sheet-actions.component';
+import { SheetActionsComponent } from '../sheet-actions/sheet-actions.component';
+import { VariableColors } from '../../../utils/tailwind.utils';
+import { FlatButtonDirective } from '../flat-button/flat-button.directive';
+import { FlatButtonMode } from '../../../types/flat-button-mode';
 
 @Component({
   selector: 'app-confirm',
-  imports: [AutoFocusDirective, SheetActionsComponent],
+  imports: [
+    AutoFocusDirective,
+    SheetActionsComponent,
+    SheetActionsComponent,
+    FlatButtonDirective,
+  ],
   templateUrl: './confirm.component.html',
   styleUrl: './confirm.component.scss',
+  host: {
+    class: 'flex flex-col items-stretch',
+  },
 })
 export class ConfirmComponent {
-  theme = input('primary');
+  confirmTheme = input<VariableColors>('blue');
+
+  cancelTheme = input<VariableColors>('red');
+
+  confirmMode = input<FlatButtonMode>('default');
+
+  cancelMode = input<FlatButtonMode>('default');
 
   overrideCancelLabel = input('');
 

@@ -1,25 +1,21 @@
 import { ControlValueAccessor, NgControl } from '@angular/forms';
-import { ElementRef, inject, Renderer2 } from '@angular/core';
+import { ElementRef, inject, Renderer2, signal } from '@angular/core';
 
 /** Abstract class of implementation of `ControlValueAccessor` */
 export abstract class AppControlValueAccessor implements ControlValueAccessor {
   /** Disabled status */
-  isDisabled = false;
+  isDisabled = signal(false);
 
   /** `NgControl` to use from internally */
-  private readonly internalNgControl: NgControl | null;
+  private readonly internalNgControl = inject(NgControl, { optional: true });
 
   /** `Renderer2` to use from internally */
-  private readonly internalRenderer: Renderer2;
+  private readonly internalRenderer = inject(Renderer2);
 
   /** `ElementRef` of host element to use from internally */
-  private readonly internalElementRef: ElementRef<HTMLElement>;
+  private readonly internalElementRef = inject(ElementRef<HTMLElement>);
 
   protected constructor() {
-    this.internalNgControl = inject(NgControl, { optional: true });
-    this.internalRenderer = inject(Renderer2);
-    this.internalElementRef = inject(ElementRef);
-
     if (this.internalNgControl) {
       this.internalNgControl.valueAccessor = this;
     }
@@ -49,7 +45,7 @@ export abstract class AppControlValueAccessor implements ControlValueAccessor {
    * The `disabled` attribute may be accessible only with `[disabled]` selector from the CSS instead of `:disabled`.
    */
   setDisabledState(isDisabled: boolean): void {
-    this.isDisabled = isDisabled;
+    this.isDisabled.set(isDisabled);
 
     if (isDisabled) {
       this.setAttribute('disabled');

@@ -2,9 +2,9 @@ import {
   AfterViewInit,
   Directive,
   ElementRef,
-  EventEmitter,
+  inject,
   OnDestroy,
-  Output,
+  output,
 } from '@angular/core';
 import { AngularPlatform } from '../../../utils/platform.utils';
 
@@ -15,22 +15,24 @@ import { AngularPlatform } from '../../../utils/platform.utils';
 })
 export class IntersectionDetectorDirective implements AfterViewInit, OnDestroy {
   /** Emits when host element is intersecting */
-  @Output() intersect = new EventEmitter<void>();
+  intersect = output();
 
   /** Emits when host element is not intersecting */
-  @Output() out = new EventEmitter<void>();
+  out = output();
 
   /** `IntersectionObserver` to intersecting status */
   private intersectionObserver?: IntersectionObserver;
 
-  constructor(private readonly elementRef: ElementRef) {}
+  private readonly elementRef: ElementRef<HTMLElement> = inject(
+    ElementRef<HTMLElement>,
+  );
 
   ngAfterViewInit() {
     if (AngularPlatform.isBrowser) {
       // Create `IntersectionObserver`
       this.intersectionObserver = new IntersectionObserver((records) => {
-        records.forEach((_record) => {
-          if (_record.isIntersecting) {
+        records.forEach((record) => {
+          if (record.isIntersecting) {
             this.intersect.emit();
           } else {
             this.out.emit();

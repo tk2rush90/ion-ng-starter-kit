@@ -7,12 +7,15 @@ import {
   trigger,
 } from '@angular/animations';
 
-/**
- * Create animation trigger for scaleUpDown.
- * @param name - Trigger name to use.
- * @return Animation trigger for scaleUpDown.
- */
-export function scaleUpDown(name: string): AnimationTriggerMetadata {
+export function scaleUpDown({
+  name = 'scaleUpDown',
+  scaleUp = '.1s cubic-bezier(0.58, 0.27, 0.38, 1.48)',
+  scaleDown = '.15s',
+}: {
+  name?: string;
+  scaleUp?: string;
+  scaleDown?: string;
+} = {}): AnimationTriggerMetadata {
   return trigger(name, [
     state(
       'void',
@@ -23,12 +26,12 @@ export function scaleUpDown(name: string): AnimationTriggerMetadata {
     transition(
       'void => *',
       animate(
-        '.1s cubic-bezier(0.58, 0.27, 0.38, 1.48)',
+        scaleUp,
         style({
           transform: 'scale(1)',
         }),
       ),
     ),
-    transition('* => void', animate('.15s')),
+    transition('* => void', animate(scaleDown)),
   ]);
 }

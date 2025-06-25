@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
   templateUrl: './field-error.component.html',
   styleUrl: './field-error.component.scss',
   host: {
-    class: 'block text-sm text-error-500',
+    class: 'block text-sm text-red-500',
   },
 })
 export class FieldErrorComponent {}

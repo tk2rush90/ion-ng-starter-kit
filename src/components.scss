@@ -1,0 +1,11 @@
+[appIconButton] {
+  i-lucide svg {
+    @apply size-5;
+  }
+}
+
+[appAutoResizer] {
+  &::-webkit-scrollbar {
+    @apply hidden;
+  }
+}

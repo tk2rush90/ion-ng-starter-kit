@@ -17,12 +17,12 @@ import { IconFormatListBulletedComponent } from '../../icons/icon-format-list-bu
 import { IconFormatListNumberedComponent } from '../../icons/icon-format-list-numbered/icon-format-list-numbered.component';
 import { IconFormatQuoteComponent } from '../../icons/icon-format-quote/icon-format-quote.component';
 import { MarkdownEditorViewType } from '../../../types/markdown-editor-view-type';
-import { TextareaResizerDirective } from '../textarea-resizer/textarea-resizer.directive';
+import { AutoResizerDirective } from '../auto-resizer/auto-resizer.directive';
 import { MarkdownService } from '../../../services/app/markdown/markdown.service';
 import { SafeHtml } from '@angular/platform-browser';
 import { NgTemplateOutlet } from '@angular/common';
 import { IconPhotoComponent } from '../../icons/icon-photo/icon-photo.component';
-import { FileUploaderDirective } from '../file-uploader/file-uploader.directive';
+import { FileHandlerDirective } from '../file-handler/file-handler.directive';
 import { Logger } from '../../../utils/logger.utils';
 import { SelectionChangeDetectorDirective } from '../selection-change-detector/selection-change-detector.directive';
 import { IconLinkComponent } from '../../icons/icon-link/icon-link.component';
@@ -61,10 +61,10 @@ export interface MarkdownEditorAttachment {
     IconFormatListBulletedComponent,
     IconFormatListNumberedComponent,
     IconFormatQuoteComponent,
-    TextareaResizerDirective,
+    AutoResizerDirective,
     NgTemplateOutlet,
     IconPhotoComponent,
-    FileUploaderDirective,
+    FileHandlerDirective,
     SelectionChangeDetectorDirective,
     IconLinkComponent,
     IconFormatBoldComponent,

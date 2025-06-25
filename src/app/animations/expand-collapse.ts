@@ -7,12 +7,15 @@ import {
   trigger,
 } from '@angular/animations';
 
-/**
- * Create animation trigger for expandCollapse.
- * @param name - Trigger name to use.
- * @return Animation trigger for expandCollapse.
- */
-export function expandCollapse(name: string): AnimationTriggerMetadata {
+export function expandCollapse({
+  name = 'expandCollapse',
+  expand = '.15s',
+  collapse = '.15s',
+}: {
+  name?: string;
+  expand?: string;
+  collapse?: string;
+} = {}): AnimationTriggerMetadata {
   return trigger(name, [
     state(
       'void',
@@ -23,12 +26,12 @@ export function expandCollapse(name: string): AnimationTriggerMetadata {
     transition(
       'void => *',
       animate(
-        '.15s',
+        expand,
         style({
           height: '*',
         }),
       ),
     ),
-    transition('* => void', animate('.15s')),
+    transition('* => void', animate(collapse)),
   ]);
 }

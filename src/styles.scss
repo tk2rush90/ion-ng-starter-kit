@@ -1,3 +1,5 @@
+@use "mixins" as mixins;
+
 /*
  * App Global CSS
  * ----------------------------------------------------------------------------
@@ -25,6 +27,10 @@
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /**
  * Ionic Dark Mode
  * -----------------------------------------------------
@@ -38,4 +44,8 @@
 
 .ProseMirror-selectednode {
   @apply outline outline-2 outline-primary-500;
+}
+
+* {
+  outline: 0;
 }

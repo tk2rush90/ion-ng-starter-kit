@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostListener } from '@angular/core';
+import { Directive, ElementRef, inject } from '@angular/core';
 import { AppControlValueAccessor } from '../../../abstracts/app-control-value-accessor';
 import { Logger } from '../../../utils/logger.utils';
 
@@ -6,6 +6,11 @@ import { Logger } from '../../../utils/logger.utils';
 @Directive({
   selector: 'input[appImeInput], textarea[appImeInput]',
   standalone: true,
+  host: {
+    '(keydown)': `updateValueImmediately($event)`,
+    '(keyup)': `updateValueImmediately($event)`,
+    '(input)': `updateValueWithDelay($event)`,
+  },
 })
 export class ImeInputDirective extends AppControlValueAccessor {
   /** Previous value */
@@ -14,13 +19,9 @@ export class ImeInputDirective extends AppControlValueAccessor {
   /** Logger */
   private readonly logger = new Logger('ImeInputDirective');
 
-  constructor(
-    private readonly elementRef: ElementRef<
-      HTMLInputElement | HTMLTextAreaElement
-    >,
-  ) {
-    super();
-  }
+  private readonly elementRef: ElementRef<
+    HTMLInputElement | HTMLTextAreaElement
+  > = inject(ElementRef<HTMLInputElement | HTMLTextAreaElement>);
 
   /** This method does nothing */
   override writeValue(obj: any) {
@@ -29,8 +30,6 @@ export class ImeInputDirective extends AppControlValueAccessor {
   }
 
   /** Update value immediately after keydown or keyup */
-  @HostListener('keydown', ['$event'])
-  @HostListener('keyup', ['$event'])
   updateValueImmediately(event: Event): void {
     this.updateValue(
       (event.target as HTMLInputElement | HTMLTextAreaElement).value,
@@ -42,7 +41,6 @@ export class ImeInputDirective extends AppControlValueAccessor {
    * input event twice. To prevent updating value twice, it should be updated with delay when
    * input event triggered.
    */
-  @HostListener('input', ['$event'])
   updateValueWithDelay(event: Event): void {
     setTimeout(() => {
       const currentValue = (

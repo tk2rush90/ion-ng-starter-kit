@@ -1,48 +1,5 @@
 app-form-field {
-  @apply flex flex-col items-stretch gap-1.5 rounded-2xl bg-primary-500/10 p-4 transition-colors;
-
-  &:has(input:focus),
-  &:has(select:focus),
-  &:has(textarea:focus) {
-    @apply bg-primary-500/30;
-  }
-
-  .control-container:has(app-date-input) {
-    app-date-input {
-      @apply w-full;
-    }
-  }
-
-  // input 설정
-  .control-container:not(:has(app-date-input)):has(input) {
-    @apply gap-4;
-
-    input {
-      @apply h-full w-0 shrink grow;
-    }
-
-    .input-close {
-      @apply block;
-    }
-  }
-
-  // select 설정
-  .control-container:has(select) {
-    @apply gap-4;
-
-    select {
-      @apply h-full w-0 shrink grow appearance-none;
-    }
-
-    .select-button {
-      @apply block;
-    }
-  }
-
-  // textarea 설정
-  .control-container:has(textarea) {
-    textarea {
-      @apply w-0 shrink grow;
-    }
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    @apply hidden;
   }
 }

@@ -1,23 +1,33 @@
-import { Directive, HostBinding } from '@angular/core';
+import { Directive, inject } from '@angular/core';
 import { CarouselDirective } from '../carousel.directive';
 
 @Directive({
   selector: '[appCarouselItem]',
   standalone: true,
+  host: {
+    '[class]': `classes`,
+    '[style]': `styles`,
+  },
 })
 export class CarouselItemDirective {
-  @HostBinding('style.transform') transform = 'translateX(0)';
+  transform = 'translateX(0)';
 
-  constructor(private readonly carousel: CarouselDirective) {}
+  private readonly carousel = inject(CarouselDirective);
 
-  @HostBinding('class') get classObjects(): object {
+  get classes(): any {
+    const classes: any = {};
+
     if (this.carousel.isSlided && this.carousel.isSliding) {
-      return {
-        'pointer-events-none': true,
-        'select-none': true,
-      };
-    } else {
-      return {};
+      classes['pointer-events-none'] = true;
+      classes['select-none'] = true;
     }
+
+    return classes;
+  }
+
+  get styles(): any {
+    return {
+      transform: this.transform,
+    };
   }
 }

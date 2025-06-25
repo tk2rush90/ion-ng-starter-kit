@@ -1,84 +1,145 @@
 import {
   booleanAttribute,
   Component,
-  EventEmitter,
-  HostListener,
-  Input,
-  Output,
-  ViewEncapsulation,
+  computed,
+  effect,
+  inject,
+  input,
+  output,
 } from '@angular/core';
 import { AppControlValueAccessor } from '../../../abstracts/app-control-value-accessor';
 import { CheckboxService } from '../../../services/app/checkbox/checkbox.service';
-import { IconCheckComponent } from '../../icons/icon-check/icon-check.component';
+import { CheckIcon, LucideAngularModule } from 'lucide-angular';
+import { NgClass } from '@angular/common';
+import { VariableColors } from '../../../utils/tailwind.utils';
+import { fadeInOut } from '../../../animations/fade-in-out';
 
 /** A component of checkbox with label and button */
 @Component({
   selector: 'app-checkbox',
-  imports: [IconCheckComponent],
+  imports: [LucideAngularModule, NgClass],
   templateUrl: './checkbox.component.html',
   styleUrl: './checkbox.component.scss',
   host: {
+    '(click)': `onHostClick()`,
+    '(focus)': `onHostFocus()`,
+    '(blur)': `onHostBlur()`,
+    '(keydown.space)': `onHostSpaceKeydown($event)`,
+    '[attr.aria-checked]': 'isChecked()',
+    '[attr.data-theme]': `theme()`,
+    '[class]': `classes()`,
+    class:
+      'flex cursor-pointer select-none items-center justify-between gap-2 rounded-full px-3 py-2 transition-colors',
     tabindex: '0',
-    class: 'cursor-pointer select-none',
     role: 'checkbox',
-    ['[attr.aria-checked]']: 'checked',
-    ['[class.headwind-checked]']: 'checked',
   },
   providers: [CheckboxService],
-  encapsulation: ViewEncapsulation.None,
+  animations: [
+    fadeInOut({
+      fadeIn: '.1s',
+      fadeOut: '.1s',
+    }),
+  ],
 })
 export class CheckboxComponent extends AppControlValueAccessor {
+  theme = input<VariableColors>('blue');
+
+  /** 초기 disabled 상태 설정 */
+  disabled = input(false, {
+    transform: booleanAttribute,
+  });
+
+  /** 초기 체크 상태 설정 */
+  checked = input(false, {
+    transform: booleanAttribute,
+  });
+
   /** Emits when `checked` status has changed */
-  @Output() checkedChange = new EventEmitter<boolean>();
+  checkedChange = output<boolean>();
 
-  constructor(private readonly checkboxService: CheckboxService) {
+  /** 실제 체크 상태 */
+  isChecked = computed(() => this.checkboxService.checked());
+
+  /** 호스트 클래스 생성 이펙트 */
+  classes = computed(() => {
+    const classes: any = {};
+
+    const theme = this.theme();
+
+    const disabled = this.checkboxService.disabled();
+
+    if (disabled) {
+      classes['hover:bg-black/5'] = true;
+    } else {
+      classes[`hover:bg-${theme}-500/5`] = true;
+      classes[`active:bg-${theme}-500/10`] = true;
+    }
+
+    return classes;
+  });
+
+  /** 체크박스 버튼 클래스 */
+  buttonClasses = computed(() => {
+    const classes: any = {};
+
+    const theme = this.theme();
+
+    const disabled = this.checkboxService.disabled();
+
+    const focused = this.checkboxService.focused();
+
+    if (disabled) {
+      classes['bg-black/15'] = true;
+      classes['text-black/30'] = true;
+
+      if (focused) {
+        classes[`border-black/15`] = true;
+      } else {
+        classes['border-transparent'] = true;
+      }
+    } else {
+      classes[`bg-${theme}-100`] = true;
+      classes[`text-${theme}-500`] = true;
+
+      if (focused) {
+        classes[`border-${theme}-500`] = true;
+      } else {
+        classes['border-transparent'] = true;
+      }
+    }
+
+    return classes;
+  });
+
+  private readonly checkboxService = inject(CheckboxService);
+
+  constructor() {
     super();
-  }
 
-  /** Get disabled status */
-  get disabled(): boolean {
-    return this.isDisabled;
-  }
-
-  /** Set disabled status */
-  @Input({ transform: booleanAttribute })
-  set disabled(value: boolean) {
-    this.setDisabledState(value);
-  }
-
-  /** Get checked status */
-  get checked(): boolean {
-    return this.checkboxService.checked;
-  }
-
-  /** Set checked status */
-  @Input({ transform: booleanAttribute })
-  set checked(value: boolean) {
-    this.checkboxService.checked = value;
+    effect(() => {
+      this.setDisabledState(this.disabled());
+      this.checkboxService.checked.set(this.checked());
+    });
   }
 
   /** Listen click event to toggle checked status */
-  @HostListener('click')
   onHostClick(): void {
     this.toggle();
   }
 
   /** Listen focus event to set `focused` status of service */
-  @HostListener('focus')
   onHostFocus(): void {
-    this.checkboxService.focused = true;
+    this.checkboxService.focused.set(true);
   }
 
   /** Listen blur event to mark as touched */
-  @HostListener('blur')
   onHostBlur(): void {
     this.onTouched();
 
-    this.checkboxService.focused = false;
+    this.checkboxService.focused.set(false);
   }
 
   /** Listen space keydown for accessibility */
-  @HostListener('keydown.space', ['$event'])
   onHostSpaceKeydown(event: Event): void {
     event.stopPropagation();
     event.preventDefault();
@@ -88,7 +149,7 @@ export class CheckboxComponent extends AppControlValueAccessor {
 
   /** Write value to component */
   override writeValue(obj: any) {
-    this.checked = obj;
+    this.checkboxService.checked.set(obj);
   }
 
   /** Update `NgControl` and component values. Also, emits `valueChange` */
@@ -102,12 +163,12 @@ export class CheckboxComponent extends AppControlValueAccessor {
     super.setDisabledState(isDisabled);
 
     // Apply to service.
-    this.checkboxService.disabled = isDisabled;
+    this.checkboxService.disabled.set(isDisabled);
   }
 
   /** Check the checkbox */
   check(): void {
-    if (this.disabled) {
+    if (this.disabled()) {
       return;
     }
 
@@ -116,7 +177,7 @@ export class CheckboxComponent extends AppControlValueAccessor {
 
   /** Uncheck the checkbox */
   uncheck(): void {
-    if (this.disabled) {
+    if (this.disabled()) {
       return;
     }
 
@@ -125,10 +186,12 @@ export class CheckboxComponent extends AppControlValueAccessor {
 
   /** Toggle checked status */
   toggle(): void {
-    if (this.checked) {
+    if (this.isChecked()) {
       this.uncheck();
     } else {
       this.check();
     }
   }
+
+  protected readonly CheckIcon = CheckIcon;
 }

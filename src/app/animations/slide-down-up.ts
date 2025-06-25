@@ -7,12 +7,15 @@ import {
   trigger,
 } from '@angular/animations';
 
-/**
- * Create animation trigger for slideDownUp.
- * @param name - Trigger name to use.
- * @return Animation trigger for slideDownUp.
- */
-export function slideDownUp(name: string): AnimationTriggerMetadata {
+export function slideDownUp({
+  name = 'slideDownUp',
+  slideDown = '.15s',
+  slideUp = '.15s',
+}: {
+  name?: string;
+  slideDown?: string;
+  slideUp?: string;
+} = {}): AnimationTriggerMetadata {
   return trigger(name, [
     state(
       'void',
@@ -23,12 +26,12 @@ export function slideDownUp(name: string): AnimationTriggerMetadata {
     transition(
       'void => *',
       animate(
-        '.15s',
+        slideDown,
         style({
           transform: 'translateY(0)',
         }),
       ),
     ),
-    transition('* => void', animate('.15s')),
+    transition('* => void', animate(slideUp)),
   ]);
 }

@@ -1,5 +1,22 @@
 import colors from "tailwindcss/colors";
 
+const spacingToRem = (value) => {
+  return value * 0.25;
+};
+
+const spacings = () => {
+  const step = 0.5;
+  const max = step * 400;
+
+  const spacings = {};
+
+  for (let i = 0.5; i < max; i += step) {
+    spacings[i] = spacingToRem(i) + "rem";
+  }
+
+  return spacings;
+};
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./src/**/*.{html,ts}"],
@@ -20,6 +37,12 @@ module.exports = {
           "monospace",
         ],
       },
+      brightness: {
+        80: 0.8,
+        110: 1.1,
+        120: 1.2,
+      },
+      spacing: spacings(),
       screens: {
         xs: "375px",
         sm: "425px",
@@ -58,5 +81,21 @@ module.exports = {
   plugins: [
     require("@tailwindcss/typography"),
     require("@tailwindcss/container-queries"),
+  ],
+  safelist: [
+    {
+      pattern:
+        /bg-(slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(((300|400|500)(\/(5|10|20|30))?)|100)/,
+      variants: ["hover", "active", "focus"],
+    },
+    {
+      pattern:
+        /border-(slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(300|500|900)(\/(30))?/,
+      variants: ["hover", "focus", "has-[:focus]"],
+    },
+    {
+      pattern:
+        /text-(slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-500/,
+    },
   ],
 };

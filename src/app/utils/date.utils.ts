@@ -63,3 +63,32 @@ export const isDatePassed = (date: Date, targetDate: Date): boolean => {
 
   return date > targetDate;
 };
+
+export const isDateInRange = (
+  date: Date,
+  minDate: Date | string | undefined,
+  maxDate: Date | string | undefined,
+) => {
+  let minDateValid = true;
+  let maxDateValid = true;
+
+  if (minDate) {
+    minDate = new Date(minDate);
+
+    minDate.setHours(0, 0, 0, 0);
+    date.setHours(0, 0, 0, 0);
+
+    minDateValid = date.getTime() >= minDate.getTime();
+  }
+
+  if (maxDate) {
+    maxDate = new Date(maxDate);
+
+    maxDate.setHours(0, 0, 0, 0);
+    date.setHours(0, 0, 0, 0);
+
+    maxDateValid = date.getTime() <= maxDate.getTime();
+  }
+
+  return minDateValid && maxDateValid;
+};

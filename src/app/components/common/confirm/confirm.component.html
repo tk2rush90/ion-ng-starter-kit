@@ -1,4 +1,4 @@
-<div class="break-keep px-6 pb-6">
+<div class="break-keep px-4 pb-4">
   <ng-content></ng-content>
 </div>
 
@@ -6,8 +6,10 @@
   @if (displayCancelButton()) {
     <button
       (click)="clickCancel.emit(); close()"
+      [theme]="cancelTheme()"
+      [mode]="cancelMode()"
       type="button"
-      class="stroke-button"
+      appFlatButton
     >
       {{ overrideCancelLabel() || "취소" }}
     </button>
@@ -15,8 +17,10 @@
 
   <button
     (click)="clickConfirm.emit(); close()"
+    [theme]="confirmTheme()"
+    [mode]="confirmMode()"
     type="button"
-    class="flat-button {{ theme() }}"
+    appFlatButton
     appAutoFocus
   >
     {{ overrideConfirmLabel() || "확인" }}

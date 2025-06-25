@@ -7,12 +7,15 @@ import {
   trigger,
 } from '@angular/animations';
 
-/**
- * Create animation trigger that slide in from right and out to right.
- * @param name - Animation name to use.
- * @return AnimationTriggerMetadata for slideInOutRight.
- */
-export function slideInOutRight(name: string): AnimationTriggerMetadata {
+export function slideInOutRight({
+  name = 'slideInOutRight',
+  slideIn = '.15s ease-out',
+  slideOut = '.15s ease-out',
+}: {
+  name?: string;
+  slideIn?: string;
+  slideOut?: string;
+} = {}): AnimationTriggerMetadata {
   return trigger(name, [
     state(
       'void',
@@ -23,12 +26,12 @@ export function slideInOutRight(name: string): AnimationTriggerMetadata {
     transition(
       'void => *',
       animate(
-        '.15s ease-out',
+        slideIn,
         style({
           transform: 'translateX(0)',
         }),
       ),
     ),
-    transition('* => void', animate('.15s ease-out')),
+    transition('* => void', animate(slideOut)),
   ]);
 }
