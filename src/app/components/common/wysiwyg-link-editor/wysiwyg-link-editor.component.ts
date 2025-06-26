@@ -1,11 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Inject,
-  Input,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { Component, inject, input, OnInit, output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { FormFieldComponent } from '../form-field/form-field.component';
 import { FieldErrorComponent } from '../form-field/field-error/field-error.component';
@@ -13,8 +6,9 @@ import { advancedRequired } from '../../../utils/validator.utils';
 import { AutoFocusDirective } from '../auto-focus/auto-focus.directive';
 import { ImeInputDirective } from '../ime-input/ime-input.directive';
 import { OVERLAY_REF } from '../../../tokens/overlay-ref';
-import { OverlayRef } from '../../../services/app/overlay/overlay.service';
-import { SheetActionsComponent } from '../../app/sheet-actions/sheet-actions.component';
+import { OverlayActionsComponent } from '../overlay-actions/overlay-actions.component';
+import { FlatButtonDirective } from '../flat-button/flat-button.directive';
+import { VariableColors } from '../../../utils/tailwind.utils';
 
 @Component({
   selector: 'app-wysiwyg-link-editor',
@@ -24,15 +18,21 @@ import { SheetActionsComponent } from '../../app/sheet-actions/sheet-actions.com
     FieldErrorComponent,
     AutoFocusDirective,
     ImeInputDirective,
-    SheetActionsComponent,
+    OverlayActionsComponent,
+    FlatButtonDirective,
   ],
   templateUrl: './wysiwyg-link-editor.component.html',
   styleUrl: './wysiwyg-link-editor.component.scss',
+  host: {
+    class: 'flex flex-col items-stretch',
+  },
 })
 export class WysiwygLinkEditorComponent implements OnInit {
-  @Input() url = '';
+  theme = input<VariableColors>('blue');
 
-  @Output() saved = new EventEmitter<string>();
+  url = input('');
+
+  saved = output<string>();
 
   formGroup = new FormGroup({
     url: new FormControl('', {
@@ -41,12 +41,12 @@ export class WysiwygLinkEditorComponent implements OnInit {
     }),
   });
 
-  constructor(@Inject(OVERLAY_REF) private readonly overlayRef: OverlayRef) {}
+  private readonly overlayRef = inject(OVERLAY_REF);
 
   ngOnInit() {
-    if (this.url) {
+    if (this.url()) {
       this.formGroup.patchValue({
-        url: this.url,
+        url: this.url(),
       });
     }
   }

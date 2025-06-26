@@ -29,7 +29,7 @@ import { fadeInOut } from '../../../animations/fade-in-out';
     '[attr.data-theme]': `theme()`,
     '[class]': `classes()`,
     class:
-      'flex cursor-pointer select-none items-center justify-between gap-2 rounded-full px-3 py-2 transition-colors',
+      'flex cursor-pointer select-none items-center justify-between gap-2 px-3 min-h-10 rounded-[1.25rem] py-2 transition-colors',
     tabindex: '0',
     role: 'checkbox',
   },

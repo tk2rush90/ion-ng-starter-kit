@@ -5,7 +5,7 @@ import {
   WEEK_DAYS,
 } from '../../../utils/date.utils';
 import { DatePipe, formatDate, NgClass } from '@angular/common';
-import { SheetActionsComponent } from '../sheet-actions/sheet-actions.component';
+import { OverlayActionsComponent } from '../overlay-actions/overlay-actions.component';
 import { IconButtonDirective } from '../icon-button/icon-button.directive';
 import {
   CalendarFoldIcon,
@@ -21,7 +21,7 @@ import { VariableColors } from '../../../utils/tailwind.utils';
   imports: [
     DatePipe,
     NgClass,
-    SheetActionsComponent,
+    OverlayActionsComponent,
     IconButtonDirective,
     LucideAngularModule,
     FlatButtonDirective,

@@ -1,13 +1,5 @@
-import { Directive, ElementRef, EventEmitter, Output } from '@angular/core';
-
-/** An event that contains changed selection position for textarea and input elements */
-export interface SelectionChangeEvent {
-  /** Changed selection start */
-  selectionStart: number | null;
-
-  /** Changed selection end */
-  selectionEnd: number | null;
-}
+import { Directive, ElementRef, inject, output } from '@angular/core';
+import { SelectionChangeEvent } from '../../../data/selection-change.event';
 
 /** A directive to detect selection change from the textarea or input element */
 @Directive({
@@ -24,13 +16,11 @@ export interface SelectionChangeEvent {
   },
 })
 export class SelectionChangeDetectorDirective {
-  @Output() selectionChange = new EventEmitter<SelectionChangeEvent>();
+  selectionChange = output<SelectionChangeEvent>();
 
-  constructor(
-    private readonly elementRef: ElementRef<
-      HTMLTextAreaElement | HTMLInputElement
-    >,
-  ) {}
+  private readonly elementRef: ElementRef<
+    HTMLTextAreaElement | HTMLInputElement
+  > = inject(ElementRef<HTMLTextAreaElement | HTMLInputElement>);
 
   emitSelectionChange(): void {
     this.selectionChange.emit({

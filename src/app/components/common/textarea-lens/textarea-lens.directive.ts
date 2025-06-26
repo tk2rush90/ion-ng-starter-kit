@@ -1,13 +1,11 @@
 import {
   Directive,
+  DOCUMENT,
   ElementRef,
-  HostListener,
-  Inject,
+  inject,
   Input,
   numberAttribute,
-  DOCUMENT
 } from '@angular/core';
-
 
 /**
  * 텍스트 입력에 따라 화면 중앙에 커서가 위치하게 하는 Directive
@@ -17,16 +15,19 @@ import {
 @Directive({
   selector: 'textarea[appTextareaLens]',
   standalone: true,
+  host: {
+    '(input)': `focusToCursor()`,
+  },
 })
 export class TextareaLensDirective {
   @Input({ transform: numberAttribute }) scrollAdjustment = 0;
 
-  constructor(
-    @Inject(DOCUMENT) private readonly document: Document,
-    private readonly elementRef: ElementRef<HTMLTextAreaElement>,
-  ) {}
+  private readonly document = inject(DOCUMENT);
 
-  @HostListener('input')
+  private readonly elementRef: ElementRef<HTMLTextAreaElement> = inject(
+    ElementRef<HTMLTextAreaElement>,
+  );
+
   focusToCursor(): void {
     const textarea = this.elementRef.nativeElement;
 

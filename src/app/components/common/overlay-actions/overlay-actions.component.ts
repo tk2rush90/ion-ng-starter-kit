@@ -2,15 +2,15 @@ import { Component, computed, input } from '@angular/core';
 import { SheetActionsAlign } from '../../../types/sheet-actions-align';
 
 @Component({
-  selector: 'app-sheet-actions',
+  selector: 'app-overlay-actions',
   imports: [],
-  templateUrl: './sheet-actions.component.html',
-  styleUrl: './sheet-actions.component.scss',
+  templateUrl: './overlay-actions.component.html',
+  styleUrl: './overlay-actions.component.scss',
   host: {
     '[class]': `classes()`,
   },
 })
-export class SheetActionsComponent {
+export class OverlayActionsComponent {
   justify = input.required<SheetActionsAlign>();
 
   classes = computed(() => {

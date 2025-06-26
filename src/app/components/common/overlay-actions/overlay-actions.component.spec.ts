@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ValueFieldComponent } from './value-field.component';
+import { OverlayActionsComponent } from './overlay-actions.component';
 
-describe('ValueFieldComponent', () => {
-  let component: ValueFieldComponent;
-  let fixture: ComponentFixture<ValueFieldComponent>;
+describe('SheetActionsComponent', () => {
+  let component: OverlayActionsComponent;
+  let fixture: ComponentFixture<OverlayActionsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ValueFieldComponent],
+      imports: [OverlayActionsComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ValueFieldComponent);
+    fixture = TestBed.createComponent(OverlayActionsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

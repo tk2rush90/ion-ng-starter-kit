@@ -1,19 +1,21 @@
 import {
   booleanAttribute,
   Component,
-  ContentChildren,
+  computed,
+  contentChildren,
   DestroyRef,
-  EventEmitter,
-  HostListener,
-  Input,
-  Output,
-  QueryList,
+  effect,
+  inject,
+  input,
+  output,
 } from '@angular/core';
 import { RadioGroupService } from '../../../services/app/radio-group/radio-group.service';
 import { AppControlValueAccessor } from '../../../abstracts/app-control-value-accessor';
 import { RadioComponent } from './radio/radio.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { findIndexFromQueryList } from '../../../utils/query-list.utils';
+import { VariableColors } from '../../../utils/tailwind.utils';
+import { RadioGroupDirection } from '../../../types/radio-group-direction';
 
 /** Radio group allows selecting an option between multiple options */
 @Component({
@@ -22,64 +24,86 @@ import { findIndexFromQueryList } from '../../../utils/query-list.utils';
   templateUrl: './radio-group.component.html',
   styleUrl: './radio-group.component.scss',
   host: {
+    '(blur)': `onHostBlur()`,
+    '(focus)': `onHostFocus()`,
+    '(keydown.arrowUp)': 'onHostArrowUpKeydown($event)',
+    '(keydown.arrowDown)': 'onHostArrowDownKeydown($event)',
+    '(keydown.arrowLeft)': 'onHostArrowLeftKeydown($event)',
+    '(keydown.arrowRight)': 'onHostArrowRightKeydown($event)',
+    '[class]': `classes()`,
     tabindex: '0',
+    class: 'flex gap-1',
   },
   providers: [RadioGroupService],
 })
 export class RadioGroupComponent extends AppControlValueAccessor {
+  value = input<any>();
+
+  theme = input<VariableColors>('blue');
+
+  direction = input<RadioGroupDirection>('column');
+
+  /** 초기 disabled 여부 설정 */
+  disabled = input(false, {
+    transform: booleanAttribute,
+  });
+
   /** Emits when value has changed */
-  @Output() valueChange = new EventEmitter<any>();
+  valueChange = output<any>();
 
   /** Children of `RadioComponent` */
-  @ContentChildren(RadioComponent, { descendants: true })
-  radioList?: QueryList<RadioComponent>;
+  radioList = contentChildren(RadioComponent);
 
-  constructor(
-    private readonly destroyRef: DestroyRef,
-    private readonly radioGroupService: RadioGroupService,
-  ) {
+  classes = computed(() => {
+    const classes: any = {};
+
+    const direction = this.direction();
+
+    switch (direction) {
+      case 'column': {
+        classes['flex-col'] = true;
+        classes['items-stretch'] = true;
+        break;
+      }
+
+      case 'row': {
+        classes['flex-row'] = true;
+        classes['items-center'] = true;
+        classes['flex-wrap'] = true;
+        break;
+      }
+    }
+
+    return classes;
+  });
+
+  private readonly destroyRef = inject(DestroyRef);
+
+  private readonly radioGroupService = inject(RadioGroupService);
+
+  constructor() {
     super();
+
+    effect(() => {
+      this.radioGroupService.value.set(this.value());
+      this.setDisabledState(this.disabled());
+    });
 
     this.subscribeSelectOption();
   }
 
-  /** Get selected value */
-  get value(): any {
-    return this.radioGroupService.value;
-  }
-
-  /** Set selected value */
-  @Input()
-  set value(value: any) {
-    this.radioGroupService.value = value;
-  }
-
-  /** Get disabled status */
-  get disabled(): boolean {
-    return this.isDisabled;
-  }
-
-  /** Set disabled status */
-  @Input({ transform: booleanAttribute })
-  set disabled(value: boolean) {
-    this.setDisabledState(value);
-  }
-
   /** When blurred, mark as touched */
-  @HostListener('blur')
   onHostBlur(): void {
     this.onTouched();
-    this.radioGroupService.focused = false;
+    this.radioGroupService.focused.set(false);
   }
 
   /** When focused, update status in service */
-  @HostListener('focus')
   onHostFocus(): void {
-    this.radioGroupService.focused = true;
+    this.radioGroupService.focused.set(true);
   }
 
   /** Listen arrowUp keydown for accessibility */
-  @HostListener('keydown.arrowUp', ['$event'])
   onHostArrowUpKeydown(event: Event): void {
     event.stopPropagation();
     event.preventDefault();
@@ -88,7 +112,6 @@ export class RadioGroupComponent extends AppControlValueAccessor {
   }
 
   /** Listen arrowDown keydown for accessibility */
-  @HostListener('keydown.arrowDown', ['$event'])
   onHostArrowDownKeydown(event: Event): void {
     event.stopPropagation();
     event.preventDefault();
@@ -97,7 +120,6 @@ export class RadioGroupComponent extends AppControlValueAccessor {
   }
 
   /** Listen arrowLeft keydown for accessibility */
-  @HostListener('keydown.arrowLeft', ['$event'])
   onHostArrowLeftKeydown(event: Event): void {
     event.stopPropagation();
     event.preventDefault();
@@ -106,7 +128,6 @@ export class RadioGroupComponent extends AppControlValueAccessor {
   }
 
   /** Listen arrowRight keydown for accessibility */
-  @HostListener('keydown.arrowRight', ['$event'])
   onHostArrowRightKeydown(event: Event): void {
     event.stopPropagation();
     event.preventDefault();
@@ -118,6 +139,7 @@ export class RadioGroupComponent extends AppControlValueAccessor {
   override updateValue(value: any) {
     super.updateValue(value);
     this.valueChange.emit(value);
+    this.radioGroupService.value.set(value);
   }
 
   /** Write value to component */
@@ -130,40 +152,43 @@ export class RadioGroupComponent extends AppControlValueAccessor {
     super.setDisabledState(isDisabled);
 
     // Apply to service.
-    this.radioGroupService.disabled = isDisabled;
+    this.radioGroupService.disabled.set(isDisabled);
   }
 
   /** Move to previous option */
   toPreviousOption(): void {
-    if (!this.disabled) {
+    if (!this.isDisabled()) {
       const currentOptionIndex = findIndexFromQueryList(
-        this.radioList,
-        (radio) => radio.selected,
+        this.radioList(),
+        (radio) => radio.isSelected(),
       );
+
       const previousOptionIndex = Math.max(currentOptionIndex - 1, 0);
 
-      const previousOption = this.radioList?.get(previousOptionIndex);
+      const previousOption = this.radioList()![previousOptionIndex];
 
       if (previousOption) {
-        this.updateValue(previousOption.value);
+        this.updateValue(previousOption.value());
       }
     }
   }
 
   /** Move to next option */
   toNextOption(): void {
-    if (!this.disabled) {
+    if (!this.isDisabled()) {
       const currentOptionIndex = findIndexFromQueryList(
-        this.radioList,
-        (radio) => radio.selected,
+        this.radioList(),
+        (radio) => radio.isSelected(),
       );
-      const lastOptionIndex = (this.radioList?.length || 0) - 1;
+
+      const lastOptionIndex = (this.radioList()?.length || 0) - 1;
+
       const nextOptionIndex = Math.min(currentOptionIndex + 1, lastOptionIndex);
 
-      const nextOption = this.radioList?.get(nextOptionIndex);
+      const nextOption = this.radioList()![nextOptionIndex];
 
       if (nextOption) {
-        this.updateValue(nextOption.value);
+        this.updateValue(nextOption.value());
       }
     }
   }
@@ -173,7 +198,7 @@ export class RadioGroupComponent extends AppControlValueAccessor {
     this.radioGroupService.selectOption
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((value) => {
-        if (!this.disabled) {
+        if (!this.isDisabled()) {
           this.updateValue(value);
         }
       });

@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { OVERLAY_REF } from '../../../tokens/overlay-ref';
 import { AutoFocusDirective } from '../auto-focus/auto-focus.directive';
-import { SheetActionsComponent } from '../sheet-actions/sheet-actions.component';
+import { OverlayActionsComponent } from '../overlay-actions/overlay-actions.component';
 import { VariableColors } from '../../../utils/tailwind.utils';
 import { FlatButtonDirective } from '../flat-button/flat-button.directive';
 import { FlatButtonMode } from '../../../types/flat-button-mode';
@@ -16,8 +16,8 @@ import { FlatButtonMode } from '../../../types/flat-button-mode';
   selector: 'app-confirm',
   imports: [
     AutoFocusDirective,
-    SheetActionsComponent,
-    SheetActionsComponent,
+    OverlayActionsComponent,
+    OverlayActionsComponent,
     FlatButtonDirective,
   ],
   templateUrl: './confirm.component.html',

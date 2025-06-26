@@ -1,10 +1,10 @@
 <form
   (ngSubmit)="submitToSave()"
   [formGroup]="formGroup"
-  class="flex-col-stretch"
+  class="flex flex-col items-stretch"
 >
-  <div class="flex-col-stretch px-4 pb-4">
-    <app-form-field>
+  <div class="flex flex-col items-stretch px-4 pb-4">
+    <app-form-field [theme]="theme()">
       <label>URL</label>
 
       <input
@@ -22,14 +22,15 @@
     </app-form-field>
   </div>
 
-  <app-sheet-actions justify="right">
+  <app-overlay-actions justify="right">
     <button
       (click)="$event.stopPropagation()"
       [disabled]="formGroup.invalid"
+      [theme]="theme()"
       type="submit"
-      class="flat-button primary"
+      appFlatButton
     >
       저장하기
     </button>
-  </app-sheet-actions>
+  </app-overlay-actions>
 </form>

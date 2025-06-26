@@ -14,6 +14,10 @@ import { scaleUpDown } from '../../../animations/scale-up-down';
   templateUrl: './toast-outlet.component.html',
   styleUrl: './toast-outlet.component.scss',
   animations: [fadeInOut(), scaleUpDown()],
+  host: {
+    class:
+      'pointer-events-none fixed bottom-0 left-0 right-0 top-0 z-[10000] flex flex-col items-center justify-end gap-2 p-4',
+  },
 })
 export class ToastOutletComponent {
   private readonly toastService = inject(ToastService);

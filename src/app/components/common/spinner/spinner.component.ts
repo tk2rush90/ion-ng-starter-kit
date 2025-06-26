@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, computed, input, numberAttribute } from '@angular/core';
+import { VariableColors } from '../../../utils/tailwind.utils';
 
 /**
  * A simple loading spinner.
@@ -11,8 +12,22 @@ import { Component } from '@angular/core';
   templateUrl: './spinner.component.html',
   styleUrl: './spinner.component.scss',
   host: {
-    class:
-      'inline-block rounded-full relative before:border before:border-[2px] before:absolute before:rounded-full before:border-box',
+    '[class]': `classes()`,
+    class: 'block aspect-square',
   },
 })
-export class SpinnerComponent {}
+export class SpinnerComponent {
+  theme = input<VariableColors>('blue');
+
+  strokeWidth = input(2.5, {
+    transform: numberAttribute,
+  });
+
+  classes = computed(() => {
+    const theme = this.theme();
+
+    return {
+      [`text-${theme}-500`]: true,
+    };
+  });
+}

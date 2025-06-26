@@ -27,22 +27,9 @@ import {
   warpInBlockNode,
 } from '../../../utils/prosemirror.utils';
 import { OverlayService } from '../../../services/app/overlay/overlay.service';
-import { IconBoldComponent } from '../../icons/icon-bold/icon-bold.component';
-import { IconBracesComponent } from '../../icons/icon-braces/icon-braces.component';
-import { IconCodeComponent } from '../../icons/icon-code/icon-code.component';
-import { IconHeading1Component } from '../../icons/icon-heading-1/icon-heading-1.component';
-import { IconHeading2Component } from '../../icons/icon-heading-2/icon-heading-2.component';
-import { IconHeading3Component } from '../../icons/icon-heading-3/icon-heading-3.component';
-import { IconItalicComponent } from '../../icons/icon-italic/icon-italic.component';
-import { IconLinkComponent } from '../../icons/icon-link/icon-link.component';
-import { IconPilcrowComponent } from '../../icons/icon-pilcrow/icon-pilcrow.component';
 import { IconPilcrowPlusComponent } from '../../icons/icon-pilcrow-plus/icon-pilcrow-plus.component';
-import { IconQuoteComponent } from '../../icons/icon-quote/icon-quote.component';
 import { IconQuoteMinusComponent } from '../../icons/icon-quote-minus/icon-quote-minus.component';
 import { IconQuotePlusComponent } from '../../icons/icon-quote-plus/icon-quote-plus.component';
-import { IconStrikeThroughComponent } from '../../icons/icon-strike-through/icon-strike-through.component';
-import { IconUnderlineComponent } from '../../icons/icon-underline/icon-underline.component';
-import { IconUnlinkComponent } from '../../icons/icon-unlink/icon-unlink.component';
 import { BackdropComponent } from '../backdrop/backdrop.component';
 import { BottomSheetComponent } from '../bottom-sheet/bottom-sheet.component';
 import { WysiwygLinkEditorComponent } from '../wysiwyg-link-editor/wysiwyg-link-editor.component';
@@ -51,29 +38,36 @@ import { slideInOutBottomFull } from '../../../animations/slide-in-out-bottom-fu
 import { slideInBottom } from '../../../animations/slide-in-bottom';
 import { fadeIn } from '../../../animations/fade-in';
 import { OVERLAY_REF } from '../../../tokens/overlay-ref';
+import {
+  BoldIcon,
+  BracesIcon,
+  CodeIcon,
+  Heading1Icon,
+  Heading2Icon,
+  Heading3Icon,
+  ItalicIcon,
+  LinkIcon,
+  LucideAngularModule,
+  PilcrowIcon,
+  QuoteIcon,
+  StrikethroughIcon,
+  UnderlineIcon,
+  UnlinkIcon,
+} from 'lucide-angular';
 
 @Component({
   selector: 'app-wysiwyg-editor-actions',
   imports: [
-    IconBoldComponent,
-    IconBracesComponent,
-    IconCodeComponent,
-    IconHeading1Component,
-    IconHeading2Component,
-    IconHeading3Component,
-    IconItalicComponent,
-    IconLinkComponent,
-    IconPilcrowComponent,
     IconPilcrowPlusComponent,
-    IconQuoteComponent,
     IconQuoteMinusComponent,
     IconQuotePlusComponent,
-    IconStrikeThroughComponent,
-    IconUnderlineComponent,
-    IconUnlinkComponent,
     BackdropComponent,
     BottomSheetComponent,
     WysiwygLinkEditorComponent,
+    LucideAngularModule,
+    IconPilcrowPlusComponent,
+    IconQuotePlusComponent,
+    IconQuoteMinusComponent,
   ],
   templateUrl: './wysiwyg-editor-actions.component.html',
   styleUrl: './wysiwyg-editor-actions.component.scss',
@@ -84,7 +78,9 @@ export class WysiwygEditorActionsComponent implements OnDestroy {
 
   private linkUpdateTimeout: any;
 
-  private readonly overlayRef = inject(OVERLAY_REF);
+  private readonly overlayRef = inject(OVERLAY_REF, {
+    optional: true,
+  });
 
   private readonly destroyRef = inject(DestroyRef);
 
@@ -442,4 +438,18 @@ export class WysiwygEditorActionsComponent implements OnDestroy {
 
     toggleInlineMark(this.proseMirrorEditorService.view, 'code');
   }
+
+  protected readonly PilcrowIcon = PilcrowIcon;
+  protected readonly Heading1Icon = Heading1Icon;
+  protected readonly Heading2Icon = Heading2Icon;
+  protected readonly Heading3Icon = Heading3Icon;
+  protected readonly BracesIcon = BracesIcon;
+  protected readonly QuoteIcon = QuoteIcon;
+  protected readonly BoldIcon = BoldIcon;
+  protected readonly ItalicIcon = ItalicIcon;
+  protected readonly UnderlineIcon = UnderlineIcon;
+  protected readonly StrikethroughIcon = StrikethroughIcon;
+  protected readonly CodeIcon = CodeIcon;
+  protected readonly LinkIcon = LinkIcon;
+  protected readonly UnlinkIcon = UnlinkIcon;
 }

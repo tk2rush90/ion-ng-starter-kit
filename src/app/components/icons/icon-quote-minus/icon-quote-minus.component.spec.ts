@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SheetActionsComponent } from './sheet-actions.component';
+import { IconQuoteMinusComponent } from './icon-quote-minus.component';
 
-describe('SheetActionsComponent', () => {
-  let component: SheetActionsComponent;
-  let fixture: ComponentFixture<SheetActionsComponent>;
+describe('IconQuoteMinusComponent', () => {
+  let component: IconQuoteMinusComponent;
+  let fixture: ComponentFixture<IconQuoteMinusComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SheetActionsComponent]
+      imports: [IconQuoteMinusComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(SheetActionsComponent);
+    fixture = TestBed.createComponent(IconQuoteMinusComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

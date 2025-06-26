@@ -16,6 +16,17 @@ import { AutoResizerDirective } from '../../components/common/auto-resizer/auto-
 import { FieldHintComponent } from '../../components/common/form-field/field-hint/field-hint.component';
 import { FieldErrorComponent } from '../../components/common/form-field/field-error/field-error.component';
 import { GoogleOauthButtonComponent } from '../../components/common/google-oauth-button/google-oauth-button.component';
+import { RadioGroupComponent } from '../../components/common/radio-group/radio-group.component';
+import { RadioComponent } from '../../components/common/radio-group/radio/radio.component';
+import { FieldComponent } from '../../components/common/field/field.component';
+import { SpinnerComponent } from '../../components/common/spinner/spinner.component';
+import { WysiwygEditorComponent } from '../../components/common/wysiwyg-editor/wysiwyg-editor.component';
+import { WysiwygEditorActionsComponent } from '../../components/common/wysiwyg-editor-actions/wysiwyg-editor-actions.component';
+import { ProseMirrorEditorService } from '../../services/app/prose-mirror-editor/prose-mirror-editor.service';
+import {
+  createInlineEditorState,
+  inlineSchema,
+} from '../../utils/prosemirror.utils';
 
 @Component({
   selector: 'app-example-page',
@@ -32,6 +43,12 @@ import { GoogleOauthButtonComponent } from '../../components/common/google-oauth
     FieldHintComponent,
     FieldErrorComponent,
     GoogleOauthButtonComponent,
+    RadioGroupComponent,
+    RadioComponent,
+    FieldComponent,
+    SpinnerComponent,
+    WysiwygEditorComponent,
+    WysiwygEditorActionsComponent,
   ],
   templateUrl: './example-page.component.html',
   styleUrl: './example-page.component.scss',
@@ -40,8 +57,13 @@ import { GoogleOauthButtonComponent } from '../../components/common/google-oauth
     class:
       'flex min-h-dvh flex-col items-stretch gap-4 grow shrink-0 h-auto basis-auto',
   },
+  providers: [ProseMirrorEditorService],
 })
 export class ExamplePageComponent {
+  editorState = createInlineEditorState(inlineSchema, {
+    placeholder: '어떤 생각을 하고 계신가요?',
+  });
+
   private readonly destroyRef = inject(DestroyRef);
 
   private readonly overlayService = inject(OverlayService);

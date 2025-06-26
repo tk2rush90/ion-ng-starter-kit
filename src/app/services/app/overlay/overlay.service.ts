@@ -2,6 +2,7 @@ import {
   ApplicationRef,
   DestroyRef,
   EmbeddedViewRef,
+  inject,
   Injectable,
   Injector,
   OnDestroy,
@@ -87,7 +88,9 @@ export class OverlayService implements OnDestroy {
 
   private readonly eventTimeout: any;
 
-  constructor(private readonly applicationRef: ApplicationRef) {
+  private readonly applicationRef = inject(ApplicationRef);
+
+  constructor() {
     this.eventTimeout = setTimeout(() => {
       if (AngularPlatform.isBrowser) {
         window.addEventListener(
@@ -203,7 +206,8 @@ export class OverlayService implements OnDestroy {
 
       overlayOutletRef.changeDetectorRef.detectChanges();
 
-      this.cachedViewContainerRef = overlayOutletRef.instance.viewContainerRef;
+      this.cachedViewContainerRef =
+        overlayOutletRef.instance.viewContainerRef()!;
     }
 
     return this.cachedViewContainerRef;
