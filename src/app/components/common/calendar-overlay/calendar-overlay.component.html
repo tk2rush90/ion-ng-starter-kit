@@ -16,6 +16,7 @@
           'text-rose-500': $index === 0,
           'text-blue-500': $index === 6,
           'text-black/50': $index !== 0 && $index !== 6,
+          'dark:text-dark-text/50': $index !== 0 && $index !== 6,
         }"
         class="flex items-center justify-center uppercase"
       >
@@ -27,57 +28,10 @@
   <div class="grid grid-cols-7 gap-y-4">
     @for (calendarDate of calendarDates; track calendarDate.toDateString()) {
       <div class="relative flex h-12 items-center justify-center">
-        @if (fromDate()) {
-          @if (isFromDate(calendarDate)) {
-            @if (!isSelectedDate(calendarDate)) {
-              <div
-                [ngClass]="{
-                  'bg-black/5': isRangedDate(calendarDate),
-                }"
-                class="pointer-events-none absolute right-0 top-1/2 z-[1] h-8 w-1/2 -translate-y-1/2"
-              ></div>
-            }
-          } @else if (isSelectedDate(calendarDate)) {
-            <div
-              [ngClass]="{
-                'bg-black/5': isRangedDate(calendarDate),
-              }"
-              class="pointer-events-none absolute left-0 top-1/2 z-[1] h-8 w-1/2 -translate-y-1/2"
-            ></div>
-          } @else {
-            <div
-              [ngClass]="{
-                'bg-black/5': isRangedDate(calendarDate),
-              }"
-              class="pointer-events-none absolute left-0 top-1/2 z-[1] h-8 w-full -translate-y-1/2"
-            ></div>
-          }
-        } @else if (toDate()) {
-          @if (isToDate(calendarDate)) {
-            @if (!isSelectedDate(calendarDate)) {
-              <div
-                [ngClass]="{
-                  'bg-black/5': isRangedDate(calendarDate),
-                }"
-                class="pointer-events-none absolute left-0 top-1/2 z-[1] h-8 w-1/2 -translate-y-1/2"
-              ></div>
-            }
-          } @else if (isSelectedDate(calendarDate)) {
-            <div
-              [ngClass]="{
-                'bg-black/5': isRangedDate(calendarDate),
-              }"
-              class="pointer-events-none absolute right-0 top-1/2 z-[1] h-8 w-1/2 -translate-y-1/2"
-            ></div>
-          } @else {
-            <div
-              [ngClass]="{
-                'bg-black/5': isRangedDate(calendarDate),
-              }"
-              class="pointer-events-none absolute left-0 top-1/2 z-[1] h-8 w-full -translate-y-1/2"
-            ></div>
-          }
-        }
+        <div
+          [ngClass]="getRangedDateClasses(calendarDate)"
+          class="pointer-events-none absolute top-1/2 z-[1] h-8 -translate-y-1/2"
+        ></div>
 
         <button
           (click)="selectDate(calendarDate)"
@@ -85,7 +39,7 @@
           [ngClass]="getDateClasses(calendarDate)"
           type="button"
           tabindex="-1"
-          class="relative z-[2] flex aspect-square w-full max-w-8 items-center justify-center rounded-full text-center text-sm disabled:bg-black/[0.03] disabled:text-black/15"
+          class="relative z-[2] flex aspect-square w-full max-w-8 items-center justify-center rounded-full text-center text-sm disabled:bg-black/[0.03] disabled:text-black/15 dark:disabled:bg-white/[0.03] dark:disabled:text-white/15"
         >
           {{ calendarDate.getDate() }}
         </button>

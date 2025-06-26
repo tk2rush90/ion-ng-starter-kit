@@ -55,13 +55,15 @@ module.exports = {
       },
       // Generate colors from https://uicolors.app/create is recommended.
       colors: {
-        primary: colors.blue,
-        secondary: colors.teal,
-        tertiary: colors.violet,
-        warn: colors.amber,
-        error: colors.red,
-        success: colors.emerald,
+        // primary: colors.blue,
+        // secondary: colors.teal,
+        // tertiary: colors.violet,
+        // warn: colors.amber,
+        // error: colors.red,
+        // success: colors.emerald,
         kakao: "#FEE500",
+        "dark-background": colors.slate[800],
+        "dark-text": colors.white,
       },
       outlineWidth: {
         3: "3px",
@@ -85,13 +87,27 @@ module.exports = {
   safelist: [
     {
       pattern:
-        /bg-(slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(((300|400|500)(\/(5|10|20|30))?)|100)/,
-      variants: ["hover", "active", "focus"],
+        /bg-(slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-((100|300|400|500|900)(\/(5|10|15|20|30))?)/,
+      variants: [
+        "hover",
+        "active",
+        "focus",
+        "dark:hover",
+        "dark:active",
+        "dark",
+      ],
+    },
+    {
+      pattern: /bg-(black|white)(\/(5|10|15|20|30))?/,
+      variants: ["hover", "active", "focus", "dark"],
+    },
+    {
+      pattern: /text-(black|white|current)(\/(5|10|15|20|30))?/,
     },
     {
       pattern:
         /border-(slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(300|500|900)(\/(30))?/,
-      variants: ["hover", "focus", "has-[:focus]"],
+      variants: ["hover", "focus", "has-[:focus]", "dark:focus"],
     },
     {
       pattern:

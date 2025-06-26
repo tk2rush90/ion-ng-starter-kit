@@ -17,9 +17,12 @@ export class IconButtonDirective {
     const classes: any = {};
 
     if (theme === 'black') {
-      classes['text-black'] = true;
+      classes['text-current'] = true;
       classes['hover:bg-black/5'] = true;
       classes['active:bg-black/10'] = true;
+
+      classes['dark:hover:bg-white/10'] = true;
+      classes['dark:active:bg-white/20'] = true;
     } else {
       classes[`text-${theme}-500`] = true;
       classes[`hover:bg-${theme}-500/5`] = true;

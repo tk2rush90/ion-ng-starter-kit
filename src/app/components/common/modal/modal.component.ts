@@ -22,7 +22,7 @@ import { NgClass } from '@angular/common';
     '(scroll)': `detectScroll()`,
     '[style]': `styles`,
     class:
-      'pointer-events-auto fixed left-1/2 top-1/2 flex max-h-[calc(100dvh-32px)] w-[calc(100dvw-32px)] flex-col items-stretch overflow-auto rounded-3xl bg-white shadow-lg',
+      'pointer-events-auto fixed left-1/2 top-1/2 flex max-h-[calc(100dvh-32px)] w-[calc(100dvw-32px)] flex-col items-stretch overflow-auto rounded-3xl bg-white dark:bg-dark-background shadow-lg',
   },
   imports: [IconButtonDirective, LucideAngularModule, NgClass],
 })

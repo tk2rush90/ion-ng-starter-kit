@@ -1,132 +1,207 @@
 @if (hasView) {
+  @if (!isCursorInList()) {
+    @if (
+      (hasBlockNode("code_block") && isCursorInCodeBlock()) ||
+      isCursorInHeading()
+    ) {
+      <button
+        @fadeIn
+        @slideInBottom
+        (mousedown)="
+          $event.stopPropagation(); $event.preventDefault(); toggleParagraph()
+        "
+        appIconButton
+        class="relative *:scale-90"
+        type="button"
+      >
+        <i-lucide [img]="PilcrowIcon"></i-lucide>
+      </button>
+    }
+
+    @if (hasBlockNode("code_block") && isCursorInCodeBlock()) {
+      <button
+        @fadeIn
+        @slideInBottom
+        (mousedown)="
+          $event.stopPropagation(); $event.preventDefault(); addParagraph()
+        "
+        appIconButton
+        class="relative *:scale-90"
+        type="button"
+      >
+        <app-icon-pilcrow-plus></app-icon-pilcrow-plus>
+      </button>
+    }
+
+    @if (hasBlockNode("heading")) {
+      <button
+        @fadeIn
+        @slideInBottom
+        (mousedown)="
+          $event.stopPropagation(); $event.preventDefault(); toggleHeading(2)
+        "
+        [ngClass]="getButtonEffectClasses(isCursorInHeading(2))"
+        [theme]="isCursorInHeading(2) ? theme() : 'black'"
+        appIconButton
+        class="relative *:scale-90 after:absolute after:left-1/2 after:top-0.5 after:block after:size-1 after:-translate-x-1/2 after:rounded-full after:bg-current after:transition-all after:content-['']"
+        type="button"
+      >
+        <i-lucide [img]="Heading1Icon"></i-lucide>
+      </button>
+
+      <button
+        @fadeIn
+        @slideInBottom
+        (mousedown)="
+          $event.stopPropagation(); $event.preventDefault(); toggleHeading(3)
+        "
+        [ngClass]="getButtonEffectClasses(isCursorInHeading(3))"
+        [theme]="isCursorInHeading(3) ? theme() : 'black'"
+        appIconButton
+        class="relative *:scale-90 after:absolute after:left-1/2 after:top-0.5 after:block after:size-1 after:-translate-x-1/2 after:rounded-full after:bg-current after:transition-all after:content-['']"
+        type="button"
+      >
+        <i-lucide [img]="Heading2Icon"></i-lucide>
+      </button>
+
+      <button
+        @fadeIn
+        @slideInBottom
+        (mousedown)="
+          $event.stopPropagation(); $event.preventDefault(); toggleHeading(4)
+        "
+        [ngClass]="getButtonEffectClasses(isCursorInHeading(4))"
+        [theme]="isCursorInHeading(4) ? theme() : 'black'"
+        appIconButton
+        class="relative *:scale-90 after:absolute after:left-1/2 after:top-0.5 after:block after:size-1 after:-translate-x-1/2 after:rounded-full after:bg-current after:transition-all after:content-['']"
+        type="button"
+      >
+        <i-lucide [img]="Heading3Icon"></i-lucide>
+      </button>
+    }
+
+    @if (hasBlockNode("code_block") && !isCursorInCodeBlock()) {
+      <button
+        @fadeIn
+        @slideInBottom
+        (mousedown)="
+          $event.stopPropagation(); $event.preventDefault(); setCodeBlock()
+        "
+        appIconButton
+        class="relative *:scale-90"
+        type="button"
+      >
+        <i-lucide [img]="BracesIcon"></i-lucide>
+      </button>
+    }
+
+    @if (hasBlockNode("blockquote")) {
+      @if (isCursorInBlockquote()) {
+        <button
+          @fadeIn
+          @slideInBottom
+          (mousedown)="
+            $event.stopPropagation();
+            $event.preventDefault();
+            insertBlockQuote()
+          "
+          appIconButton
+          class="relative *:scale-90"
+          type="button"
+        >
+          <app-icon-quote-plus></app-icon-quote-plus>
+        </button>
+
+        <button
+          @fadeIn
+          @slideInBottom
+          (mousedown)="
+            $event.stopPropagation();
+            $event.preventDefault();
+            unwrapBlockquote()
+          "
+          appIconButton
+          class="relative *:scale-90"
+          type="button"
+        >
+          <app-icon-quote-minus></app-icon-quote-minus>
+        </button>
+      } @else {
+        <button
+          @fadeIn
+          @slideInBottom
+          (mousedown)="
+            $event.stopPropagation();
+            $event.preventDefault();
+            insertBlockQuote()
+          "
+          appIconButton
+          class="relative *:scale-90"
+          type="button"
+        >
+          <i-lucide [img]="QuoteIcon"></i-lucide>
+        </button>
+      }
+    }
+  }
+
   @if (
-    (hasBlockNode("code_block") && isCursorInCodeBlock()) || isCursorInHeading()
+    !isCursorInCodeBlock() && !isCursorInHeading() && !isCursorInBlockquote()
   ) {
-    <button
-      @fadeIn
-      @slideInBottom
-      (mousedown)="
-        $event.stopPropagation(); $event.preventDefault(); toggleParagraph()
-      "
-      class="x-non-extendable relative flex w-8 items-center justify-center transition-all"
-      type="button"
-    >
-      <i-lucide [img]="PilcrowIcon"></i-lucide>
-    </button>
-  }
-
-  @if (hasBlockNode("code_block") && isCursorInCodeBlock()) {
-    <button
-      @fadeIn
-      @slideInBottom
-      (mousedown)="
-        $event.stopPropagation(); $event.preventDefault(); addParagraph()
-      "
-      class="x-non-extendable relative flex w-8 items-center justify-center transition-all"
-      type="button"
-    >
-      <app-icon-pilcrow-plus class="size-4"></app-icon-pilcrow-plus>
-    </button>
-  }
-
-  @if (hasBlockNode("heading")) {
-    <button
-      @fadeIn
-      @slideInBottom
-      (mousedown)="
-        $event.stopPropagation(); $event.preventDefault(); toggleHeading(2)
-      "
-      [class.is-active]="isCursorInHeading(2)"
-      class="x-non-extendable relative flex w-8 items-center justify-center transition-all"
-      type="button"
-    >
-      <i-lucide [img]="Heading1Icon"></i-lucide>
-    </button>
-
-    <button
-      @fadeIn
-      @slideInBottom
-      (mousedown)="
-        $event.stopPropagation(); $event.preventDefault(); toggleHeading(3)
-      "
-      [class.is-active]="isCursorInHeading(3)"
-      class="x-non-extendable relative flex w-8 items-center justify-center transition-all"
-      type="button"
-    >
-      <i-lucide [img]="Heading2Icon"></i-lucide>
-    </button>
-
-    <button
-      @fadeIn
-      @slideInBottom
-      (mousedown)="
-        $event.stopPropagation(); $event.preventDefault(); toggleHeading(4)
-      "
-      [class.is-active]="isCursorInHeading(4)"
-      class="x-non-extendable relative flex w-8 items-center justify-center transition-all"
-      type="button"
-    >
-      <i-lucide [img]="Heading3Icon"></i-lucide>
-    </button>
-  }
-
-  @if (hasBlockNode("code_block") && !isCursorInCodeBlock()) {
-    <button
-      @fadeIn
-      @slideInBottom
-      (mousedown)="
-        $event.stopPropagation(); $event.preventDefault(); setCodeBlock()
-      "
-      class="x-non-extendable relative flex w-8 items-center justify-center transition-all"
-      type="button"
-    >
-      <i-lucide [img]="BracesIcon"></i-lucide>
-    </button>
-  }
-
-  @if (hasBlockNode("blockquote")) {
-    @if (isCursorInBlockquote()) {
+    @if (!isCursorInList("ordered_list")) {
       <button
         @fadeIn
         @slideInBottom
         (mousedown)="
-          $event.stopPropagation(); $event.preventDefault(); insertBlockQuote()
+          $event.stopPropagation(); $event.preventDefault(); insertOrderedList()
         "
-        class="x-non-extendable relative flex w-8 items-center justify-center transition-all"
+        appIconButton
         type="button"
       >
-        <app-icon-quote-plus
-          strokeWidth="1.5"
-          class="size-6"
-        ></app-icon-quote-plus>
+        <i-lucide [img]="ListOrderedIcon"></i-lucide>
+      </button>
+    }
+
+    @if (!isCursorInList("bullet_list")) {
+      <button
+        @fadeIn
+        @slideInBottom
+        (mousedown)="
+          $event.stopPropagation(); $event.preventDefault(); insertBulletList()
+        "
+        appIconButton
+        type="button"
+      >
+        <i-lucide [img]="ListIcon"></i-lucide>
+      </button>
+    }
+
+    @if (isCursorInList("ordered_list") || isCursorInList("bullet_list")) {
+      <button
+        @fadeIn
+        @slideInBottom
+        (mousedown)="
+          $event.stopPropagation(); $event.preventDefault(); outdentList()
+        "
+        appIconButton
+        type="button"
+      >
+        <i-lucide [img]="IndentDecreaseIcon"></i-lucide>
       </button>
 
-      <button
-        @fadeIn
-        @slideInBottom
-        (mousedown)="
-          $event.stopPropagation(); $event.preventDefault(); unwrapBlockquote()
-        "
-        class="x-non-extendable relative flex w-8 items-center justify-center transition-all"
-        type="button"
-      >
-        <app-icon-quote-minus
-          strokeWidth="1.5"
-          class="size-6"
-        ></app-icon-quote-minus>
-      </button>
-    } @else {
-      <button
-        @fadeIn
-        @slideInBottom
-        (mousedown)="
-          $event.stopPropagation(); $event.preventDefault(); insertBlockQuote()
-        "
-        class="x-non-extendable relative flex w-8 items-center justify-center transition-all"
-        type="button"
-      >
-        <i-lucide [img]="QuoteIcon"></i-lucide>
-      </button>
+      @if (!isFirstListItem()) {
+        <button
+          @fadeIn
+          @slideInBottom
+          (mousedown)="
+            $event.stopPropagation(); $event.preventDefault(); indentList()
+          "
+          appIconButton
+          type="button"
+        >
+          <i-lucide [img]="IndentIncreaseIcon"></i-lucide>
+        </button>
+      }
     }
   }
 
@@ -140,8 +215,10 @@
       (mousedown)="
         $event.stopPropagation(); $event.preventDefault(); toggleBold()
       "
-      [class.is-active]="isBoldActive()"
-      class="x-non-extendable relative flex w-8 items-center justify-center transition-all"
+      [ngClass]="getButtonEffectClasses(isBoldActive())"
+      [theme]="isBoldActive() ? theme() : 'black'"
+      appIconButton
+      class="relative *:scale-90 after:absolute after:left-1/2 after:top-0.5 after:block after:size-1 after:-translate-x-1/2 after:rounded-full after:bg-current after:transition-all after:content-['']"
       type="button"
     >
       <i-lucide [img]="BoldIcon"></i-lucide>
@@ -153,8 +230,10 @@
       (mousedown)="
         $event.stopPropagation(); $event.preventDefault(); toggleItalic()
       "
-      [class.is-active]="isItalic()"
-      class="x-non-extendable relative flex w-8 items-center justify-center transition-all"
+      [ngClass]="getButtonEffectClasses(isItalic())"
+      [theme]="isItalic() ? theme() : 'black'"
+      appIconButton
+      class="relative *:scale-90 after:absolute after:left-1/2 after:top-0.5 after:block after:size-1 after:-translate-x-1/2 after:rounded-full after:bg-current after:transition-all after:content-['']"
       type="button"
     >
       <i-lucide [img]="ItalicIcon"></i-lucide>
@@ -166,8 +245,10 @@
       (mousedown)="
         $event.stopPropagation(); $event.preventDefault(); toggleUnderline()
       "
-      [class.is-active]="isUnderlineActive()"
-      class="x-non-extendable relative flex w-8 items-center justify-center transition-all"
+      [ngClass]="getButtonEffectClasses(isUnderlineActive())"
+      [theme]="isUnderlineActive() ? theme() : 'black'"
+      appIconButton
+      class="relative *:scale-90 after:absolute after:left-1/2 after:top-0.5 after:block after:size-1 after:-translate-x-1/2 after:rounded-full after:bg-current after:transition-all after:content-['']"
       type="button"
     >
       <i-lucide [img]="UnderlineIcon"></i-lucide>
@@ -179,8 +260,10 @@
       (mousedown)="
         $event.stopPropagation(); $event.preventDefault(); toggleLineThrough()
       "
-      [class.is-active]="isStrike()"
-      class="x-non-extendable relative flex w-8 items-center justify-center transition-all"
+      [ngClass]="getButtonEffectClasses(isStrike())"
+      [theme]="isStrike() ? theme() : 'black'"
+      appIconButton
+      class="relative *:scale-90 after:absolute after:left-1/2 after:top-0.5 after:block after:size-1 after:-translate-x-1/2 after:rounded-full after:bg-current after:transition-all after:content-['']"
       type="button"
     >
       <i-lucide [img]="StrikethroughIcon"></i-lucide>
@@ -193,8 +276,10 @@
         (mousedown)="
           $event.stopPropagation(); $event.preventDefault(); toggleCode()
         "
-        [class.is-active]="isCode()"
-        class="x-non-extendable relative flex w-8 items-center justify-center transition-all"
+        [ngClass]="getButtonEffectClasses(isCode())"
+        [theme]="isCode() ? theme() : 'black'"
+        appIconButton
+        class="relative *:scale-90 after:absolute after:left-1/2 after:top-0.5 after:block after:size-1 after:-translate-x-1/2 after:rounded-full after:bg-current after:transition-all after:content-['']"
         type="button"
       >
         <i-lucide [img]="CodeIcon"></i-lucide>
@@ -208,8 +293,10 @@
         (mousedown)="
           $event.stopPropagation(); $event.preventDefault(); openLinkEditor()
         "
-        [class.is-active]="isLink()"
-        class="x-non-extendable relative flex w-8 items-center justify-center transition-all"
+        [ngClass]="getButtonEffectClasses(isLink())"
+        [theme]="isLink() ? theme() : 'black'"
+        appIconButton
+        class="relative *:scale-90 after:absolute after:left-1/2 after:top-0.5 after:block after:size-1 after:-translate-x-1/2 after:rounded-full after:bg-current after:transition-all after:content-['']"
         type="button"
       >
         <i-lucide [img]="LinkIcon"></i-lucide>
@@ -223,7 +310,8 @@
         (mousedown)="
           $event.stopPropagation(); $event.preventDefault(); removeLink()
         "
-        class="x-non-extendable relative flex w-8 items-center justify-center transition-all"
+        appIconButton
+        class="relative *:scale-90"
         type="button"
       >
         <i-lucide [img]="UnlinkIcon"></i-lucide>

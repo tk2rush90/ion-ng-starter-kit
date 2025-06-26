@@ -11,7 +11,7 @@ import {
   signal,
 } from '@angular/core';
 import { OVERLAY_REF } from '../../../tokens/overlay-ref';
-import anime, { AnimeInstance } from 'animejs';
+import { animate, JSAnimation } from 'animejs';
 import { LucideAngularModule, XIcon } from 'lucide-angular';
 import { spacingToRem } from '../../../utils/tailwind.utils';
 import { NgClass } from '@angular/common';
@@ -78,7 +78,7 @@ export class BottomSheetComponent implements AfterViewInit, OnDestroy {
 
   private cancelTouchCancel?: () => void;
 
-  private animeInstance?: AnimeInstance;
+  private animeInstance?: JSAnimation;
 
   private readonly overlayRef = inject(OVERLAY_REF);
 
@@ -191,14 +191,13 @@ export class BottomSheetComponent implements AfterViewInit, OnDestroy {
       this.animatableMoveDragY = this.moveDragY();
 
       // 원상복구
-      this.animeInstance = anime({
-        targets: this,
+      this.animeInstance = animate(this, {
         animatableMoveDragY: this.startDragY(),
         duration: 250,
-        easing: 'easeOutCirc',
+        ease: 'outCirc',
         // 업데이트 될 때마다 animatableMoveDragY 값 시그널에 반영
-        update: () => this.moveDragY.set(this.animatableMoveDragY),
-        complete: () => {
+        onUpdate: () => this.moveDragY.set(this.animatableMoveDragY),
+        onComplete: () => {
           this.isDragging.set(false);
           this.isDragMoved.set(false);
         },

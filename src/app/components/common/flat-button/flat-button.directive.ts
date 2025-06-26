@@ -41,6 +41,8 @@ export class FlatButtonDirective implements OnDestroy {
     if (isDisabled) {
       classes['bg-black/15'] = true;
       classes['text-black/30'] = true;
+      classes['dark:text-dark-text/30'] = true;
+      classes['dark:bg-white/15'] = true;
     } else if (mode === 'default') {
       classes[`bg-${theme}-500/10`] = true;
       classes[`hover:bg-${theme}-500/20`] = true;
@@ -52,6 +54,7 @@ export class FlatButtonDirective implements OnDestroy {
       classes[`hover:brightness-110`] = true;
       classes[`active:brightness-120`] = true;
       classes[`focus:border-${theme}-900`] = true;
+      classes[`dark:focus:border-${theme}-300`] = true;
       classes[`text-white`] = true;
     } else if (mode === 'transparent') {
       classes[`hover:bg-${theme}-500/10`] = true;

@@ -1,5 +1,6 @@
 [appIconButton] {
-  i-lucide svg {
+  i-lucide svg,
+  .app-icon {
     @apply size-5;
   }
 }
@@ -8,4 +9,116 @@
   &::-webkit-scrollbar {
     @apply hidden;
   }
+}
+
+.app-icon {
+  svg {
+    @apply size-full;
+  }
+}
+
+.ProseMirror-selectednode {
+  @apply outline outline-2 outline-blue-500;
+}
+
+.ProseMirror {
+  &:has(.ProseMirror-placeholder:has(+ .ProseMirror-separator)) {
+    .ProseMirror-trailingBreak {
+      @apply invisible;
+    }
+  }
+
+  blockquote p:has(.ProseMirror-trailingBreak) {
+    &::before,
+    &::after {
+      @apply hidden;
+    }
+  }
+}
+
+/* style.css */
+.ProseMirror-placeholder {
+  @apply pointer-events-none inline-block text-black/50;
+
+  &:has(+ .ProseMirror-separator) {
+    @apply absolute;
+  }
+}
+
+/* 에디터에 포커스 되었을 때 플레이스홀더 숨기기 */
+.ProseMirror.ProseMirror-focused .ProseMirror-placeholder {
+  @apply hidden;
+}
+
+* {
+  &::-webkit-scrollbar {
+    @apply absolute h-1 w-1;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    @apply bg-black/50;
+  }
+}
+
+.prose {
+  @apply break-all text-justify;
+
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  blockquote,
+  pre,
+  ul,
+  ol,
+  img,
+  table {
+    @apply my-4;
+
+    &:first-child {
+      @apply mt-0;
+    }
+
+    &:last-child {
+      @apply mb-0;
+    }
+  }
+
+  img {
+    @apply w-full;
+  }
+
+  strong {
+    @apply font-bold;
+  }
+
+  blockquote,
+  li {
+    p:last-child {
+      @apply mb-0;
+    }
+  }
+}
+
+.prose :where(code):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  @apply rounded bg-stone-100 px-1 py-0.5 font-normal text-red-600;
+
+  &::before,
+  &::after {
+    content: none;
+  }
+}
+
+.prose
+  :where(pre code):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  @apply rounded-none bg-transparent p-0 text-inherit;
+}
+
+.ProseMirror:not(.ProseMirror-focused)
+  .ProseMirror-textEmpty:first-child::before {
+  content: "여기에 내용을 입력하세요.";
+  @apply pointer-events-none absolute text-black/50 dark:text-dark-text/50;
 }

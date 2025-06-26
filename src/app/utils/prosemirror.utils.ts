@@ -37,9 +37,11 @@ import {
   liftListItem,
   sinkListItem,
   splitListItem,
+  wrapInList,
 } from 'prosemirror-schema-list';
 import { isDevMode } from '@angular/core';
 import { ProseMirrorNodeJson } from '../data/prose-mirror-node-json';
+import { findParentNodeClosestToPos } from 'prosemirror-utils';
 
 /** 공통 인라인 마크 스펙 */
 export const commonInlineMarks = ProseMirrorSchemaBasic.spec.marks
@@ -448,14 +450,16 @@ export const createPlaceholderPlugin = (
 
         const placeholderNode = document.createElement('span');
         placeholderNode.classList.add('ProseMirror-placeholder');
+        placeholderNode.contentEditable = 'true';
         placeholderNode.textContent = placeholderText;
 
         // 문서의 시작 부분에 위젯 데코레이션 추가
         // pos: 1 (문서 시작 = 0, 첫 번째 텍스트 블록의 시작 = 1)
         return DecorationSet.create(doc, [
-          Decoration.widget(1, placeholderNode, {
-            side: -1,
-            stopEvent: () => true,
+          Decoration.node(0, doc.content.size + 2, {
+            // doc 노드 전체 범위에 적용
+            class: 'ProseMirror-empty-with-placeholder',
+            'data-placeholder': placeholderText, // CSS에서 사용할 데이터 속성
           }),
           // side: -1은 커서가 플레이스홀더 앞에 위치하도록 함
           // stopEvent: true는 플레이스홀더 클릭 시 이벤트를 중단하여 커서가 비정상적으로 위치하는 것을 방지
@@ -752,6 +756,33 @@ export const isBlockQuoteActive = (view: EditorView) => {
 
     if (ancestor.type === state.schema.nodes['blockquote']) {
       return true;
+    }
+  }
+
+  return false;
+};
+
+export const isCursorInList = (
+  view: EditorView,
+  type?: 'ordered_list' | 'bullet_list',
+): boolean => {
+  const { state } = view;
+
+  const { $cursor } = state.selection as TextSelection;
+
+  if (!$cursor) {
+    return false;
+  }
+
+  for (let i = $cursor.depth; i > 0; i--) {
+    const node = $cursor.node(i);
+
+    if (node.type.name === 'ordered_list' || node.type.name === 'bullet_list') {
+      if (type) {
+        return node.type.name === type;
+      } else {
+        return true;
+      }
     }
   }
 
@@ -1241,6 +1272,139 @@ export const warpInBlockNode = (view: EditorView, node: string) => {
   wrapIn(nodeType)(state, dispatch, view);
 };
 
+export const toggleList = (
+  view: EditorView,
+  type: 'ordered_list' | 'bullet_list',
+) => {
+  const { state, dispatch } = view;
+  const { schema } = state;
+  const { $from, $to } = state.selection;
+
+  const targetListType = schema.nodes[type];
+  const itemType = schema.nodes['list_item'];
+
+  const range = $from.blockRange($to);
+
+  if (!range) {
+    return false;
+  }
+
+  const isList = (nodeType: any) =>
+    nodeType === schema.nodes['bullet_list'] ||
+    nodeType === schema.nodes['ordered_list'];
+
+  const parentDepth = range.depth - 1;
+  const parent = $from.node(parentDepth);
+  const grandParent = $from.node(parentDepth - 1);
+
+  const inList = isList(grandParent?.type) && parent?.type === itemType;
+  const currentListType = inList ? grandParent.type : null;
+
+  if (currentListType === targetListType) {
+    return liftListItem(itemType)(state, dispatch);
+  }
+
+  if (inList && currentListType && currentListType !== targetListType) {
+    if (!dispatch) return true;
+    const listPos = $from.before(parentDepth);
+    const listNode = state.doc.nodeAt(listPos);
+    if (!listNode || listNode.type !== currentListType) return false;
+
+    const newList = targetListType.create(
+      listNode.attrs,
+      listNode.content,
+      listNode.marks,
+    );
+
+    const tr = state.tr.replaceWith(
+      listPos,
+      listPos + listNode.nodeSize,
+      newList,
+    );
+    dispatch(tr);
+    return true;
+  }
+
+  return wrapInList(targetListType)(state, dispatch);
+};
+
+export const changeList = (
+  view: EditorView,
+  type: 'ordered_list' | 'bullet_list',
+): void => {
+  const { state, dispatch } = view;
+  const { tr, selection } = state;
+  const { $from } = selection;
+
+  let listNode: any | null = null;
+  let listNodePos = -1;
+
+  for (let i = $from.depth; i > 0; i--) {
+    const node = $from.node(i);
+    if (node.type.name.endsWith('_list')) {
+      listNode = node;
+      listNodePos = $from.start(i) - 1;
+      break;
+    }
+  }
+
+  if (listNode && listNodePos !== -1) {
+    const targetNodeType: NodeType = state.schema.nodes[type];
+
+    if (targetNodeType && targetNodeType !== listNode.type) {
+      const start = listNodePos;
+      const end = listNodePos + listNode.nodeSize;
+
+      const newListNode = targetNodeType.create(
+        listNode.attrs,
+        listNode.content,
+      );
+
+      dispatch(tr.replaceRangeWith(start, end, newListNode));
+    }
+  }
+};
+
+export const indentList = (view: EditorView) => {
+  const { state, dispatch } = view;
+
+  const { schema } = state;
+
+  return sinkListItem(schema.nodes['list_item'])(state, dispatch);
+};
+
+export const outdentList = (view: EditorView) => {
+  const { state, dispatch } = view;
+
+  const { schema } = state;
+
+  return liftListItem(schema.nodes['list_item'])(state, dispatch);
+};
+
+export const isFirstListItem = (view: EditorView) => {
+  const { state } = view;
+  const { schema } = state;
+  const { selection, doc } = state;
+
+  let isFirstListItemInItsList = false;
+
+  doc.nodesBetween(
+    selection.from,
+    selection.to,
+    (node: ProseMirrorNode, pos: number) => {
+      if (node.type === schema.nodes['list_item']) {
+        const $pos = doc.resolve(pos);
+
+        if ($pos.parent.type.name.includes('list') && $pos.index() === 0) {
+          isFirstListItemInItsList = true;
+        }
+      }
+    },
+  );
+
+  return isFirstListItemInItsList;
+};
+
 /** EditorView의 내용을 JSON으로 변환해 가져오는 함수 */
 export const getEditorJson = (view: EditorView) => {
   return view.state.doc.toJSON();
@@ -1393,3 +1557,94 @@ export const getLinkMarkByCursor = (view: EditorView): Mark | null => {
   // 링크가 활성화된 상태가 아니면 false를 반환합니다.
   return null;
 };
+
+/** List를 다른 유형의 List로 전환하는 함수 */
+export const convertListToList = (
+  view: EditorView,
+  target: 'ordered_list' | 'bullet_list',
+): void => {
+  const { state, dispatch } = view;
+
+  const { selection } = state;
+
+  const { $from } = selection; // 커서 또는 선택 영역의 시작점
+
+  // 커서 위치에서 가장 가까운 상위 리스트 노드를 찾기
+  const parentList = findParentNodeClosestToPos(
+    $from,
+    (node) =>
+      node.type.name === 'ordered_list' || node.type.name === 'bullet_list',
+  );
+
+  if (!parentList) {
+    return;
+  }
+
+  const { node: listNode, pos: listPos } = parentList;
+
+  if (listNode.type.name !== 'ordered_list') {
+    return;
+  }
+
+  const bulletListType: NodeType | undefined = state.schema.nodes[target];
+
+  if (!bulletListType) {
+    return;
+  }
+
+  // 4. 리스트 노드 타입을 전환하는 트랜잭션을 생성합니다.
+  // replaceWith를 사용하여 노드를 새로운 타입의 노드로 교체합니다.
+  const tr = state.tr.replaceWith(
+    listPos, // 전환할 노드의 시작 위치
+    listPos + listNode.nodeSize, // 전환할 노드의 끝 위치
+    bulletListType.create(null, listNode.content), // 새 bullet_list 노드 생성 (기존 콘텐츠 유지)
+  );
+
+  dispatch(tr);
+};
+
+export class EmptyContentNodeView {
+  dom: HTMLElement;
+
+  contentDOM: HTMLElement;
+
+  node: ProseMirrorNode;
+
+  constructor(
+    node: ProseMirrorNode,
+    view: EditorView,
+    getPos: () => number | undefined,
+  ) {
+    this.node = node;
+    this.dom = document.createElement(
+      node.type.name === 'paragraph' ? 'p' : `h${node.attrs['level']}`,
+    );
+    this.contentDOM = this.dom;
+    this.updateClass();
+  }
+
+  update(node: ProseMirrorNode) {
+    if (
+      node.type !== this.node.type ||
+      (node.type.name === 'heading' &&
+        node.attrs['level'] !== this.node.attrs['level'])
+    ) {
+      return false;
+    }
+    this.node = node;
+    this.updateClass();
+    return true;
+  }
+
+  updateClass() {
+    const isEmpty = this.node.textContent.trim().length === 0;
+
+    if (isEmpty) {
+      this.dom.classList.add('ProseMirror-textEmpty');
+    } else {
+      this.dom.classList.remove('ProseMirror-textEmpty');
+    }
+  }
+
+  destroy() {}
+}

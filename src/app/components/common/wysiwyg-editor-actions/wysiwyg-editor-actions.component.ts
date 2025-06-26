@@ -2,6 +2,7 @@ import {
   Component,
   DestroyRef,
   inject,
+  input,
   isDevMode,
   OnDestroy,
   TemplateRef,
@@ -9,20 +10,26 @@ import {
 } from '@angular/core';
 import { ProseMirrorEditorService } from '../../../services/app/prose-mirror-editor/prose-mirror-editor.service';
 import {
+  changeList,
   findLinkMark,
   getCurrentSelectionRange,
+  indentList,
   insertParagraph,
   isBlockQuoteActive,
   isCodeBlockActive,
+  isCursorInList,
+  isFirstListItem,
   isHeadingActive,
   isLinkMarkActive,
   isMarkActive,
   isSelectionExpanded,
+  outdentList,
   removeLinkMark,
   selectMark,
   setBlockNode,
   setLinkMark,
   toggleInlineMark,
+  toggleList,
   unwrapBlockquote,
   warpInBlockNode,
 } from '../../../utils/prosemirror.utils';
@@ -45,8 +52,12 @@ import {
   Heading1Icon,
   Heading2Icon,
   Heading3Icon,
+  IndentDecreaseIcon,
+  IndentIncreaseIcon,
   ItalicIcon,
   LinkIcon,
+  ListIcon,
+  ListOrderedIcon,
   LucideAngularModule,
   PilcrowIcon,
   QuoteIcon,
@@ -54,6 +65,9 @@ import {
   UnderlineIcon,
   UnlinkIcon,
 } from 'lucide-angular';
+import { IconButtonDirective } from '../icon-button/icon-button.directive';
+import { NgClass } from '@angular/common';
+import { VariableColors } from '../../../utils/tailwind.utils';
 
 @Component({
   selector: 'app-wysiwyg-editor-actions',
@@ -68,12 +82,20 @@ import {
     IconPilcrowPlusComponent,
     IconQuotePlusComponent,
     IconQuoteMinusComponent,
+    IconButtonDirective,
+    NgClass,
   ],
   templateUrl: './wysiwyg-editor-actions.component.html',
   styleUrl: './wysiwyg-editor-actions.component.scss',
   animations: [fadeInOut(), slideInOutBottomFull(), slideInBottom(), fadeIn()],
+  host: {
+    class:
+      'flex w-full flex-row flex-nowrap items-center justify-start gap-1 overflow-auto rounded-full bg-black/5 dark:bg-white/10 px-3 backdrop-blur-lg has-[+_*]:w-auto h-10',
+  },
 })
 export class WysiwygEditorActionsComponent implements OnDestroy {
+  theme = input<VariableColors>('blue');
+
   linkEditorTemplateRef = viewChild<TemplateRef<any>>('linkEditor');
 
   private linkUpdateTimeout: any;
@@ -305,6 +327,18 @@ export class WysiwygEditorActionsComponent implements OnDestroy {
     return isBlockQuoteActive(this.proseMirrorEditorService.view);
   }
 
+  isCursorInList(type?: 'ordered_list' | 'bullet_list'): boolean {
+    if (!this.proseMirrorEditorService.view) {
+      if (isDevMode()) {
+        console.error('EditorView를 찾을 수 없습니다');
+      }
+
+      return false;
+    }
+
+    return isCursorInList(this.proseMirrorEditorService.view, type);
+  }
+
   isExpanded(): boolean {
     if (!this.proseMirrorEditorService.view) {
       if (isDevMode()) {
@@ -365,6 +399,74 @@ export class WysiwygEditorActionsComponent implements OnDestroy {
     }
 
     warpInBlockNode(this.proseMirrorEditorService.view, 'blockquote');
+  }
+
+  insertOrderedList(): void {
+    if (!this.proseMirrorEditorService.view) {
+      if (isDevMode()) {
+        console.error('EditorView를 찾을 수 없습니다');
+      }
+
+      return;
+    }
+
+    if (isCursorInList(this.proseMirrorEditorService.view, 'bullet_list')) {
+      changeList(this.proseMirrorEditorService.view, 'ordered_list');
+    } else {
+      toggleList(this.proseMirrorEditorService.view, 'ordered_list');
+    }
+  }
+
+  insertBulletList(): void {
+    if (!this.proseMirrorEditorService.view) {
+      if (isDevMode()) {
+        console.error('EditorView를 찾을 수 없습니다');
+      }
+
+      return;
+    }
+
+    if (isCursorInList(this.proseMirrorEditorService.view, 'ordered_list')) {
+      changeList(this.proseMirrorEditorService.view, 'bullet_list');
+    } else {
+      toggleList(this.proseMirrorEditorService.view, 'bullet_list');
+    }
+  }
+
+  indentList(): void {
+    if (!this.proseMirrorEditorService.view) {
+      if (isDevMode()) {
+        console.error('EditorView를 찾을 수 없습니다');
+      }
+
+      return;
+    }
+
+    indentList(this.proseMirrorEditorService.view);
+  }
+
+  outdentList(): void {
+    if (!this.proseMirrorEditorService.view) {
+      if (isDevMode()) {
+        console.error('EditorView를 찾을 수 없습니다');
+      }
+
+      return;
+    }
+
+    outdentList(this.proseMirrorEditorService.view);
+  }
+
+  isFirstListItem(): boolean {
+    if (!this.proseMirrorEditorService.view) {
+      if (isDevMode()) {
+        console.error('EditorView를 찾을 수 없습니다');
+      }
+
+      return false;
+    }
+
+    return isFirstListItem(this.proseMirrorEditorService.view);
   }
 
   toggleBold(): void {
@@ -439,6 +541,16 @@ export class WysiwygEditorActionsComponent implements OnDestroy {
     toggleInlineMark(this.proseMirrorEditorService.view, 'code');
   }
 
+  getButtonEffectClasses(state: boolean): any {
+    const classes: any = {};
+
+    if (!state) {
+      classes['after:hidden'] = true;
+    }
+
+    return classes;
+  }
+
   protected readonly PilcrowIcon = PilcrowIcon;
   protected readonly Heading1Icon = Heading1Icon;
   protected readonly Heading2Icon = Heading2Icon;
@@ -452,4 +564,8 @@ export class WysiwygEditorActionsComponent implements OnDestroy {
   protected readonly CodeIcon = CodeIcon;
   protected readonly LinkIcon = LinkIcon;
   protected readonly UnlinkIcon = UnlinkIcon;
+  protected readonly ListOrderedIcon = ListOrderedIcon;
+  protected readonly ListIcon = ListIcon;
+  protected readonly IndentIncreaseIcon = IndentIncreaseIcon;
+  protected readonly IndentDecreaseIcon = IndentDecreaseIcon;
 }

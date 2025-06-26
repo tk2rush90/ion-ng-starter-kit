@@ -11,8 +11,8 @@ import {
 } from '@angular/core';
 import { CarouselItemDirective } from './carousel-item/carousel-item.directive';
 import { AngularPlatform } from '../../../utils/platform.utils';
-import anime, { AnimeInstance } from 'animejs';
 import { Platform } from '@ionic/angular/standalone';
+import { animate, JSAnimation } from 'animejs';
 
 @Directive({
   selector: '[appCarousel]',
@@ -60,7 +60,7 @@ export class CarouselDirective implements OnDestroy {
 
   private resizeTimer: any;
 
-  private animeInstance?: AnimeInstance;
+  private animeInstance?: JSAnimation;
 
   private readonly elementRef = inject(ElementRef<HTMLDivElement>);
 
@@ -226,12 +226,11 @@ export class CarouselDirective implements OnDestroy {
   }
 
   animate(to: number): void {
-    this.animeInstance = anime({
-      targets: this,
+    this.animeInstance = animate(this, {
       storedX: to,
       duration: 300,
-      easing: 'easeOutCirc',
-      change: () => {
+      ease: 'outCirc',
+      onRender: () => {
         this.updateCarouselTransform();
         this.updateSlideIndex();
       },

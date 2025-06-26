@@ -1,4 +1,4 @@
-import { Component, Input, numberAttribute } from '@angular/core';
+import { Component } from '@angular/core';
 import { Icon } from '../../../abstracts/icon';
 
 @Component({
@@ -7,6 +7,4 @@ import { Icon } from '../../../abstracts/icon';
   templateUrl: './icon-quote-plus.component.html',
   styleUrl: './icon-quote-plus.component.scss',
 })
-export class IconQuotePlusComponent extends Icon {
-  @Input({ transform: numberAttribute }) strokeWidth = 2;
-}
+export class IconQuotePlusComponent extends Icon {}

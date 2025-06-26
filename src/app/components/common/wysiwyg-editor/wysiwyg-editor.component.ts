@@ -12,6 +12,7 @@ import {
 } from '@angular/core';
 import { AngularPlatform } from '../../../utils/platform.utils';
 import {
+  EmptyContentNodeView,
   getEditorJson,
   isCodeBlockActive,
 } from '../../../utils/prosemirror.utils';
@@ -90,6 +91,12 @@ export class WysiwygEditorComponent implements AfterViewInit, OnDestroy {
                 },
               }),
             ],
+            nodeViews: {
+              paragraph: (node, view, getPos) =>
+                new EmptyContentNodeView(node, view, getPos),
+              heading: (node, view, getPos) =>
+                new EmptyContentNodeView(node, view, getPos),
+            },
           },
         );
       });

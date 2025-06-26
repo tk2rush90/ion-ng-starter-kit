@@ -1,5 +1,5 @@
 <div
-  class="flex items-center justify-start px-4 text-sm text-black/50 empty:hidden"
+  class="flex items-center justify-start px-4 text-sm text-black/50 empty:hidden dark:text-dark-text/50"
 >
   <!-- Render label -->
   <ng-content select="label"></ng-content>
@@ -9,6 +9,8 @@
   }
 </div>
 
-<div class="flex flex-col items-stretch gap-0.5 px-4">
+<ng-content select="app-checkbox,app-radio-group"></ng-content>
+
+<div class="flex flex-col items-stretch">
   <ng-content></ng-content>
 </div>

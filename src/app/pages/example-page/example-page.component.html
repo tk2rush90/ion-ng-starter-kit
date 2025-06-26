@@ -801,3 +801,76 @@
 <app-wysiwyg-editor [state]="editorState"></app-wysiwyg-editor>
 
 <app-wysiwyg-editor-actions></app-wysiwyg-editor-actions>
+
+<app-card
+  class="flex max-w-screen-sm flex-col items-stretch overflow-auto"
+  withBorder
+>
+  <div class="flex flex-col items-stretch gap-4 p-4">
+    <app-form-field theme="indigo" required>
+      <label>이메일</label>
+
+      <input type="email" />
+    </app-form-field>
+
+    <app-form-field theme="indigo" required>
+      <label>패스워드</label>
+
+      <input type="password" />
+    </app-form-field>
+
+    <app-form-field theme="indigo" required>
+      <label>자기소개</label>
+
+      <textarea appImeInput appAutoResizer></textarea>
+    </app-form-field>
+
+    <app-form-field theme="indigo" required>
+      <label>지역</label>
+
+      <select>
+        <option>사천</option>
+
+        <option>서울</option>
+      </select>
+    </app-form-field>
+
+    <app-field required>
+      <label>성별</label>
+
+      <app-radio-group theme="indigo">
+        <app-radio value="남자">남자</app-radio>
+
+        <app-radio value="여자">여자</app-radio>
+      </app-radio-group>
+    </app-field>
+
+    <app-checkbox theme="indigo">개인 정보 처리방침에 동의합니다</app-checkbox>
+  </div>
+
+  <app-overlay-actions justify="right">
+    <button type="submit" theme="indigo" appFlatButton>제출하기</button>
+  </app-overlay-actions>
+</app-card>
+
+<app-card
+  class="draggable-container flex max-w-screen-sm flex-col items-stretch p-4"
+>
+  <app-card #draggable class="flex items-center justify-between p-4" withBorder>
+    <div>할 일이 많지1</div>
+
+    <app-checkbox></app-checkbox>
+  </app-card>
+
+  <app-card #draggable class="flex items-center justify-between p-4" withBorder>
+    <div>할 일이 많지2</div>
+
+    <app-checkbox></app-checkbox>
+  </app-card>
+
+  <app-card #draggable class="flex items-center justify-between p-4" withBorder>
+    <div>할 일이 많지3</div>
+
+    <app-checkbox></app-checkbox>
+  </app-card>
+</app-card>

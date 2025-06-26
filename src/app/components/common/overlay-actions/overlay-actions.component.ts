@@ -8,6 +8,8 @@ import { SheetActionsAlign } from '../../../types/sheet-actions-align';
   styleUrl: './overlay-actions.component.scss',
   host: {
     '[class]': `classes()`,
+    class:
+      'sticky bottom-0 left-0 z-50 flex items-center border-t border-black/15 bg-white px-4 py-3 dark:bg-dark-background dark:border-white/15',
   },
 })
 export class OverlayActionsComponent {

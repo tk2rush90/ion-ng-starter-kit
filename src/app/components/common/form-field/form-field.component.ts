@@ -78,7 +78,8 @@ export class FormFieldComponent implements AfterViewInit, OnDestroy {
       classes['bg-black/15'] = true;
       classes['bg-black/30'] = true;
     } else {
-      classes[`bg-${theme}-100`] = true;
+      classes[`bg-${theme}-500/15`] = true;
+      classes[`hover:bg-${theme}-500/20`] = true;
       classes[`has-[:focus]:border-${theme}-500`] = true;
     }
 

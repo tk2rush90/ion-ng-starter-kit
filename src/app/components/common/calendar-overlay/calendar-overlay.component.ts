@@ -87,19 +87,24 @@ export class CalendarOverlayComponent {
 
     const isSelectedDate = this.isSelectedDate(calendarDate);
 
-    if (isSelectedDate) {
-      classes['text-white'] = true;
-      classes[`bg-${theme}-500`] = true;
-    } else {
-      classes['hover:bg-black/5'] = true;
-      classes['active:bg-black/10'] = true;
-    }
+    const isFromDate = this.isFromDate(calendarDate);
 
-    classes['text-black/15'] = this.isOutOfDisplayDate(calendarDate);
+    const isToDate = this.isToDate(calendarDate);
 
-    if (this.isFromDate(calendarDate) || this.isToDate(calendarDate)) {
-      classes[`bg-${theme}-100`] = true;
-    }
+    const isOutOfDisplayDate = this.isOutOfDisplayDate(calendarDate);
+
+    const isFromOrToDate = isFromDate || isToDate;
+
+    classes['text-white'] = isSelectedDate;
+    classes[`bg-${theme}-500`] = isSelectedDate;
+    classes['hover:bg-black/5'] = !isFromOrToDate;
+    classes['active:bg-black/10'] = !isFromOrToDate;
+    classes['dark:hover:bg-white/10'] = !isFromOrToDate;
+    classes['dark:active:bg-white/15'] = !isFromOrToDate;
+    classes['text-black/15'] = isOutOfDisplayDate;
+    classes['dark:text-white/15'] = isOutOfDisplayDate;
+    classes[`bg-${theme}-100`] = isFromOrToDate;
+    classes[`dark:bg-${theme}-900`] = isFromOrToDate;
 
     return classes;
   }
@@ -205,6 +210,33 @@ export class CalendarOverlayComponent {
         formatDate(calendarDate, 'yyyy-MM-dd', 'en-US'),
       );
     }
+  }
+
+  getRangedDateClasses(calendarDate: Date): any {
+    const classes: any = {};
+
+    const fromDate = this.fromDate();
+
+    const isFromDate = this.isFromDate(calendarDate);
+
+    const toDate = this.toDate();
+
+    const isToDate = this.isToDate(calendarDate);
+
+    const isSelectedDate = this.isSelectedDate(calendarDate);
+
+    const isRangedDate = this.isRangedDate(calendarDate);
+
+    const widthClass =
+      isFromDate || isToDate || isSelectedDate ? 'w-1/2' : 'w-full';
+
+    classes[widthClass] = true;
+    classes['right-0'] = !!(isSelectedDate ? toDate && !isToDate : fromDate);
+    classes['left-0'] = !!(isSelectedDate ? fromDate && !isFromDate : toDate);
+    classes['bg-black/5'] = isRangedDate;
+    classes['dark:bg-white/10'] = isRangedDate;
+
+    return classes;
   }
 
   protected readonly WEEK_DAYS = WEEK_DAYS;

@@ -1,4 +1,12 @@
-import { Component, DestroyRef, inject, TemplateRef } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  DestroyRef,
+  ElementRef,
+  inject,
+  TemplateRef,
+  viewChildren,
+} from '@angular/core';
 import { CheckboxComponent } from '../../components/common/checkbox/checkbox.component';
 import { BackdropComponent } from '../../components/common/backdrop/backdrop.component';
 import { BottomSheetComponent } from '../../components/common/bottom-sheet/bottom-sheet.component';
@@ -24,9 +32,14 @@ import { WysiwygEditorComponent } from '../../components/common/wysiwyg-editor/w
 import { WysiwygEditorActionsComponent } from '../../components/common/wysiwyg-editor-actions/wysiwyg-editor-actions.component';
 import { ProseMirrorEditorService } from '../../services/app/prose-mirror-editor/prose-mirror-editor.service';
 import {
-  createInlineEditorState,
-  inlineSchema,
+  createDefaultEditorState,
+  defaultSchema,
 } from '../../utils/prosemirror.utils';
+import { CardComponent } from '../../components/common/card/card.component';
+import { ImeInputDirective } from '../../components/common/ime-input/ime-input.directive';
+import { OverlayActionsComponent } from '../../components/common/overlay-actions/overlay-actions.component';
+import { createDraggable } from 'animejs';
+import { AngularPlatform } from '../../utils/platform.utils';
 
 @Component({
   selector: 'app-example-page',
@@ -49,6 +62,9 @@ import {
     SpinnerComponent,
     WysiwygEditorComponent,
     WysiwygEditorActionsComponent,
+    CardComponent,
+    ImeInputDirective,
+    OverlayActionsComponent,
   ],
   templateUrl: './example-page.component.html',
   styleUrl: './example-page.component.scss',
@@ -59,9 +75,13 @@ import {
   },
   providers: [ProseMirrorEditorService],
 })
-export class ExamplePageComponent {
-  editorState = createInlineEditorState(inlineSchema, {
+export class ExamplePageComponent implements AfterViewInit {
+  editorState = createDefaultEditorState(defaultSchema, {
     placeholder: '어떤 생각을 하고 계신가요?',
+  });
+
+  draggableList = viewChildren('draggable', {
+    read: ElementRef,
   });
 
   private readonly destroyRef = inject(DestroyRef);
@@ -69,6 +89,16 @@ export class ExamplePageComponent {
   private readonly overlayService = inject(OverlayService);
 
   private readonly toastService = inject(ToastService);
+
+  ngAfterViewInit() {
+    if (AngularPlatform.isBrowser) {
+      this.draggableList().forEach((draggableElementRef) =>
+        createDraggable(draggableElementRef.nativeElement, {
+          container: '.draggable-container',
+        }),
+      );
+    }
+  }
 
   openOverlay(templateRef: TemplateRef<any> | null): void {
     if (templateRef) {

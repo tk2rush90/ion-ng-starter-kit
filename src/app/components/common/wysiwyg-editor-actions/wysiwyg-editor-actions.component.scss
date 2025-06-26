@@ -1,22 +1,5 @@
 :host {
-  @apply flex h-8 w-full flex-row flex-nowrap items-stretch justify-start gap-2 overflow-auto rounded-full bg-primary-500/10 px-3 backdrop-blur-lg has-[+_*]:w-auto;
-
   &::-webkit-scrollbar {
     @apply hidden;
-  }
-
-  button {
-    &::after {
-      @apply absolute left-1/2 top-1.5 block size-1 -translate-x-1/2 rounded-full transition-all;
-      content: "";
-    }
-
-    &.is-active {
-      @apply text-secondary-500;
-
-      &::after {
-        @apply bg-secondary-500;
-      }
-    }
   }
 }

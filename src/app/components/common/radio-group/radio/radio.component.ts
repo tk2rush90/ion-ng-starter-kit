@@ -47,6 +47,8 @@ export class RadioComponent {
     } else {
       classes[`hover:bg-${theme}-500/5`] = true;
       classes[`active:bg-${theme}-500/10`] = true;
+      classes[`dark:hover:bg-${theme}-500/10`] = true;
+      classes[`dark:active:bg-${theme}-500/15`] = true;
     }
 
     return classes;
@@ -64,8 +66,13 @@ export class RadioComponent {
     const isFocused = this.radioGroupService.focused();
 
     if (isDisabled) {
-      classes['bg-black/15'] = true;
       classes['text-black/30'] = true;
+
+      if (isFocused) {
+        classes['bg-black/30'] = true;
+      } else {
+        classes['bg-black/15'] = true;
+      }
 
       if (isSelected && isFocused) {
         classes['border-black/15'] = true;
@@ -73,8 +80,13 @@ export class RadioComponent {
         classes['border-transparent'] = true;
       }
     } else {
-      classes[`bg-${theme}-100`] = true;
       classes[`text-${theme}-500`] = true;
+
+      if (isFocused) {
+        classes[`bg-${theme}-500/30`] = true;
+      } else {
+        classes[`bg-${theme}-500/15`] = true;
+      }
 
       if (isSelected && isFocused) {
         classes[`border-${theme}-500`] = true;
