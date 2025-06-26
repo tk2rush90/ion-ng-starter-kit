@@ -874,3 +874,81 @@
     <app-checkbox></app-checkbox>
   </app-card>
 </app-card>
+
+<button
+  (click)="
+    openOverlay(messageOverlayEmerald, {
+      preventOutsideClosing: true,
+      allowDuplicated: true,
+    })
+  "
+  type="button"
+  theme="emerald"
+  appFlatButton
+>
+  Message Overlay
+</button>
+
+<ng-template #messageOverlayEmerald>
+  <app-message-overlay @fadeInOut @slideInOutBottomFull theme="emerald">
+    <i-lucide [img]="PartyPopperIcon" messageIcon></i-lucide>
+
+    <ng-container messageTitle>축하합니다!</ng-container>
+
+    <ng-container messageContent>
+      새로운 할 일이 등록 되었어요. 다음은 어떤 일을 하고싶으신가요?
+    </ng-container>
+  </app-message-overlay>
+</ng-template>
+
+<button
+  (click)="
+    openOverlay(messageOverlayCyan, {
+      preventOutsideClosing: true,
+      allowDuplicated: true,
+    })
+  "
+  type="button"
+  theme="cyan"
+  appFlatButton
+>
+  Message Overlay
+</button>
+
+<ng-template #messageOverlayCyan>
+  <app-message-overlay @fadeInOut @slideInOutBottomFull theme="cyan">
+    <i-lucide [img]="PartyPopperIcon" messageIcon></i-lucide>
+
+    <ng-container messageTitle>축하합니다!</ng-container>
+
+    <ng-container messageContent>
+      새로운 할 일이 등록 되었어요. 다음은 어떤 일을 하고싶으신가요?
+    </ng-container>
+  </app-message-overlay>
+</ng-template>
+
+<button
+  (click)="
+    openOverlay(messageOverlayRose, {
+      preventOutsideClosing: true,
+      allowDuplicated: true,
+    })
+  "
+  type="button"
+  theme="rose"
+  appFlatButton
+>
+  Message Overlay
+</button>
+
+<ng-template #messageOverlayRose>
+  <app-message-overlay @fadeInOut @slideInOutBottomFull theme="rose">
+    <i-lucide [img]="BugIcon" messageIcon></i-lucide>
+
+    <ng-container messageTitle>버그가 발견되었습니다.</ng-container>
+
+    <ng-container messageContent>
+      빠른 시일 내에 버그를 수정할 수 있도록 하겠습니다.
+    </ng-container>
+  </app-message-overlay>
+</ng-template>

@@ -87,7 +87,7 @@ module.exports = {
   safelist: [
     {
       pattern:
-        /bg-(slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-((100|300|400|500|900)(\/(5|10|15|20|30))?)/,
+        /bg-(slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-((100|300|400|500|600|900)(\/(5|10|15|20|30))?)/,
       variants: [
         "hover",
         "active",

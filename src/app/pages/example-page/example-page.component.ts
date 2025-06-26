@@ -10,7 +10,10 @@ import {
 import { CheckboxComponent } from '../../components/common/checkbox/checkbox.component';
 import { BackdropComponent } from '../../components/common/backdrop/backdrop.component';
 import { BottomSheetComponent } from '../../components/common/bottom-sheet/bottom-sheet.component';
-import { OverlayService } from '../../services/app/overlay/overlay.service';
+import {
+  OverlayOptions,
+  OverlayService,
+} from '../../services/app/overlay/overlay.service';
 import { fadeInOut } from '../../animations/fade-in-out';
 import { slideInOutBottomFull } from '../../animations/slide-in-out-bottom-full';
 import { FlatButtonDirective } from '../../components/common/flat-button/flat-button.directive';
@@ -40,6 +43,13 @@ import { ImeInputDirective } from '../../components/common/ime-input/ime-input.d
 import { OverlayActionsComponent } from '../../components/common/overlay-actions/overlay-actions.component';
 import { createDraggable } from 'animejs';
 import { AngularPlatform } from '../../utils/platform.utils';
+import { MessageOverlayComponent } from '../../components/common/message-overlay/message-overlay.component';
+import {
+  BugIcon,
+  CircleAlertIcon,
+  LucideAngularModule,
+  PartyPopperIcon,
+} from 'lucide-angular';
 
 @Component({
   selector: 'app-example-page',
@@ -65,6 +75,8 @@ import { AngularPlatform } from '../../utils/platform.utils';
     CardComponent,
     ImeInputDirective,
     OverlayActionsComponent,
+    MessageOverlayComponent,
+    LucideAngularModule,
   ],
   templateUrl: './example-page.component.html',
   styleUrl: './example-page.component.scss',
@@ -100,10 +112,14 @@ export class ExamplePageComponent implements AfterViewInit {
     }
   }
 
-  openOverlay(templateRef: TemplateRef<any> | null): void {
+  openOverlay(
+    templateRef: TemplateRef<any> | null,
+    options: Omit<OverlayOptions, 'destroyRef'> = {},
+  ): void {
     if (templateRef) {
       this.overlayService.open(templateRef, {
         destroyRef: this.destroyRef,
+        ...options,
       });
     }
   }
@@ -120,4 +136,7 @@ export class ExamplePageComponent implements AfterViewInit {
 
   protected readonly MB = MB;
   protected readonly KB = KB;
+  protected readonly CircleAlertIcon = CircleAlertIcon;
+  protected readonly PartyPopperIcon = PartyPopperIcon;
+  protected readonly BugIcon = BugIcon;
 }

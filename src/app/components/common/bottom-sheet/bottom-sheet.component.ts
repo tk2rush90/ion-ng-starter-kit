@@ -26,7 +26,7 @@ import { IconButtonDirective } from '../icon-button/icon-button.directive';
     '(scroll)': `detectScroll()`,
     '[style]': `styles()`,
     class:
-      'pointer-events-auto fixed bottom-0 left-0 right-0 flex w-full flex-col items-stretch overflow-auto rounded-t-3xl bg-white shadow-lg md:bottom-4 md:left-1/2 md:w-[calc(100dvw-2rem)] md:rounded-3xl',
+      'pointer-events-auto fixed bottom-0 left-0 right-0 flex w-full flex-col items-stretch overflow-auto rounded-t-3xl bg-white dark:bg-dark-background shadow-2xl dark:shadow-white/5 md:bottom-4 md:left-1/2 md:w-[calc(100dvw-2rem)] md:rounded-3xl',
   },
 })
 export class BottomSheetComponent implements AfterViewInit, OnDestroy {
@@ -52,7 +52,7 @@ export class BottomSheetComponent implements AfterViewInit, OnDestroy {
     const styles: any = {};
 
     if (!this.isDragging()) {
-      styles.maxHeight = `calc(100dvh-${spacingToRem(14)}rem-${spacingToRem(4)}rem)`;
+      styles.maxHeight = `calc(100dvh - ${spacingToRem(14)}rem - ${spacingToRem(4)}rem)`;
     }
 
     if (this.isDragMoved()) {
@@ -61,6 +61,15 @@ export class BottomSheetComponent implements AfterViewInit, OnDestroy {
     }
 
     return styles;
+  });
+
+  shadowClasses = computed(() => {
+    const isScrolled = this.isScrolled();
+
+    return {
+      'shadow-lg': isScrolled,
+      'dark:shadow-white/5': isScrolled,
+    };
   });
 
   /** AnimeJS를 이용한 애니메이션 실행을 위한 필드 */

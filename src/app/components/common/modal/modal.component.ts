@@ -2,6 +2,7 @@ import {
   AfterViewInit,
   booleanAttribute,
   Component,
+  computed,
   ElementRef,
   inject,
   input,
@@ -22,7 +23,7 @@ import { NgClass } from '@angular/common';
     '(scroll)': `detectScroll()`,
     '[style]': `styles`,
     class:
-      'pointer-events-auto fixed left-1/2 top-1/2 flex max-h-[calc(100dvh-32px)] w-[calc(100dvw-32px)] flex-col items-stretch overflow-auto rounded-3xl bg-white dark:bg-dark-background shadow-lg',
+      'pointer-events-auto fixed left-1/2 top-1/2 flex max-h-[calc(100dvh-32px)] w-[calc(100dvw-32px)] flex-col items-stretch overflow-auto rounded-3xl bg-white dark:bg-dark-background dark:shadow-white/5 shadow-2xl',
   },
   imports: [IconButtonDirective, LucideAngularModule, NgClass],
 })
@@ -33,17 +34,24 @@ export class ModalComponent implements AfterViewInit, OnDestroy {
 
   isScrolled = signal(false);
 
+  scrollClasses = computed(() => {
+    const isScrolled = this.isScrolled();
+
+    return {
+      'shadow-lg': isScrolled,
+      'dark:shadow-white/5': isScrolled,
+    };
+  });
+
+  styles = {
+    translate: '-50% -50%',
+  };
+
   private scrollDetectTimeout: any;
 
   private readonly overlayRef = inject(OVERLAY_REF);
 
   private readonly elementRef = inject(ElementRef<HTMLElement>);
-
-  get styles(): any {
-    return {
-      translate: '-50% -50%',
-    };
-  }
 
   ngAfterViewInit() {
     this.scrollDetectTimeout = setTimeout(() => this.detectScroll());
