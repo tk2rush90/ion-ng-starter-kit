@@ -29,7 +29,7 @@ import { NgClass } from '@angular/common';
 import { IconButtonDirective } from '../icon-button/icon-button.directive';
 import { BackdropComponent } from '../backdrop/backdrop.component';
 import { ModalComponent } from '../modal/modal.component';
-import { CalendarOverlayComponent } from '../calendar-overlay/calendar-overlay.component';
+import { CalendarComponent } from '../calendar/calendar.component';
 import { fadeInOut } from '../../../animations/fade-in-out';
 import { slideInOutBottom } from '../../../animations/slide-in-out-bottom';
 import {
@@ -46,7 +46,7 @@ import {
     IconButtonDirective,
     BackdropComponent,
     ModalComponent,
-    CalendarOverlayComponent,
+    CalendarComponent,
   ],
   templateUrl: './form-field.component.html',
   styleUrl: './form-field.component.scss',

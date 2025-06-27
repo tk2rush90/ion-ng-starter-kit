@@ -68,7 +68,7 @@
     modalTitle="날짜 선택"
     displayCloseButton
   >
-    <app-calendar-overlay
+    <app-calendar
       (selectedDateChange)="onSelectedDateChange($event)"
       [selectedDate]="currentDate"
       [minDate]="fromDate || minDate"
@@ -76,6 +76,6 @@
       [fromDate]="fromDate"
       [toDate]="toDate"
       [theme]="theme()"
-    ></app-calendar-overlay>
+    ></app-calendar>
   </app-modal>
 </ng-template>

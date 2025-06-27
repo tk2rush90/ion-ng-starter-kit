@@ -65,6 +65,7 @@ import { TabContainerComponent } from '../../components/common/tab-container/tab
 import { TabItemDirective } from '../../components/common/tab-item/tab-item.directive';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { ImageComponent } from '../../components/common/image/image.component';
+import { CalendarComponent } from '../../components/common/calendar/calendar.component';
 
 @Component({
   selector: 'app-example-page',
@@ -102,6 +103,7 @@ import { ImageComponent } from '../../components/common/image/image.component';
     RouterLinkActive,
     RouterLink,
     ImageComponent,
+    CalendarComponent,
   ],
   templateUrl: './example-page.component.html',
   styleUrl: './example-page.component.scss',

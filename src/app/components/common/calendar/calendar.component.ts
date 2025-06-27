@@ -17,7 +17,7 @@ import { FlatButtonDirective } from '../flat-button/flat-button.directive';
 import { VariableColors } from '../../../utils/tailwind.utils';
 
 @Component({
-  selector: 'app-calendar-overlay',
+  selector: 'app-calendar',
   imports: [
     DatePipe,
     NgClass,
@@ -26,13 +26,13 @@ import { VariableColors } from '../../../utils/tailwind.utils';
     LucideAngularModule,
     FlatButtonDirective,
   ],
-  templateUrl: './calendar-overlay.component.html',
-  styleUrl: './calendar-overlay.component.scss',
+  templateUrl: './calendar.component.html',
+  styleUrl: './calendar.component.scss',
   host: {
     class: 'flex flex-col items-stretch gap-6',
   },
 })
-export class CalendarOverlayComponent {
+export class CalendarComponent {
   theme = input<VariableColors>('blue');
 
   /** 반드시 yyyy-MM-dd 포맷 */
