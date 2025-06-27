@@ -13,7 +13,7 @@ import { IconButtonDirective } from '../icon-button/icon-button.directive';
   host: {
     '[style]': `styles`,
     class:
-      'pointer-events-auto rounded-3xl fixed left-1/2 bottom-4 pr-2 pl-4 py-4 bg-white dark:bg-dark-background flex items-center gap-4 shadow-2xl max-w-110 w-full border border-solid border-black/15 dark:border-white/15',
+      'pointer-events-auto rounded-3xl fixed left-1/2 bottom-4 pr-2 pl-4 py-4 bg-white dark:bg-dark-background flex items-center gap-4 shadow-2xl max-w-110 w-full border border-solid border-black/5 dark:border-white/5',
   },
 })
 export class MessageOverlayComponent {
