@@ -654,7 +654,11 @@
     modalTitle="Confirm"
     displayCloseButton
   >
-    <app-confirm cancelMode="transparent" displayCancelButton>
+    <app-confirm
+      cancelMode="transparent"
+      withBottomActionsBorder
+      displayCancelButton
+    >
       이건 확인을 위한 컨펌 모달입니다
     </app-confirm>
   </app-bottom-sheet>
@@ -673,7 +677,11 @@
     modalTitle="Confirm"
     displayCloseButton
   >
-    <app-confirm cancelMode="transparent" displayCancelButton>
+    <app-confirm
+      cancelMode="transparent"
+      withBottomActionsBorder
+      displayCancelButton
+    >
       이건 확인을 위한 컨펌 모달입니다
     </app-confirm>
   </app-modal>
@@ -853,9 +861,9 @@
     <app-checkbox theme="indigo">개인 정보 처리방침에 동의합니다</app-checkbox>
   </div>
 
-  <app-overlay-actions justify="right">
+  <app-bottom-actions justify="right">
     <button type="submit" theme="indigo" appFlatButton>제출하기</button>
-  </app-overlay-actions>
+  </app-bottom-actions>
 </app-card>
 
 <app-card

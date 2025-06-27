@@ -5,7 +5,7 @@ import {
   WEEK_DAYS,
 } from '../../../utils/date.utils';
 import { DatePipe, formatDate, NgClass } from '@angular/common';
-import { OverlayActionsComponent } from '../overlay-actions/overlay-actions.component';
+import { BottomActionsComponent } from '../bottom-actions/bottom-actions.component';
 import { IconButtonDirective } from '../icon-button/icon-button.directive';
 import {
   CalendarFoldIcon,
@@ -15,13 +15,15 @@ import {
 } from 'lucide-angular';
 import { FlatButtonDirective } from '../flat-button/flat-button.directive';
 import { VariableColors } from '../../../utils/tailwind.utils';
+import { WithBottomActions } from '../../../abstracts/with-bottom-actions';
+import { BottomActionsJustify } from '../../../types/bottom-actions-justify';
 
 @Component({
   selector: 'app-calendar',
   imports: [
     DatePipe,
     NgClass,
-    OverlayActionsComponent,
+    BottomActionsComponent,
     IconButtonDirective,
     LucideAngularModule,
     FlatButtonDirective,
@@ -32,7 +34,7 @@ import { VariableColors } from '../../../utils/tailwind.utils';
     class: 'flex flex-col items-stretch gap-6',
   },
 })
-export class CalendarComponent {
+export class CalendarComponent extends WithBottomActions {
   theme = input<VariableColors>('blue');
 
   /** 반드시 yyyy-MM-dd 포맷 */
@@ -50,6 +52,8 @@ export class CalendarComponent {
   /** 범위형 날짜 표시할 때 종료일 */
   toDate = input<Date | string | undefined>();
 
+  override bottomActionsJustify = input<BottomActionsJustify>('between');
+
   /** yyyy-MM-dd 포맷으로 방출 */
   selectedDateChange = output<string>();
 
@@ -62,6 +66,8 @@ export class CalendarComponent {
   selectedDateObject: Date | null = null;
 
   constructor() {
+    super();
+
     effect(() => {
       if (this.selectedDate()) {
         this.displayDate = new Date(this.selectedDate());

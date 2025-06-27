@@ -2,7 +2,10 @@
   <ng-content></ng-content>
 </div>
 
-<app-overlay-actions justify="right">
+<app-bottom-actions
+  [justify]="bottomActionsJustify()"
+  [withBorder]="withBottomActionsBorder()"
+>
   @if (displayCancelButton()) {
     <button
       (click)="clickCancel.emit(); close()"
@@ -25,4 +28,4 @@
   >
     {{ overrideConfirmLabel() || "확인" }}
   </button>
-</app-overlay-actions>
+</app-bottom-actions>

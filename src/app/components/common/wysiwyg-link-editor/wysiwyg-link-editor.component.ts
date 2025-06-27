@@ -6,9 +6,10 @@ import { advancedRequired } from '../../../utils/validator.utils';
 import { AutoFocusDirective } from '../auto-focus/auto-focus.directive';
 import { ImeInputDirective } from '../ime-input/ime-input.directive';
 import { OVERLAY_REF } from '../../../tokens/overlay-ref';
-import { OverlayActionsComponent } from '../overlay-actions/overlay-actions.component';
+import { BottomActionsComponent } from '../bottom-actions/bottom-actions.component';
 import { FlatButtonDirective } from '../flat-button/flat-button.directive';
 import { VariableColors } from '../../../utils/tailwind.utils';
+import { WithBottomActions } from '../../../abstracts/with-bottom-actions';
 
 @Component({
   selector: 'app-wysiwyg-link-editor',
@@ -18,7 +19,7 @@ import { VariableColors } from '../../../utils/tailwind.utils';
     FieldErrorComponent,
     AutoFocusDirective,
     ImeInputDirective,
-    OverlayActionsComponent,
+    BottomActionsComponent,
     FlatButtonDirective,
   ],
   templateUrl: './wysiwyg-link-editor.component.html',
@@ -27,7 +28,10 @@ import { VariableColors } from '../../../utils/tailwind.utils';
     class: 'flex flex-col items-stretch',
   },
 })
-export class WysiwygLinkEditorComponent implements OnInit {
+export class WysiwygLinkEditorComponent
+  extends WithBottomActions
+  implements OnInit
+{
   theme = input<VariableColors>('blue');
 
   url = input('');

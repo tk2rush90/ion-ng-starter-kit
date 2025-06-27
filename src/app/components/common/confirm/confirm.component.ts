@@ -7,17 +7,18 @@ import {
 } from '@angular/core';
 import { OVERLAY_REF } from '../../../tokens/overlay-ref';
 import { AutoFocusDirective } from '../auto-focus/auto-focus.directive';
-import { OverlayActionsComponent } from '../overlay-actions/overlay-actions.component';
+import { BottomActionsComponent } from '../bottom-actions/bottom-actions.component';
 import { VariableColors } from '../../../utils/tailwind.utils';
 import { FlatButtonDirective } from '../flat-button/flat-button.directive';
 import { FlatButtonMode } from '../../../types/flat-button-mode';
+import { WithBottomActions } from '../../../abstracts/with-bottom-actions';
 
 @Component({
   selector: 'app-confirm',
   imports: [
     AutoFocusDirective,
-    OverlayActionsComponent,
-    OverlayActionsComponent,
+    BottomActionsComponent,
+    BottomActionsComponent,
     FlatButtonDirective,
   ],
   templateUrl: './confirm.component.html',
@@ -26,7 +27,7 @@ import { FlatButtonMode } from '../../../types/flat-button-mode';
     class: 'flex flex-col items-stretch',
   },
 })
-export class ConfirmComponent {
+export class ConfirmComponent extends WithBottomActions {
   confirmTheme = input<VariableColors>('blue');
 
   cancelTheme = input<VariableColors>('red');

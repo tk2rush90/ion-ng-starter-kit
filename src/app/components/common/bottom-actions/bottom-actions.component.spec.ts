@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { OverlayActionsComponent } from './overlay-actions.component';
+import { BottomActionsComponent } from './bottom-actions.component';
 
 describe('SheetActionsComponent', () => {
-  let component: OverlayActionsComponent;
-  let fixture: ComponentFixture<OverlayActionsComponent>;
+  let component: BottomActionsComponent;
+  let fixture: ComponentFixture<BottomActionsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [OverlayActionsComponent],
+      imports: [BottomActionsComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(OverlayActionsComponent);
+    fixture = TestBed.createComponent(BottomActionsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

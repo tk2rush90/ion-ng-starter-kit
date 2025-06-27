@@ -48,7 +48,10 @@
   </div>
 </div>
 
-<app-overlay-actions justify="between">
+<app-bottom-actions
+  [justify]="bottomActionsJustify()"
+  [withBorder]="withBottomActionsBorder()"
+>
   <button (click)="toPreviousMonth()" type="button" tabindex="-1" appIconButton>
     <i-lucide [img]="ChevronLeft"></i-lucide>
   </button>
@@ -68,4 +71,4 @@
   <button (click)="toNextMonth()" type="button" tabindex="-1" appIconButton>
     <i-lucide [img]="ChevronRight"></i-lucide>
   </button>
-</app-overlay-actions>
+</app-bottom-actions>

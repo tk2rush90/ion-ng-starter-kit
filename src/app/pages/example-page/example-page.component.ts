@@ -40,7 +40,7 @@ import {
 } from '../../utils/prosemirror.utils';
 import { CardComponent } from '../../components/common/card/card.component';
 import { ImeInputDirective } from '../../components/common/ime-input/ime-input.directive';
-import { OverlayActionsComponent } from '../../components/common/overlay-actions/overlay-actions.component';
+import { BottomActionsComponent } from '../../components/common/bottom-actions/bottom-actions.component';
 import { createDraggable } from 'animejs';
 import { AngularPlatform } from '../../utils/platform.utils';
 import { MessageOverlayComponent } from '../../components/common/message-overlay/message-overlay.component';
@@ -90,7 +90,7 @@ import { CalendarComponent } from '../../components/common/calendar/calendar.com
     WysiwygEditorActionsComponent,
     CardComponent,
     ImeInputDirective,
-    OverlayActionsComponent,
+    BottomActionsComponent,
     MessageOverlayComponent,
     LucideAngularModule,
     SideBarContainerComponent,

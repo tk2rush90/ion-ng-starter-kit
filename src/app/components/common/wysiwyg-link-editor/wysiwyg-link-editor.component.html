@@ -22,7 +22,10 @@
     </app-form-field>
   </div>
 
-  <app-overlay-actions justify="right">
+  <app-bottom-actions
+    [justify]="bottomActionsJustify()"
+    [withBorder]="withBottomActionsBorder()"
+  >
     <button
       (click)="$event.stopPropagation()"
       [disabled]="formGroup.invalid"
@@ -32,5 +35,5 @@
     >
       저장하기
     </button>
-  </app-overlay-actions>
+  </app-bottom-actions>
 </form>
