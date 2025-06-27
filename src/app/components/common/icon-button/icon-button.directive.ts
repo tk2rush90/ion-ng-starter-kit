@@ -9,14 +9,14 @@ import { VariableColors } from '../../../utils/tailwind.utils';
   },
 })
 export class IconButtonDirective {
-  theme = input<VariableColors | 'black'>('black');
+  theme = input<VariableColors | 'transparent'>('transparent');
 
   classes = computed(() => {
     const theme = this.theme();
 
     const classes: any = {};
 
-    if (theme === 'black') {
+    if (theme === 'transparent') {
       classes['text-current'] = true;
       classes['hover:bg-black/5'] = true;
       classes['active:bg-black/10'] = true;

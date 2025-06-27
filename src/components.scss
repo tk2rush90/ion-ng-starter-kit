@@ -11,6 +11,13 @@
   }
 }
 
+app-chip {
+  .app-icon,
+  i-lucide svg {
+    @apply size-4;
+  }
+}
+
 .app-icon {
   svg {
     @apply size-full;

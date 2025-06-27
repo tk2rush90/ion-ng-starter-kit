@@ -58,6 +58,7 @@ import { SideBarContainerComponent } from '../../components/common/side-bar-cont
 import { SideBarComponent } from '../../components/common/side-bar/side-bar.component';
 import { IconButtonDirective } from '../../components/common/icon-button/icon-button.directive';
 import { SideBarOverlayComponent } from '../../components/common/side-bar-overlay/side-bar-overlay.component';
+import { ChipComponent } from '../../components/common/chip/chip.component';
 
 @Component({
   selector: 'app-example-page',
@@ -89,6 +90,7 @@ import { SideBarOverlayComponent } from '../../components/common/side-bar-overla
     SideBarComponent,
     IconButtonDirective,
     SideBarOverlayComponent,
+    ChipComponent,
   ],
   templateUrl: './example-page.component.html',
   styleUrl: './example-page.component.scss',

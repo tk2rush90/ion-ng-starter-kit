@@ -41,7 +41,7 @@
           $event.stopPropagation(); $event.preventDefault(); toggleHeading(2)
         "
         [ngClass]="getButtonEffectClasses(isCursorInHeading(2))"
-        [theme]="isCursorInHeading(2) ? theme() : 'black'"
+        [theme]="isCursorInHeading(2) ? theme() : 'transparent'"
         appIconButton
         class="relative *:scale-90 after:absolute after:left-1/2 after:top-0.5 after:block after:size-1 after:-translate-x-1/2 after:rounded-full after:bg-current after:transition-all after:content-['']"
         type="button"
@@ -56,7 +56,7 @@
           $event.stopPropagation(); $event.preventDefault(); toggleHeading(3)
         "
         [ngClass]="getButtonEffectClasses(isCursorInHeading(3))"
-        [theme]="isCursorInHeading(3) ? theme() : 'black'"
+        [theme]="isCursorInHeading(3) ? theme() : 'transparent'"
         appIconButton
         class="relative *:scale-90 after:absolute after:left-1/2 after:top-0.5 after:block after:size-1 after:-translate-x-1/2 after:rounded-full after:bg-current after:transition-all after:content-['']"
         type="button"
@@ -71,7 +71,7 @@
           $event.stopPropagation(); $event.preventDefault(); toggleHeading(4)
         "
         [ngClass]="getButtonEffectClasses(isCursorInHeading(4))"
-        [theme]="isCursorInHeading(4) ? theme() : 'black'"
+        [theme]="isCursorInHeading(4) ? theme() : 'transparent'"
         appIconButton
         class="relative *:scale-90 after:absolute after:left-1/2 after:top-0.5 after:block after:size-1 after:-translate-x-1/2 after:rounded-full after:bg-current after:transition-all after:content-['']"
         type="button"
@@ -216,7 +216,7 @@
         $event.stopPropagation(); $event.preventDefault(); toggleBold()
       "
       [ngClass]="getButtonEffectClasses(isBoldActive())"
-      [theme]="isBoldActive() ? theme() : 'black'"
+      [theme]="isBoldActive() ? theme() : 'transparent'"
       appIconButton
       class="relative *:scale-90 after:absolute after:left-1/2 after:top-0.5 after:block after:size-1 after:-translate-x-1/2 after:rounded-full after:bg-current after:transition-all after:content-['']"
       type="button"
@@ -231,7 +231,7 @@
         $event.stopPropagation(); $event.preventDefault(); toggleItalic()
       "
       [ngClass]="getButtonEffectClasses(isItalic())"
-      [theme]="isItalic() ? theme() : 'black'"
+      [theme]="isItalic() ? theme() : 'transparent'"
       appIconButton
       class="relative *:scale-90 after:absolute after:left-1/2 after:top-0.5 after:block after:size-1 after:-translate-x-1/2 after:rounded-full after:bg-current after:transition-all after:content-['']"
       type="button"
@@ -246,7 +246,7 @@
         $event.stopPropagation(); $event.preventDefault(); toggleUnderline()
       "
       [ngClass]="getButtonEffectClasses(isUnderlineActive())"
-      [theme]="isUnderlineActive() ? theme() : 'black'"
+      [theme]="isUnderlineActive() ? theme() : 'transparent'"
       appIconButton
       class="relative *:scale-90 after:absolute after:left-1/2 after:top-0.5 after:block after:size-1 after:-translate-x-1/2 after:rounded-full after:bg-current after:transition-all after:content-['']"
       type="button"
@@ -261,7 +261,7 @@
         $event.stopPropagation(); $event.preventDefault(); toggleLineThrough()
       "
       [ngClass]="getButtonEffectClasses(isStrike())"
-      [theme]="isStrike() ? theme() : 'black'"
+      [theme]="isStrike() ? theme() : 'transparent'"
       appIconButton
       class="relative *:scale-90 after:absolute after:left-1/2 after:top-0.5 after:block after:size-1 after:-translate-x-1/2 after:rounded-full after:bg-current after:transition-all after:content-['']"
       type="button"
@@ -277,7 +277,7 @@
           $event.stopPropagation(); $event.preventDefault(); toggleCode()
         "
         [ngClass]="getButtonEffectClasses(isCode())"
-        [theme]="isCode() ? theme() : 'black'"
+        [theme]="isCode() ? theme() : 'transparent'"
         appIconButton
         class="relative *:scale-90 after:absolute after:left-1/2 after:top-0.5 after:block after:size-1 after:-translate-x-1/2 after:rounded-full after:bg-current after:transition-all after:content-['']"
         type="button"
@@ -294,7 +294,7 @@
           $event.stopPropagation(); $event.preventDefault(); openLinkEditor()
         "
         [ngClass]="getButtonEffectClasses(isLink())"
-        [theme]="isLink() ? theme() : 'black'"
+        [theme]="isLink() ? theme() : 'transparent'"
         appIconButton
         class="relative *:scale-90 after:absolute after:left-1/2 after:top-0.5 after:block after:size-1 after:-translate-x-1/2 after:rounded-full after:bg-current after:transition-all after:content-['']"
         type="button"
