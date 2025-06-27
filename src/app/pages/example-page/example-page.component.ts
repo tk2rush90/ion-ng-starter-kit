@@ -64,6 +64,7 @@ import { ChipComponent } from '../../components/common/chip/chip.component';
 import { TabContainerComponent } from '../../components/common/tab-container/tab-container.component';
 import { TabItemDirective } from '../../components/common/tab-item/tab-item.directive';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { ImageComponent } from '../../components/common/image/image.component';
 
 @Component({
   selector: 'app-example-page',
@@ -100,6 +101,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
     TabItemDirective,
     RouterLinkActive,
     RouterLink,
+    ImageComponent,
   ],
   templateUrl: './example-page.component.html',
   styleUrl: './example-page.component.scss',
