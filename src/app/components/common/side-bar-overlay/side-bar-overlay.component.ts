@@ -1,11 +1,12 @@
 import {
+  AfterViewInit,
   booleanAttribute,
   Component,
   computed,
   inject,
   input,
+  signal,
 } from '@angular/core';
-import { OVERLAY_REF } from '../../../tokens/overlay-ref';
 import { SideBarPosition } from '../../../types/side-bar-position';
 import { spacingToRem } from '../../../utils/tailwind.utils';
 import {
@@ -15,6 +16,7 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
+import { OVERLAY_REF } from '../../../tokens/overlay-ref';
 
 @Component({
   selector: 'app-side-bar-overlay',
@@ -24,7 +26,8 @@ import {
   host: {
     '[@sideBarOverlay]': `sideBarOverlayState()`,
     '[class]': `classes()`,
-    class: `fixed bg-white dark:bg-dark-background overflow-auto flex flex-col items-stretch w-[calc(100dvw-${spacingToRem(8)}rem)]`,
+    '[style]': `styles()`,
+    class: `fixed bg-white dark:bg-dark-background overflow-auto flex flex-col items-stretch pointer-events-auto`,
   },
   animations: [
     trigger('sideBarOverlay', [
@@ -33,9 +36,14 @@ import {
         style({
           transform: `{{ translateX }}`,
         }),
+        {
+          params: {
+            translateX: 'translateX(0%)',
+          },
+        },
       ),
       transition(
-        'void => *',
+        'void => show',
         animate(
           '.15s ease-out',
           style({
@@ -47,7 +55,7 @@ import {
     ]),
   ],
 })
-export class SideBarOverlayComponent {
+export class SideBarOverlayComponent implements AfterViewInit {
   /** 플로팅 설정 시 오버레이가 화면 바운더리에 붙어있지 않고 떠있는 형태로 렌더링 된다 */
   floating = input(false, {
     transform: booleanAttribute,
@@ -68,12 +76,20 @@ export class SideBarOverlayComponent {
       'top-0': !floating,
       'top-4': floating,
       'bottom-0': !floating,
-      'bottom-0': floating,
+      'bottom-4': floating,
       'left-0': isLeftPosition && !floating,
       'left-4': isLeftPosition && floating,
       'right-0': isRightPosition && !floating,
       'right-4': isRightPosition && floating,
       'rounded-3xl': floating,
+    };
+  });
+
+  styles = computed(() => {
+    const floating = this.floating();
+
+    return {
+      width: `calc(100dvw - ${spacingToRem(floating ? 8 : 4)}rem)`,
     };
   });
 
@@ -85,14 +101,26 @@ export class SideBarOverlayComponent {
 
   sideBarOverlayState = computed(() => {
     return {
-      value: 'show',
+      value: this.isReady() ? 'show' : 'void',
       params: {
         translateX: this.translateX(),
       },
     };
   });
 
+  /**
+   * 슬라이드 애니메이션 시 컴포넌트 생성 즉시 애니메이션을 실행하면
+   * void 상태의 초기 translateX 값이 제대로 바인딩 되지 않는 문제가 발생.
+   * 문제를 해결하기 위해 View가 초기화 되고난 후 이 값을 true로 변경시켜
+   * 애니메이션 실행
+   */
+  isReady = signal(false);
+
   private readonly overlayRef = inject(OVERLAY_REF);
+
+  ngAfterViewInit() {
+    this.isReady.set(true);
+  }
 
   close(): void {
     this.overlayRef.close();

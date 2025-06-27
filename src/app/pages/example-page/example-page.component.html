@@ -1565,13 +1565,57 @@
 </app-side-bar-container>
 
 <button (click)="openOverlay(sideBarOverlayLeft)" type="button" appFlatButton>
-  SideBarOverlay Open
+  Left SideBarOverlay Open
 </button>
 
 <ng-template #sideBarOverlayLeft>
   <app-backdrop @fadeInOut></app-backdrop>
 
-  <app-side-bar-overlay @fadeInOut position="left">
+  <app-side-bar-overlay @fadeInOut class="max-w-80" position="left">
     Left Sidebar
+  </app-side-bar-overlay>
+</ng-template>
+
+<button (click)="openOverlay(sideBarOverlayRight)" type="button" appFlatButton>
+  Right SideBarOverlay Open
+</button>
+
+<ng-template #sideBarOverlayRight>
+  <app-backdrop @fadeInOut></app-backdrop>
+
+  <app-side-bar-overlay @fadeInOut class="max-w-80" position="right">
+    Right Sidebar
+  </app-side-bar-overlay>
+</ng-template>
+
+<button
+  (click)="openOverlay(sideBarOverlayLeftFloating)"
+  type="button"
+  appFlatButton
+>
+  LeftFloating SideBarOverlay Open
+</button>
+
+<ng-template #sideBarOverlayLeftFloating>
+  <app-backdrop @fadeInOut></app-backdrop>
+
+  <app-side-bar-overlay @fadeInOut class="max-w-80" position="left" floating>
+    LeftFloating Sidebar
+  </app-side-bar-overlay>
+</ng-template>
+
+<button
+  (click)="openOverlay(sideBarOverlayRightFloating)"
+  type="button"
+  appFlatButton
+>
+  RightFloating SideBarOverlay Open
+</button>
+
+<ng-template #sideBarOverlayRightFloating>
+  <app-backdrop @fadeInOut></app-backdrop>
+
+  <app-side-bar-overlay @fadeInOut class="max-w-80" position="right" floating>
+    RightFloating Sidebar
   </app-side-bar-overlay>
 </ng-template>
