@@ -952,3 +952,614 @@
     </ng-container>
   </app-message-overlay>
 </ng-template>
+
+<app-side-bar-container
+  class="aspect-video max-w-screen-md overflow-hidden rounded-3xl border border-black/15"
+>
+  <app-side-bar #sideBar class="w-80" position="left" withShadow>
+    <button (click)="sideBar.close()" type="button" appFlatButton>
+      사이드바 닫기
+    </button>
+  </app-side-bar>
+
+  <div class="flex flex-col items-stretch">
+    <div class="flex items-center justify-start gap-1">
+      <button (click)="sideBar.open()" type="button" appFlatButton>
+        사이드바 열기
+      </button>
+
+      <button (click)="sideBar.toggle()" type="button" appFlatButton>
+        사이드바 토글
+      </button>
+    </div>
+
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac neque
+    mauris. Maecenas pulvinar enim non iaculis tincidunt. Praesent interdum
+    commodo quam at varius. Sed vitae ex varius, ornare libero vulputate, ornare
+    tortor. In hac habitasse platea dictumst. Lorem ipsum dolor sit amet,
+    consectetur adipiscing elit. Curabitur nibh arcu, tempus nec blandit sit
+    amet, facilisis nec risus. Suspendisse vestibulum est metus. Pellentesque ut
+    est vitae quam tempus laoreet ac quis urna. Pellentesque habitant morbi
+    tristique senectus et netus et malesuada fames ac turpis egestas.
+    Suspendisse gravida nunc id eleifend egestas. Vestibulum laoreet aliquet
+    turpis ut luctus. Donec dictum nisi vitae gravida volutpat. Nullam interdum,
+    tortor vitae viverra dignissim, felis sapien posuere sapien, et vulputate
+    nulla nisi id dui. Ut et malesuada nibh. Praesent posuere a nulla et
+    convallis. Fusce consequat tellus sed quam tincidunt fermentum. Sed gravida
+    convallis dui sit amet tempor. Cras id erat finibus quam porttitor porttitor
+    ut vel massa. Aliquam mollis vulputate lacus, ac maximus ligula varius quis.
+    Nulla sollicitudin, augue fringilla porta ultricies, sapien erat tempor est,
+    non tempus mauris enim blandit nibh. Aliquam erat volutpat. Etiam vitae
+    vulputate lacus, ut pharetra lectus. Donec non sapien mauris. Duis sed erat
+    ut elit consequat porta non sed nulla. Vestibulum dictum erat vitae neque
+    ullamcorper, nec aliquet erat dignissim. Phasellus non tellus porta elit
+    eleifend rutrum. Sed ultricies turpis velit, vel egestas mi placerat eu. Ut
+    aliquet tincidunt tempus. Aliquam nec elementum lacus, a tincidunt lacus.
+    Duis diam eros, semper a molestie ac, tempor a mi. Morbi lobortis, magna id
+    pulvinar ullamcorper, purus velit imperdiet nulla, sed finibus orci nunc in
+    velit. Nam sit amet libero finibus, mollis dolor eget, blandit metus. Sed
+    aliquet dui non mi pharetra ornare. Duis a tempor tellus. Donec vel suscipit
+    tortor, at vestibulum lacus. Proin at rhoncus nisi. Sed dignissim diam nibh,
+    ut feugiat tellus iaculis id. Curabitur eu varius metus, et tincidunt urna.
+    Suspendisse velit sem, tempor non fringilla ac, pharetra faucibus nunc. Cras
+    eleifend pharetra magna sit amet posuere. Aliquam ut nisl vel massa
+    pellentesque eleifend eu vehicula felis. Donec vitae elit nec arcu cursus
+    mattis sed vel dolor. Etiam eleifend nisi nibh, ac suscipit odio efficitur
+    sit amet. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent
+    molestie malesuada ex, eu pretium urna aliquam sed. Donec laoreet lorem at
+    erat sodales congue. Aenean tempus felis eget consectetur tincidunt. Aliquam
+    commodo, enim id laoreet blandit, dolor orci aliquam nibh, et vulputate
+    nulla elit vitae felis. Donec accumsan dui id placerat lacinia. Sed tempor
+    ullamcorper augue, sed finibus diam sollicitudin quis. Suspendisse porttitor
+    elementum consectetur. Phasellus sollicitudin pellentesque euismod. Mauris
+    luctus auctor urna, sed volutpat justo. Mauris nec sem elementum, placerat
+    magna vel, sollicitudin enim. Donec non orci vel enim pretium mollis id ut
+    arcu. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices
+    posuere cubilia curae; Mauris fermentum erat nec purus commodo commodo. Nunc
+    porta, nunc sed luctus posuere, eros tortor finibus turpis, ut aliquam urna
+    erat fermentum sapien. Vestibulum finibus et velit vitae varius. Suspendisse
+    vitae sem at purus semper suscipit vitae quis augue. Suspendisse rhoncus
+    neque a suscipit vestibulum. Suspendisse euismod leo a mauris aliquet
+    egestas. Ut porta, massa ac mollis convallis, mauris purus tristique odio,
+  </div>
+</app-side-bar-container>
+
+<app-side-bar-container
+  class="aspect-video max-w-screen-md overflow-hidden rounded-3xl border border-black/15"
+>
+  <app-side-bar #sideBar2 class="w-80" position="left" withShadow>
+    <div class="flex items-center justify-end p-4">
+      @if (sideBar2.isOpened()) {
+        <button (click)="sideBar2.close()" type="button" appIconButton>
+          <i-lucide [img]="PanelLeftCloseIcon"></i-lucide>
+        </button>
+      }
+    </div>
+  </app-side-bar>
+
+  <div class="flex flex-col items-stretch p-4">
+    <div class="flex items-center justify-start gap-1">
+      @if (!sideBar2.isOpened()) {
+        <button
+          @fadeInOut
+          (click)="sideBar2.open()"
+          type="button"
+          appIconButton
+        >
+          <i-lucide [img]="PanelLeftOpenIcon"></i-lucide>
+        </button>
+      }
+    </div>
+
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac neque
+    mauris. Maecenas pulvinar enim non iaculis tincidunt. Praesent interdum
+    commodo quam at varius. Sed vitae ex varius, ornare libero vulputate, ornare
+    tortor. In hac habitasse platea dictumst. Lorem ipsum dolor sit amet,
+    consectetur adipiscing elit. Curabitur nibh arcu, tempus nec blandit sit
+    amet, facilisis nec risus. Suspendisse vestibulum est metus. Pellentesque ut
+    est vitae quam tempus laoreet ac quis urna. Pellentesque habitant morbi
+    tristique senectus et netus et malesuada fames ac turpis egestas.
+    Suspendisse gravida nunc id eleifend egestas. Vestibulum laoreet aliquet
+    turpis ut luctus. Donec dictum nisi vitae gravida volutpat. Nullam interdum,
+    tortor vitae viverra dignissim, felis sapien posuere sapien, et vulputate
+    nulla nisi id dui. Ut et malesuada nibh. Praesent posuere a nulla et
+    convallis. Fusce consequat tellus sed quam tincidunt fermentum. Sed gravida
+    convallis dui sit amet tempor. Cras id erat finibus quam porttitor porttitor
+    ut vel massa. Aliquam mollis vulputate lacus, ac maximus ligula varius quis.
+    Nulla sollicitudin, augue fringilla porta ultricies, sapien erat tempor est,
+    non tempus mauris enim blandit nibh. Aliquam erat volutpat. Etiam vitae
+    vulputate lacus, ut pharetra lectus. Donec non sapien mauris. Duis sed erat
+    ut elit consequat porta non sed nulla. Vestibulum dictum erat vitae neque
+    ullamcorper, nec aliquet erat dignissim. Phasellus non tellus porta elit
+    eleifend rutrum. Sed ultricies turpis velit, vel egestas mi placerat eu. Ut
+    aliquet tincidunt tempus. Aliquam nec elementum lacus, a tincidunt lacus.
+    Duis diam eros, semper a molestie ac, tempor a mi. Morbi lobortis, magna id
+    pulvinar ullamcorper, purus velit imperdiet nulla, sed finibus orci nunc in
+    velit. Nam sit amet libero finibus, mollis dolor eget, blandit metus. Sed
+    aliquet dui non mi pharetra ornare. Duis a tempor tellus. Donec vel suscipit
+    tortor, at vestibulum lacus. Proin at rhoncus nisi. Sed dignissim diam nibh,
+    ut feugiat tellus iaculis id. Curabitur eu varius metus, et tincidunt urna.
+    Suspendisse velit sem, tempor non fringilla ac, pharetra faucibus nunc. Cras
+    eleifend pharetra magna sit amet posuere. Aliquam ut nisl vel massa
+    pellentesque eleifend eu vehicula felis. Donec vitae elit nec arcu cursus
+    mattis sed vel dolor. Etiam eleifend nisi nibh, ac suscipit odio efficitur
+    sit amet. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent
+    molestie malesuada ex, eu pretium urna aliquam sed. Donec laoreet lorem at
+    erat sodales congue. Aenean tempus felis eget consectetur tincidunt. Aliquam
+    commodo, enim id laoreet blandit, dolor orci aliquam nibh, et vulputate
+    nulla elit vitae felis. Donec accumsan dui id placerat lacinia. Sed tempor
+    ullamcorper augue, sed finibus diam sollicitudin quis. Suspendisse porttitor
+    elementum consectetur. Phasellus sollicitudin pellentesque euismod. Mauris
+    luctus auctor urna, sed volutpat justo. Mauris nec sem elementum, placerat
+    magna vel, sollicitudin enim. Donec non orci vel enim pretium mollis id ut
+    arcu. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices
+    posuere cubilia curae; Mauris fermentum erat nec purus commodo commodo. Nunc
+    porta, nunc sed luctus posuere, eros tortor finibus turpis, ut aliquam urna
+    erat fermentum sapien. Vestibulum finibus et velit vitae varius. Suspendisse
+    vitae sem at purus semper suscipit vitae quis augue. Suspendisse rhoncus
+    neque a suscipit vestibulum. Suspendisse euismod leo a mauris aliquet
+    egestas. Ut porta, massa ac mollis convallis, mauris purus tristique odio,
+  </div>
+</app-side-bar-container>
+
+<app-side-bar-container
+  class="aspect-video max-w-screen-md overflow-hidden rounded-3xl border border-black/15"
+>
+  <app-side-bar
+    #sideBar3
+    class="z-10 w-80 bg-white"
+    position="left"
+    keepSize="1.25rem"
+    withShadow
+  >
+    <div class="flex items-center justify-end p-4">
+      <div
+        class="absolute right-0 top-4 z-50 flex size-9 translate-x-1/2 items-center justify-center rounded-full border border-black/15 bg-white shadow-2xl"
+      >
+        <button (click)="sideBar3.toggle()" type="button" appIconButton>
+          @if (sideBar3.isOpened()) {
+            <i-lucide [img]="PanelLeftCloseIcon"></i-lucide>
+          } @else {
+            <i-lucide [img]="PanelLeftOpenIcon"></i-lucide>
+          }
+        </button>
+      </div>
+    </div>
+  </app-side-bar>
+
+  <div class="flex flex-col items-stretch p-4">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac neque
+    mauris. Maecenas pulvinar enim non iaculis tincidunt. Praesent interdum
+    commodo quam at varius. Sed vitae ex varius, ornare libero vulputate, ornare
+    tortor. In hac habitasse platea dictumst. Lorem ipsum dolor sit amet,
+    consectetur adipiscing elit. Curabitur nibh arcu, tempus nec blandit sit
+    amet, facilisis nec risus. Suspendisse vestibulum est metus. Pellentesque ut
+    est vitae quam tempus laoreet ac quis urna. Pellentesque habitant morbi
+    tristique senectus et netus et malesuada fames ac turpis egestas.
+    Suspendisse gravida nunc id eleifend egestas. Vestibulum laoreet aliquet
+    turpis ut luctus. Donec dictum nisi vitae gravida volutpat. Nullam interdum,
+    tortor vitae viverra dignissim, felis sapien posuere sapien, et vulputate
+    nulla nisi id dui. Ut et malesuada nibh. Praesent posuere a nulla et
+    convallis. Fusce consequat tellus sed quam tincidunt fermentum. Sed gravida
+    convallis dui sit amet tempor. Cras id erat finibus quam porttitor porttitor
+    ut vel massa. Aliquam mollis vulputate lacus, ac maximus ligula varius quis.
+    Nulla sollicitudin, augue fringilla porta ultricies, sapien erat tempor est,
+    non tempus mauris enim blandit nibh. Aliquam erat volutpat. Etiam vitae
+    vulputate lacus, ut pharetra lectus. Donec non sapien mauris. Duis sed erat
+    ut elit consequat porta non sed nulla. Vestibulum dictum erat vitae neque
+    ullamcorper, nec aliquet erat dignissim. Phasellus non tellus porta elit
+    eleifend rutrum. Sed ultricies turpis velit, vel egestas mi placerat eu. Ut
+    aliquet tincidunt tempus. Aliquam nec elementum lacus, a tincidunt lacus.
+    Duis diam eros, semper a molestie ac, tempor a mi. Morbi lobortis, magna id
+    pulvinar ullamcorper, purus velit imperdiet nulla, sed finibus orci nunc in
+    velit. Nam sit amet libero finibus, mollis dolor eget, blandit metus. Sed
+    aliquet dui non mi pharetra ornare. Duis a tempor tellus. Donec vel suscipit
+    tortor, at vestibulum lacus. Proin at rhoncus nisi. Sed dignissim diam nibh,
+    ut feugiat tellus iaculis id. Curabitur eu varius metus, et tincidunt urna.
+    Suspendisse velit sem, tempor non fringilla ac, pharetra faucibus nunc. Cras
+    eleifend pharetra magna sit amet posuere. Aliquam ut nisl vel massa
+    pellentesque eleifend eu vehicula felis. Donec vitae elit nec arcu cursus
+    mattis sed vel dolor. Etiam eleifend nisi nibh, ac suscipit odio efficitur
+    sit amet. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent
+    molestie malesuada ex, eu pretium urna aliquam sed. Donec laoreet lorem at
+    erat sodales congue. Aenean tempus felis eget consectetur tincidunt. Aliquam
+    commodo, enim id laoreet blandit, dolor orci aliquam nibh, et vulputate
+    nulla elit vitae felis. Donec accumsan dui id placerat lacinia. Sed tempor
+    ullamcorper augue, sed finibus diam sollicitudin quis. Suspendisse porttitor
+    elementum consectetur. Phasellus sollicitudin pellentesque euismod. Mauris
+    luctus auctor urna, sed volutpat justo. Mauris nec sem elementum, placerat
+    magna vel, sollicitudin enim. Donec non orci vel enim pretium mollis id ut
+    arcu. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices
+    posuere cubilia curae; Mauris fermentum erat nec purus commodo commodo. Nunc
+    porta, nunc sed luctus posuere, eros tortor finibus turpis, ut aliquam urna
+    erat fermentum sapien. Vestibulum finibus et velit vitae varius. Suspendisse
+    vitae sem at purus semper suscipit vitae quis augue. Suspendisse rhoncus
+    neque a suscipit vestibulum. Suspendisse euismod leo a mauris aliquet
+    egestas. Ut porta, massa ac mollis convallis, mauris purus tristique odio,
+  </div>
+</app-side-bar-container>
+
+<app-side-bar-container
+  class="aspect-video max-w-screen-md overflow-hidden rounded-3xl border border-black/15"
+>
+  <app-side-bar
+    #sideBar4
+    class="z-10 w-80 bg-white"
+    position="left"
+    keepSize="1.25rem"
+    overlapContent
+    withShadow
+  >
+    <div class="flex items-center justify-end p-4">
+      <div
+        class="absolute right-0 top-4 z-50 flex size-9 translate-x-1/2 items-center justify-center rounded-full border border-black/15 bg-white shadow-2xl"
+      >
+        <button (click)="sideBar4.toggle()" type="button" appIconButton>
+          @if (sideBar4.isOpened()) {
+            <i-lucide [img]="PanelLeftCloseIcon"></i-lucide>
+          } @else {
+            <i-lucide [img]="PanelLeftOpenIcon"></i-lucide>
+          }
+        </button>
+      </div>
+    </div>
+  </app-side-bar>
+
+  <div class="flex flex-col items-stretch p-4">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac neque
+    mauris. Maecenas pulvinar enim non iaculis tincidunt. Praesent interdum
+    commodo quam at varius. Sed vitae ex varius, ornare libero vulputate, ornare
+    tortor. In hac habitasse platea dictumst. Lorem ipsum dolor sit amet,
+    consectetur adipiscing elit. Curabitur nibh arcu, tempus nec blandit sit
+    amet, facilisis nec risus. Suspendisse vestibulum est metus. Pellentesque ut
+    est vitae quam tempus laoreet ac quis urna. Pellentesque habitant morbi
+    tristique senectus et netus et malesuada fames ac turpis egestas.
+    Suspendisse gravida nunc id eleifend egestas. Vestibulum laoreet aliquet
+    turpis ut luctus. Donec dictum nisi vitae gravida volutpat. Nullam interdum,
+    tortor vitae viverra dignissim, felis sapien posuere sapien, et vulputate
+    nulla nisi id dui. Ut et malesuada nibh. Praesent posuere a nulla et
+    convallis. Fusce consequat tellus sed quam tincidunt fermentum. Sed gravida
+    convallis dui sit amet tempor. Cras id erat finibus quam porttitor porttitor
+    ut vel massa. Aliquam mollis vulputate lacus, ac maximus ligula varius quis.
+    Nulla sollicitudin, augue fringilla porta ultricies, sapien erat tempor est,
+    non tempus mauris enim blandit nibh. Aliquam erat volutpat. Etiam vitae
+    vulputate lacus, ut pharetra lectus. Donec non sapien mauris. Duis sed erat
+    ut elit consequat porta non sed nulla. Vestibulum dictum erat vitae neque
+    ullamcorper, nec aliquet erat dignissim. Phasellus non tellus porta elit
+    eleifend rutrum. Sed ultricies turpis velit, vel egestas mi placerat eu. Ut
+    aliquet tincidunt tempus. Aliquam nec elementum lacus, a tincidunt lacus.
+    Duis diam eros, semper a molestie ac, tempor a mi. Morbi lobortis, magna id
+    pulvinar ullamcorper, purus velit imperdiet nulla, sed finibus orci nunc in
+    velit. Nam sit amet libero finibus, mollis dolor eget, blandit metus. Sed
+    aliquet dui non mi pharetra ornare. Duis a tempor tellus. Donec vel suscipit
+    tortor, at vestibulum lacus. Proin at rhoncus nisi. Sed dignissim diam nibh,
+    ut feugiat tellus iaculis id. Curabitur eu varius metus, et tincidunt urna.
+    Suspendisse velit sem, tempor non fringilla ac, pharetra faucibus nunc. Cras
+    eleifend pharetra magna sit amet posuere. Aliquam ut nisl vel massa
+    pellentesque eleifend eu vehicula felis. Donec vitae elit nec arcu cursus
+    mattis sed vel dolor. Etiam eleifend nisi nibh, ac suscipit odio efficitur
+    sit amet. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent
+    molestie malesuada ex, eu pretium urna aliquam sed. Donec laoreet lorem at
+    erat sodales congue. Aenean tempus felis eget consectetur tincidunt. Aliquam
+    commodo, enim id laoreet blandit, dolor orci aliquam nibh, et vulputate
+    nulla elit vitae felis. Donec accumsan dui id placerat lacinia. Sed tempor
+    ullamcorper augue, sed finibus diam sollicitudin quis. Suspendisse porttitor
+    elementum consectetur. Phasellus sollicitudin pellentesque euismod. Mauris
+    luctus auctor urna, sed volutpat justo. Mauris nec sem elementum, placerat
+    magna vel, sollicitudin enim. Donec non orci vel enim pretium mollis id ut
+    arcu. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices
+    posuere cubilia curae; Mauris fermentum erat nec purus commodo commodo. Nunc
+    porta, nunc sed luctus posuere, eros tortor finibus turpis, ut aliquam urna
+    erat fermentum sapien. Vestibulum finibus et velit vitae varius. Suspendisse
+    vitae sem at purus semper suscipit vitae quis augue. Suspendisse rhoncus
+    neque a suscipit vestibulum. Suspendisse euismod leo a mauris aliquet
+    egestas. Ut porta, massa ac mollis convallis, mauris purus tristique odio,
+  </div>
+</app-side-bar-container>
+
+<app-side-bar-container
+  class="aspect-video max-w-screen-md overflow-hidden rounded-3xl border border-black/15"
+>
+  <app-side-bar #sideBar5 class="w-80" position="right" withShadow>
+    <button (click)="sideBar5.close()" type="button" appFlatButton>
+      사이드바 닫기
+    </button>
+  </app-side-bar>
+
+  <div class="flex flex-col items-stretch">
+    <div class="flex items-center justify-start gap-1">
+      <button (click)="sideBar5.open()" type="button" appFlatButton>
+        사이드바 열기
+      </button>
+
+      <button (click)="sideBar5.toggle()" type="button" appFlatButton>
+        사이드바 토글
+      </button>
+    </div>
+
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac neque
+    mauris. Maecenas pulvinar enim non iaculis tincidunt. Praesent interdum
+    commodo quam at varius. Sed vitae ex varius, ornare libero vulputate, ornare
+    tortor. In hac habitasse platea dictumst. Lorem ipsum dolor sit amet,
+    consectetur adipiscing elit. Curabitur nibh arcu, tempus nec blandit sit
+    amet, facilisis nec risus. Suspendisse vestibulum est metus. Pellentesque ut
+    est vitae quam tempus laoreet ac quis urna. Pellentesque habitant morbi
+    tristique senectus et netus et malesuada fames ac turpis egestas.
+    Suspendisse gravida nunc id eleifend egestas. Vestibulum laoreet aliquet
+    turpis ut luctus. Donec dictum nisi vitae gravida volutpat. Nullam interdum,
+    tortor vitae viverra dignissim, felis sapien posuere sapien, et vulputate
+    nulla nisi id dui. Ut et malesuada nibh. Praesent posuere a nulla et
+    convallis. Fusce consequat tellus sed quam tincidunt fermentum. Sed gravida
+    convallis dui sit amet tempor. Cras id erat finibus quam porttitor porttitor
+    ut vel massa. Aliquam mollis vulputate lacus, ac maximus ligula varius quis.
+    Nulla sollicitudin, augue fringilla porta ultricies, sapien erat tempor est,
+    non tempus mauris enim blandit nibh. Aliquam erat volutpat. Etiam vitae
+    vulputate lacus, ut pharetra lectus. Donec non sapien mauris. Duis sed erat
+    ut elit consequat porta non sed nulla. Vestibulum dictum erat vitae neque
+    ullamcorper, nec aliquet erat dignissim. Phasellus non tellus porta elit
+    eleifend rutrum. Sed ultricies turpis velit, vel egestas mi placerat eu. Ut
+    aliquet tincidunt tempus. Aliquam nec elementum lacus, a tincidunt lacus.
+    Duis diam eros, semper a molestie ac, tempor a mi. Morbi lobortis, magna id
+    pulvinar ullamcorper, purus velit imperdiet nulla, sed finibus orci nunc in
+    velit. Nam sit amet libero finibus, mollis dolor eget, blandit metus. Sed
+    aliquet dui non mi pharetra ornare. Duis a tempor tellus. Donec vel suscipit
+    tortor, at vestibulum lacus. Proin at rhoncus nisi. Sed dignissim diam nibh,
+    ut feugiat tellus iaculis id. Curabitur eu varius metus, et tincidunt urna.
+    Suspendisse velit sem, tempor non fringilla ac, pharetra faucibus nunc. Cras
+    eleifend pharetra magna sit amet posuere. Aliquam ut nisl vel massa
+    pellentesque eleifend eu vehicula felis. Donec vitae elit nec arcu cursus
+    mattis sed vel dolor. Etiam eleifend nisi nibh, ac suscipit odio efficitur
+    sit amet. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent
+    molestie malesuada ex, eu pretium urna aliquam sed. Donec laoreet lorem at
+    erat sodales congue. Aenean tempus felis eget consectetur tincidunt. Aliquam
+    commodo, enim id laoreet blandit, dolor orci aliquam nibh, et vulputate
+    nulla elit vitae felis. Donec accumsan dui id placerat lacinia. Sed tempor
+    ullamcorper augue, sed finibus diam sollicitudin quis. Suspendisse porttitor
+    elementum consectetur. Phasellus sollicitudin pellentesque euismod. Mauris
+    luctus auctor urna, sed volutpat justo. Mauris nec sem elementum, placerat
+    magna vel, sollicitudin enim. Donec non orci vel enim pretium mollis id ut
+    arcu. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices
+    posuere cubilia curae; Mauris fermentum erat nec purus commodo commodo. Nunc
+    porta, nunc sed luctus posuere, eros tortor finibus turpis, ut aliquam urna
+    erat fermentum sapien. Vestibulum finibus et velit vitae varius. Suspendisse
+    vitae sem at purus semper suscipit vitae quis augue. Suspendisse rhoncus
+    neque a suscipit vestibulum. Suspendisse euismod leo a mauris aliquet
+    egestas. Ut porta, massa ac mollis convallis, mauris purus tristique odio,
+  </div>
+</app-side-bar-container>
+
+<app-side-bar-container
+  class="aspect-video max-w-screen-md overflow-hidden rounded-3xl border border-black/15"
+>
+  <app-side-bar #sideBar6 class="w-80" position="right" withShadow>
+    <div class="flex items-center justify-end p-4">
+      @if (sideBar6.isOpened()) {
+        <button (click)="sideBar6.close()" type="button" appIconButton>
+          <i-lucide [img]="PanelRightCloseIcon"></i-lucide>
+          c
+        </button>
+      }
+    </div>
+  </app-side-bar>
+
+  <div class="flex flex-col items-stretch p-4">
+    <div class="flex items-center justify-end gap-1">
+      @if (!sideBar6.isOpened()) {
+        <button
+          @fadeInOut
+          (click)="sideBar6.open()"
+          type="button"
+          appIconButton
+        >
+          <i-lucide [img]="PanelRightOpenIcon"></i-lucide>
+        </button>
+      }
+    </div>
+
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac neque
+    mauris. Maecenas pulvinar enim non iaculis tincidunt. Praesent interdum
+    commodo quam at varius. Sed vitae ex varius, ornare libero vulputate, ornare
+    tortor. In hac habitasse platea dictumst. Lorem ipsum dolor sit amet,
+    consectetur adipiscing elit. Curabitur nibh arcu, tempus nec blandit sit
+    amet, facilisis nec risus. Suspendisse vestibulum est metus. Pellentesque ut
+    est vitae quam tempus laoreet ac quis urna. Pellentesque habitant morbi
+    tristique senectus et netus et malesuada fames ac turpis egestas.
+    Suspendisse gravida nunc id eleifend egestas. Vestibulum laoreet aliquet
+    turpis ut luctus. Donec dictum nisi vitae gravida volutpat. Nullam interdum,
+    tortor vitae viverra dignissim, felis sapien posuere sapien, et vulputate
+    nulla nisi id dui. Ut et malesuada nibh. Praesent posuere a nulla et
+    convallis. Fusce consequat tellus sed quam tincidunt fermentum. Sed gravida
+    convallis dui sit amet tempor. Cras id erat finibus quam porttitor porttitor
+    ut vel massa. Aliquam mollis vulputate lacus, ac maximus ligula varius quis.
+    Nulla sollicitudin, augue fringilla porta ultricies, sapien erat tempor est,
+    non tempus mauris enim blandit nibh. Aliquam erat volutpat. Etiam vitae
+    vulputate lacus, ut pharetra lectus. Donec non sapien mauris. Duis sed erat
+    ut elit consequat porta non sed nulla. Vestibulum dictum erat vitae neque
+    ullamcorper, nec aliquet erat dignissim. Phasellus non tellus porta elit
+    eleifend rutrum. Sed ultricies turpis velit, vel egestas mi placerat eu. Ut
+    aliquet tincidunt tempus. Aliquam nec elementum lacus, a tincidunt lacus.
+    Duis diam eros, semper a molestie ac, tempor a mi. Morbi lobortis, magna id
+    pulvinar ullamcorper, purus velit imperdiet nulla, sed finibus orci nunc in
+    velit. Nam sit amet libero finibus, mollis dolor eget, blandit metus. Sed
+    aliquet dui non mi pharetra ornare. Duis a tempor tellus. Donec vel suscipit
+    tortor, at vestibulum lacus. Proin at rhoncus nisi. Sed dignissim diam nibh,
+    ut feugiat tellus iaculis id. Curabitur eu varius metus, et tincidunt urna.
+    Suspendisse velit sem, tempor non fringilla ac, pharetra faucibus nunc. Cras
+    eleifend pharetra magna sit amet posuere. Aliquam ut nisl vel massa
+    pellentesque eleifend eu vehicula felis. Donec vitae elit nec arcu cursus
+    mattis sed vel dolor. Etiam eleifend nisi nibh, ac suscipit odio efficitur
+    sit amet. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent
+    molestie malesuada ex, eu pretium urna aliquam sed. Donec laoreet lorem at
+    erat sodales congue. Aenean tempus felis eget consectetur tincidunt. Aliquam
+    commodo, enim id laoreet blandit, dolor orci aliquam nibh, et vulputate
+    nulla elit vitae felis. Donec accumsan dui id placerat lacinia. Sed tempor
+    ullamcorper augue, sed finibus diam sollicitudin quis. Suspendisse porttitor
+    elementum consectetur. Phasellus sollicitudin pellentesque euismod. Mauris
+    luctus auctor urna, sed volutpat justo. Mauris nec sem elementum, placerat
+    magna vel, sollicitudin enim. Donec non orci vel enim pretium mollis id ut
+    arcu. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices
+    posuere cubilia curae; Mauris fermentum erat nec purus commodo commodo. Nunc
+    porta, nunc sed luctus posuere, eros tortor finibus turpis, ut aliquam urna
+    erat fermentum sapien. Vestibulum finibus et velit vitae varius. Suspendisse
+    vitae sem at purus semper suscipit vitae quis augue. Suspendisse rhoncus
+    neque a suscipit vestibulum. Suspendisse euismod leo a mauris aliquet
+    egestas. Ut porta, massa ac mollis convallis, mauris purus tristique odio,
+  </div>
+</app-side-bar-container>
+
+<app-side-bar-container
+  class="aspect-video max-w-screen-md overflow-hidden rounded-3xl border border-black/15"
+>
+  <app-side-bar
+    #sideBar7
+    class="z-10 w-80 bg-white"
+    position="right"
+    keepSize="1.25rem"
+    withShadow
+  >
+    <div class="flex items-center justify-end p-4">
+      <div
+        class="absolute left-0 top-4 z-50 flex size-9 -translate-x-1/2 items-center justify-center rounded-full border border-black/15 bg-white shadow-2xl"
+      >
+        <button (click)="sideBar7.toggle()" type="button" appIconButton>
+          @if (sideBar7.isOpened()) {
+            <i-lucide [img]="PanelRightCloseIcon"></i-lucide>
+          } @else {
+            <i-lucide [img]="PanelRightOpenIcon"></i-lucide>
+          }
+        </button>
+      </div>
+    </div>
+  </app-side-bar>
+
+  <div class="flex flex-col items-stretch p-4">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac neque
+    mauris. Maecenas pulvinar enim non iaculis tincidunt. Praesent interdum
+    commodo quam at varius. Sed vitae ex varius, ornare libero vulputate, ornare
+    tortor. In hac habitasse platea dictumst. Lorem ipsum dolor sit amet,
+    consectetur adipiscing elit. Curabitur nibh arcu, tempus nec blandit sit
+    amet, facilisis nec risus. Suspendisse vestibulum est metus. Pellentesque ut
+    est vitae quam tempus laoreet ac quis urna. Pellentesque habitant morbi
+    tristique senectus et netus et malesuada fames ac turpis egestas.
+    Suspendisse gravida nunc id eleifend egestas. Vestibulum laoreet aliquet
+    turpis ut luctus. Donec dictum nisi vitae gravida volutpat. Nullam interdum,
+    tortor vitae viverra dignissim, felis sapien posuere sapien, et vulputate
+    nulla nisi id dui. Ut et malesuada nibh. Praesent posuere a nulla et
+    convallis. Fusce consequat tellus sed quam tincidunt fermentum. Sed gravida
+    convallis dui sit amet tempor. Cras id erat finibus quam porttitor porttitor
+    ut vel massa. Aliquam mollis vulputate lacus, ac maximus ligula varius quis.
+    Nulla sollicitudin, augue fringilla porta ultricies, sapien erat tempor est,
+    non tempus mauris enim blandit nibh. Aliquam erat volutpat. Etiam vitae
+    vulputate lacus, ut pharetra lectus. Donec non sapien mauris. Duis sed erat
+    ut elit consequat porta non sed nulla. Vestibulum dictum erat vitae neque
+    ullamcorper, nec aliquet erat dignissim. Phasellus non tellus porta elit
+    eleifend rutrum. Sed ultricies turpis velit, vel egestas mi placerat eu. Ut
+    aliquet tincidunt tempus. Aliquam nec elementum lacus, a tincidunt lacus.
+    Duis diam eros, semper a molestie ac, tempor a mi. Morbi lobortis, magna id
+    pulvinar ullamcorper, purus velit imperdiet nulla, sed finibus orci nunc in
+    velit. Nam sit amet libero finibus, mollis dolor eget, blandit metus. Sed
+    aliquet dui non mi pharetra ornare. Duis a tempor tellus. Donec vel suscipit
+    tortor, at vestibulum lacus. Proin at rhoncus nisi. Sed dignissim diam nibh,
+    ut feugiat tellus iaculis id. Curabitur eu varius metus, et tincidunt urna.
+    Suspendisse velit sem, tempor non fringilla ac, pharetra faucibus nunc. Cras
+    eleifend pharetra magna sit amet posuere. Aliquam ut nisl vel massa
+    pellentesque eleifend eu vehicula felis. Donec vitae elit nec arcu cursus
+    mattis sed vel dolor. Etiam eleifend nisi nibh, ac suscipit odio efficitur
+    sit amet. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent
+    molestie malesuada ex, eu pretium urna aliquam sed. Donec laoreet lorem at
+    erat sodales congue. Aenean tempus felis eget consectetur tincidunt. Aliquam
+    commodo, enim id laoreet blandit, dolor orci aliquam nibh, et vulputate
+    nulla elit vitae felis. Donec accumsan dui id placerat lacinia. Sed tempor
+    ullamcorper augue, sed finibus diam sollicitudin quis. Suspendisse porttitor
+    elementum consectetur. Phasellus sollicitudin pellentesque euismod. Mauris
+    luctus auctor urna, sed volutpat justo. Mauris nec sem elementum, placerat
+    magna vel, sollicitudin enim. Donec non orci vel enim pretium mollis id ut
+    arcu. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices
+    posuere cubilia curae; Mauris fermentum erat nec purus commodo commodo. Nunc
+    porta, nunc sed luctus posuere, eros tortor finibus turpis, ut aliquam urna
+    erat fermentum sapien. Vestibulum finibus et velit vitae varius. Suspendisse
+    vitae sem at purus semper suscipit vitae quis augue. Suspendisse rhoncus
+    neque a suscipit vestibulum. Suspendisse euismod leo a mauris aliquet
+    egestas. Ut porta, massa ac mollis convallis, mauris purus tristique odio,
+    nec condimentum metus dui a felis.
+  </div>
+</app-side-bar-container>
+
+<app-side-bar-container
+  class="aspect-video max-w-screen-md overflow-hidden rounded-3xl border border-black/15"
+>
+  <app-side-bar
+    #sideBar8
+    class="z-10 w-80 bg-white"
+    position="right"
+    keepSize="1.25rem"
+    overlapContent
+    withShadow
+  >
+    <div class="flex items-center justify-end p-4">
+      <div
+        class="absolute left-0 top-4 z-50 flex size-9 -translate-x-1/2 items-center justify-center rounded-full border border-black/15 bg-white shadow-2xl"
+      >
+        <button (click)="sideBar8.toggle()" type="button" appIconButton>
+          @if (sideBar8.isOpened()) {
+            <i-lucide [img]="PanelRightCloseIcon"></i-lucide>
+          } @else {
+            <i-lucide [img]="PanelRightOpenIcon"></i-lucide>
+          }
+        </button>
+      </div>
+    </div>
+  </app-side-bar>
+
+  <div class="flex flex-col items-stretch p-4">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac neque
+    mauris. Maecenas pulvinar enim non iaculis tincidunt. Praesent interdum
+    commodo quam at varius. Sed vitae ex varius, ornare libero vulputate, ornare
+    tortor. In hac habitasse platea dictumst. Lorem ipsum dolor sit amet,
+    consectetur adipiscing elit. Curabitur nibh arcu, tempus nec blandit sit
+    amet, facilisis nec risus. Suspendisse vestibulum est metus. Pellentesque ut
+    est vitae quam tempus laoreet ac quis urna. Pellentesque habitant morbi
+    tristique senectus et netus et malesuada fames ac turpis egestas.
+    Suspendisse gravida nunc id eleifend egestas. Vestibulum laoreet aliquet
+    turpis ut luctus. Donec dictum nisi vitae gravida volutpat. Nullam interdum,
+    tortor vitae viverra dignissim, felis sapien posuere sapien, et vulputate
+    nulla nisi id dui. Ut et malesuada nibh. Praesent posuere a nulla et
+    convallis. Fusce consequat tellus sed quam tincidunt fermentum. Sed gravida
+    convallis dui sit amet tempor. Cras id erat finibus quam porttitor porttitor
+    ut vel massa. Aliquam mollis vulputate lacus, ac maximus ligula varius quis.
+    Nulla sollicitudin, augue fringilla porta ultricies, sapien erat tempor est,
+    non tempus mauris enim blandit nibh. Aliquam erat volutpat. Etiam vitae
+    vulputate lacus, ut pharetra lectus. Donec non sapien mauris. Duis sed erat
+    ut elit consequat porta non sed nulla. Vestibulum dictum erat vitae neque
+    ullamcorper, nec aliquet erat dignissim. Phasellus non tellus porta elit
+    eleifend rutrum. Sed ultricies turpis velit, vel egestas mi placerat eu. Ut
+    aliquet tincidunt tempus. Aliquam nec elementum lacus, a tincidunt lacus.
+    Duis diam eros, semper a molestie ac, tempor a mi. Morbi lobortis, magna id
+    pulvinar ullamcorper, purus velit imperdiet nulla, sed finibus orci nunc in
+    velit. Nam sit amet libero finibus, mollis dolor eget, blandit metus. Sed
+    aliquet dui non mi pharetra ornare. Duis a tempor tellus. Donec vel suscipit
+    tortor, at vestibulum lacus. Proin at rhoncus nisi. Sed dignissim diam nibh,
+    ut feugiat tellus iaculis id. Curabitur eu varius metus, et tincidunt urna.
+    Suspendisse velit sem, tempor non fringilla ac, pharetra faucibus nunc. Cras
+    eleifend pharetra magna sit amet posuere. Aliquam ut nisl vel massa
+    pellentesque eleifend eu vehicula felis. Donec vitae elit nec arcu cursus
+    mattis sed vel dolor. Etiam eleifend nisi nibh, ac suscipit odio efficitur
+    sit amet. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent
+    molestie malesuada ex, eu pretium urna aliquam sed. Donec laoreet lorem at
+    erat sodales congue. Aenean tempus felis eget consectetur tincidunt. Aliquam
+    commodo, enim id laoreet blandit, dolor orci aliquam nibh, et vulputate
+    nulla elit vitae felis. Donec accumsan dui id placerat lacinia. Sed tempor
+    ullamcorper augue, sed finibus diam sollicitudin quis. Suspendisse porttitor
+    elementum consectetur. Phasellus sollicitudin pellentesque euismod. Mauris
+    luctus auctor urna, sed volutpat justo. Mauris nec sem elementum, placerat
+    magna vel, sollicitudin enim. Donec non orci vel enim pretium mollis id ut
+    arcu. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices
+    posuere cubilia curae; Mauris fermentum erat nec purus commodo commodo. Nunc
+    porta, nunc sed luctus posuere, eros tortor finibus turpis, ut aliquam urna
+    erat fermentum sapien. Vestibulum finibus et velit vitae varius. Suspendisse
+    vitae sem at purus semper suscipit vitae quis augue. Suspendisse rhoncus
+    neque a suscipit vestibulum. Suspendisse euismod leo a mauris aliquet
+    egestas. Ut porta, massa ac mollis convallis, mauris purus tristique odio,
+    nec condimentum metus dui a felis.
+  </div>
+</app-side-bar-container>

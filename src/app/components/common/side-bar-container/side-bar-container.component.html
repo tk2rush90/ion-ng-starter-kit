@@ -1,0 +1,10 @@
+<ng-content select="app-side-bar[position='left']"></ng-content>
+
+<div
+  [ngStyle]="contentStyles()"
+  class="flex w-auto shrink grow basis-auto flex-col items-stretch transition-all"
+>
+  <ng-content></ng-content>
+</div>
+
+<ng-content select="app-side-bar[position='right']"></ng-content>

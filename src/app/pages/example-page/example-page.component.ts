@@ -48,8 +48,15 @@ import {
   BugIcon,
   CircleAlertIcon,
   LucideAngularModule,
+  PanelLeftCloseIcon,
+  PanelLeftOpenIcon,
+  PanelRightCloseIcon,
+  PanelRightOpenIcon,
   PartyPopperIcon,
 } from 'lucide-angular';
+import { SideBarContainerComponent } from '../../components/common/side-bar-container/side-bar-container.component';
+import { SideBarComponent } from '../../components/common/side-bar/side-bar.component';
+import { IconButtonDirective } from '../../components/common/icon-button/icon-button.directive';
 
 @Component({
   selector: 'app-example-page',
@@ -77,6 +84,9 @@ import {
     OverlayActionsComponent,
     MessageOverlayComponent,
     LucideAngularModule,
+    SideBarContainerComponent,
+    SideBarComponent,
+    IconButtonDirective,
   ],
   templateUrl: './example-page.component.html',
   styleUrl: './example-page.component.scss',
@@ -139,4 +149,8 @@ export class ExamplePageComponent implements AfterViewInit {
   protected readonly CircleAlertIcon = CircleAlertIcon;
   protected readonly PartyPopperIcon = PartyPopperIcon;
   protected readonly BugIcon = BugIcon;
+  protected readonly PanelLeftCloseIcon = PanelLeftCloseIcon;
+  protected readonly PanelLeftOpenIcon = PanelLeftOpenIcon;
+  protected readonly PanelRightCloseIcon = PanelRightCloseIcon;
+  protected readonly PanelRightOpenIcon = PanelRightOpenIcon;
 }
