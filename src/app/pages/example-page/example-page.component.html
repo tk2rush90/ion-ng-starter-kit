@@ -1563,3 +1563,15 @@
     nec condimentum metus dui a felis.
   </div>
 </app-side-bar-container>
+
+<button (click)="openOverlay(sideBarOverlayLeft)" type="button" appFlatButton>
+  SideBarOverlay Open
+</button>
+
+<ng-template #sideBarOverlayLeft>
+  <app-backdrop @fadeInOut></app-backdrop>
+
+  <app-side-bar-overlay @fadeInOut position="left">
+    Left Sidebar
+  </app-side-bar-overlay>
+</ng-template>
