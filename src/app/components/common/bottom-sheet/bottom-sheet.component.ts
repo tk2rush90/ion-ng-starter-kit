@@ -26,7 +26,7 @@ import { IconButtonDirective } from '../icon-button/icon-button.directive';
     '(scroll)': `detectScroll()`,
     '[style]': `styles()`,
     class:
-      'pointer-events-auto fixed bottom-0 left-0 right-0 flex w-full flex-col items-stretch overflow-auto rounded-t-3xl bg-white dark:bg-dark-background shadow-2xl dark:shadow-white/5 md:bottom-4 md:left-1/2 md:w-[calc(100dvw-2rem)] md:rounded-3xl',
+      'pointer-events-auto fixed bottom-0 left-0 right-0 flex w-full flex-col items-stretch overflow-auto rounded-t-3xl bg-white dark:bg-dark-background shadow-2xl md:bottom-4 md:left-1/2 md:w-[calc(100dvw-2rem)] md:rounded-3xl',
   },
 })
 export class BottomSheetComponent implements AfterViewInit, OnDestroy {
@@ -68,7 +68,6 @@ export class BottomSheetComponent implements AfterViewInit, OnDestroy {
 
     return {
       'shadow-lg': isScrolled,
-      'dark:shadow-white/5': isScrolled,
     };
   });
 

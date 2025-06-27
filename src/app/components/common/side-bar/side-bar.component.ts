@@ -21,7 +21,8 @@ import { AngularPlatform } from '../../../utils/platform.utils';
   host: {
     '[class]': `classes()`,
     '[style]': `styles()`,
-    class: 'absolute flex-col items-stretch transition-all h-full',
+    class:
+      'absolute flex-col items-stretch transition-all h-full bg-white dark:bg-dark-background',
   },
 })
 export class SideBarComponent implements AfterViewInit, OnDestroy {

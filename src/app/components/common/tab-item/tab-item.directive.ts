@@ -33,6 +33,7 @@ export class TabItemDirective implements AfterViewInit {
 
     return {
       'border-black/15': !isActive || !fill,
+      'dark:border-white/15': !isActive || !fill,
       'border-transparent': isActive && fill,
       'text-black': !isActive,
       'dark:text-dark-text': !isActive,
