@@ -1929,3 +1929,137 @@
     <app-chip focusable>무지개</app-chip>
   </div>
 </app-card>
+
+<app-tab-container>
+  <a
+    [routerLink]="[]"
+    [queryParams]="{ page: 'main' }"
+    routerLinkActive
+    appTabItem
+  >
+    Main
+  </a>
+
+  <a
+    [routerLink]="[]"
+    [queryParams]="{ page: 'dashboard' }"
+    routerLinkActive
+    appTabItem
+  >
+    Dashboard
+  </a>
+
+  <a
+    [routerLink]="[]"
+    [queryParams]="{ page: 'purchases' }"
+    routerLinkActive
+    appTabItem
+  >
+    Purchases
+  </a>
+
+  <a
+    [routerLink]="[]"
+    [queryParams]="{ page: 'grid' }"
+    routerLinkActive
+    appTabItem
+  >
+    <i-lucide [img]="GridIcon" class="size-5"></i-lucide>
+    Grid
+  </a>
+
+  <a
+    [routerLink]="[]"
+    [queryParams]="{ page: 'app' }"
+    routerLinkActive
+    appTabItem
+  >
+    <i-lucide [img]="AppWindowIcon" class="size-5"></i-lucide>
+    App
+  </a>
+</app-tab-container>
+
+<app-tab-container theme="orange" fill>
+  <a
+    [routerLink]="[]"
+    [queryParams]="{ page: 'main' }"
+    routerLinkActive
+    appTabItem
+  >
+    Main
+  </a>
+
+  <a
+    [routerLink]="[]"
+    [queryParams]="{ page: 'dashboard' }"
+    routerLinkActive
+    appTabItem
+  >
+    Dashboard
+  </a>
+
+  <a
+    [routerLink]="[]"
+    [queryParams]="{ page: 'purchases' }"
+    routerLinkActive
+    appTabItem
+  >
+    Purchases
+  </a>
+
+  <a
+    [routerLink]="[]"
+    [queryParams]="{ page: 'grid' }"
+    routerLinkActive
+    appTabItem
+  >
+    <i-lucide [img]="GridIcon" class="size-5"></i-lucide>
+    Grid
+  </a>
+
+  <a
+    [routerLink]="[]"
+    [queryParams]="{ page: 'app' }"
+    routerLinkActive
+    appTabItem
+  >
+    <i-lucide [img]="AppWindowIcon" class="size-5"></i-lucide>
+    App
+  </a>
+</app-tab-container>
+
+<app-tab-container theme="zinc">
+  <button type="button" appTabItem>Main</button>
+
+  <button type="button" appTabItem>Dashboard</button>
+
+  <button type="button" appTabItem>Purchases</button>
+
+  <button type="button" appTabItem>
+    <i-lucide [img]="GridIcon" class="size-5"></i-lucide>
+    Grid
+  </button>
+
+  <button type="button" appTabItem>
+    <i-lucide [img]="AppWindowIcon" class="size-5"></i-lucide>
+    App
+  </button>
+</app-tab-container>
+
+<app-tab-container theme="slate" fill>
+  <button type="button" appTabItem>Main</button>
+
+  <button type="button" appTabItem>Dashboard</button>
+
+  <button type="button" appTabItem>Purchases</button>
+
+  <button type="button" appTabItem>
+    <i-lucide [img]="GridIcon" class="size-5"></i-lucide>
+    Grid
+  </button>
+
+  <button type="button" appTabItem>
+    <i-lucide [img]="AppWindowIcon" class="size-5"></i-lucide>
+    App
+  </button>
+</app-tab-container>

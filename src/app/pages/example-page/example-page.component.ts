@@ -45,8 +45,10 @@ import { createDraggable } from 'animejs';
 import { AngularPlatform } from '../../utils/platform.utils';
 import { MessageOverlayComponent } from '../../components/common/message-overlay/message-overlay.component';
 import {
+  AppWindowIcon,
   BugIcon,
   CircleAlertIcon,
+  GridIcon,
   LucideAngularModule,
   PanelLeftCloseIcon,
   PanelLeftOpenIcon,
@@ -59,6 +61,9 @@ import { SideBarComponent } from '../../components/common/side-bar/side-bar.comp
 import { IconButtonDirective } from '../../components/common/icon-button/icon-button.directive';
 import { SideBarOverlayComponent } from '../../components/common/side-bar-overlay/side-bar-overlay.component';
 import { ChipComponent } from '../../components/common/chip/chip.component';
+import { TabContainerComponent } from '../../components/common/tab-container/tab-container.component';
+import { TabItemDirective } from '../../components/common/tab-item/tab-item.directive';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-example-page',
@@ -91,6 +96,10 @@ import { ChipComponent } from '../../components/common/chip/chip.component';
     IconButtonDirective,
     SideBarOverlayComponent,
     ChipComponent,
+    TabContainerComponent,
+    TabItemDirective,
+    RouterLinkActive,
+    RouterLink,
   ],
   templateUrl: './example-page.component.html',
   styleUrl: './example-page.component.scss',
@@ -157,4 +166,6 @@ export class ExamplePageComponent implements AfterViewInit {
   protected readonly PanelLeftOpenIcon = PanelLeftOpenIcon;
   protected readonly PanelRightCloseIcon = PanelRightCloseIcon;
   protected readonly PanelRightOpenIcon = PanelRightOpenIcon;
+  protected readonly GridIcon = GridIcon;
+  protected readonly AppWindowIcon = AppWindowIcon;
 }
