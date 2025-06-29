@@ -22,8 +22,7 @@ export class ImageComponent {
     const imageLoaded = this.imageHandlerDirective()?.imageLoaded();
 
     return {
-      'bg-black/5': !imageLoaded,
-      'dark:bg-white/10': !imageLoaded,
+      'bg-foreground/5': !imageLoaded,
     };
   });
 

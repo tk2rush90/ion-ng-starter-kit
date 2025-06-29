@@ -1,7 +1,7 @@
 @if (displayLeftButton()) {
   <div
     [ngStyle]="leftButtonStyles()"
-    class="absolute z-50 flex size-8 items-center justify-center rounded-full bg-white shadow-lg dark:bg-dark-background"
+    class="absolute z-50 flex size-8 items-center justify-center rounded-full bg-background shadow-lg"
   >
     <button (click)="toLeft()" type="button" appIconButton>
       <i-lucide [img]="ChevronLeftIcon"></i-lucide>
@@ -14,7 +14,7 @@
 @if (displayRightButton()) {
   <div
     [ngStyle]="rightButtonStyles()"
-    class="absolute z-50 flex size-8 items-center justify-center rounded-full bg-white shadow-lg dark:bg-dark-background"
+    class="absolute z-50 flex size-8 items-center justify-center rounded-full bg-background shadow-lg"
   >
     <button (click)="toRight()" type="button" appIconButton>
       <i-lucide [img]="ChevronRightIcon"></i-lucide>

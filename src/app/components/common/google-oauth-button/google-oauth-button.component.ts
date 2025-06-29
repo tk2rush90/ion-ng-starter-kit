@@ -1,5 +1,5 @@
 import { Component, HostListener, inject, output } from '@angular/core';
-import { IconGoogleLogoComponent } from '../../icons/icon-google-logo/icon-google-logo.component';
+import { IconGoogleSymbolComponent } from '../../icons/icon-google-symbol/icon-google-symbol.component';
 import { OAUTH_PREVIOUS_URL_KEY } from '../../../constants/storage-keys';
 import { Location } from '@angular/common';
 import { Storage } from '@ionic/storage';
@@ -16,7 +16,7 @@ import TokenResponse = google.accounts.oauth2.TokenResponse;
 
 @Component({
   selector: 'app-google-oauth-button',
-  imports: [IconGoogleLogoComponent],
+  imports: [IconGoogleSymbolComponent],
   templateUrl: './google-oauth-button.component.html',
   styleUrl: './google-oauth-button.component.scss',
   host: {

@@ -22,7 +22,7 @@ import { AngularPlatform } from '../../../utils/platform.utils';
     '[class]': `classes()`,
     '[style]': `styles()`,
     class:
-      'absolute flex-col items-stretch transition-all h-full bg-white dark:bg-dark-background',
+      'absolute flex flex-col items-stretch transition-all h-full bg-background',
   },
 })
 export class SideBarComponent implements AfterViewInit, OnDestroy {
@@ -60,8 +60,7 @@ export class SideBarComponent implements AfterViewInit, OnDestroy {
       'right-0': isRightPosition,
       'border-r': withBorder && isLeftPosition,
       'border-l': withBorder && isRightPosition,
-      'border-black/15': withBorder,
-      'dark:border-white/15': withBorder,
+      'border-foreground/15': withBorder,
       'shadow-2xl': withShadow,
     };
   });
@@ -102,10 +101,8 @@ export class SideBarComponent implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     if (AngularPlatform.isBrowser) {
-      this.resizeObserver = new ResizeObserver((entries) => {
-        entries.forEach((entry) => {
-          this.domRect.set(entry.contentRect);
-        });
+      this.resizeObserver = new ResizeObserver(() => {
+        this.domRect.set(this.element.getBoundingClientRect());
       });
 
       this.resizeObserver.observe(this.element);

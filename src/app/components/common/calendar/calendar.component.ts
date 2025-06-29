@@ -103,12 +103,9 @@ export class CalendarComponent extends WithBottomActions {
 
     classes['text-white'] = isSelectedDate;
     classes[`bg-${theme}-500`] = isSelectedDate;
-    classes['hover:bg-black/5'] = !isFromOrToDate;
-    classes['active:bg-black/10'] = !isFromOrToDate;
-    classes['dark:hover:bg-white/10'] = !isFromOrToDate;
-    classes['dark:active:bg-white/15'] = !isFromOrToDate;
-    classes['text-black/15'] = isOutOfDisplayDate;
-    classes['dark:text-white/15'] = isOutOfDisplayDate;
+    classes['hover:bg-foreground/5'] = !isFromOrToDate;
+    classes['active:bg-foreground/10'] = !isFromOrToDate;
+    classes['text-foreground/15'] = isOutOfDisplayDate;
     classes[`bg-${theme}-100`] = isFromOrToDate;
     classes[`dark:bg-${theme}-900`] = isFromOrToDate;
 
@@ -239,8 +236,8 @@ export class CalendarComponent extends WithBottomActions {
     classes[widthClass] = true;
     classes['right-0'] = !!(isSelectedDate ? toDate && !isToDate : fromDate);
     classes['left-0'] = !!(isSelectedDate ? fromDate && !isFromDate : toDate);
-    classes['bg-black/5'] = isRangedDate;
-    classes['dark:bg-white/10'] = isRangedDate;
+    classes['bg-foreground/5'] = isRangedDate;
+    classes['dark:bg-foreground/10'] = isRangedDate;
 
     return classes;
   }

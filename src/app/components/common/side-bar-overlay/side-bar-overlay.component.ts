@@ -27,7 +27,7 @@ import { OVERLAY_REF } from '../../../tokens/overlay-ref';
     '[@sideBarOverlay]': `sideBarOverlayState()`,
     '[class]': `classes()`,
     '[style]': `styles()`,
-    class: `fixed bg-white dark:bg-dark-background overflow-auto flex flex-col items-stretch pointer-events-auto`,
+    class: `fixed bg-background overflow-auto flex flex-col items-stretch pointer-events-auto`,
   },
   animations: [
     trigger('sideBarOverlay', [

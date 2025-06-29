@@ -11,6 +11,7 @@ import {
 import { RouterLinkActive } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TabContainerComponent } from '../tab-container/tab-container.component';
+import { AngularPlatform } from '../../../utils/platform.utils';
 
 @Directive({
   selector: '[appTabItem]',
@@ -32,11 +33,9 @@ export class TabItemDirective implements AfterViewInit {
     const isActive = this.isActive();
 
     return {
-      'border-black/15': !isActive || !fill,
-      'dark:border-white/15': !isActive || !fill,
+      'border-foreground/15': !isActive || !fill,
       'border-transparent': isActive && fill,
-      'text-black': !isActive,
-      'dark:text-dark-text': !isActive,
+      'text-foreground': !isActive,
       'text-white': isActive && fill,
       [`text-${theme}-500`]: isActive && !fill,
       [`hover:bg-${theme}-500/10`]: !isActive,
@@ -58,7 +57,8 @@ export class TabItemDirective implements AfterViewInit {
 
   constructor() {
     effect(() => {
-      if (this.isActive()) {
+      // 서버사이드에서는 getBoundingClientRect()을 읽어올 수 없다
+      if (this.isActive() && AngularPlatform.isBrowser) {
         this.tabContainerComponent.tabChange.emit(this);
 
         const itemDomRect =

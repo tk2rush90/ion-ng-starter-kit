@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
   templateUrl: './field-hint.component.html',
   styleUrl: './field-hint.component.scss',
   host: {
-    class: 'block text-sm text-black/50 dark:text-dark-text/50',
+    class: 'block text-sm text-foreground/50',
   },
 })
 export class FieldHintComponent {}

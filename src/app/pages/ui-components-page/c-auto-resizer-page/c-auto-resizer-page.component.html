@@ -1,0 +1,52 @@
+<h1>Auto Resizer</h1>
+
+<p>
+  <code>AutoResizerDirective</code>
+  is added to the
+  <code>&lt;textarea></code>
+  element to set the height variably depending on the value of the element.
+</p>
+
+<pre>
+&lt;app-form-field>
+  &lt;label>Auto Resizer&lt;/label>
+
+  &lt;textarea appAutoResizer>&lt;/textarea>
+&lt;/app-form-field>
+</pre>
+
+<app-card class="flex flex-col items-start justify-start p-4" withBorder>
+  <app-form-field class="w-full max-w-80">
+    <label>Auto Resizer</label>
+
+    <textarea appAutoResizer></textarea>
+  </app-form-field>
+</app-card>
+
+<h2>Attributes</h2>
+
+<h3>
+  <code>disableLineBreaks: boolean</code>
+</h3>
+
+<p>
+  You can ignore line breaks by setting the
+  <code>disableLineBreaks</code>
+  attribute.
+</p>
+
+<pre>
+&lt;app-form-field>
+  &lt;label>Auto Resizer&lt;/label>
+
+  &lt;textarea disableLineBreaks appAutoResizer>&lt;/textarea>
+&lt;/app-form-field>
+</pre>
+
+<app-card class="flex flex-col items-start justify-start p-4" withBorder>
+  <app-form-field class="w-full max-w-80">
+    <label>Auto Resizer</label>
+
+    <textarea disableLineBreaks appAutoResizer></textarea>
+  </app-form-field>
+</app-card>

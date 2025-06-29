@@ -1,4 +1,12 @@
-import { Component, computed, contentChild, signal } from '@angular/core';
+import {
+  AfterViewInit,
+  booleanAttribute,
+  Component,
+  computed,
+  contentChild,
+  input,
+  signal,
+} from '@angular/core';
 import { SideBarComponent } from '../side-bar/side-bar.component';
 import { NgStyle } from '@angular/common';
 
@@ -11,7 +19,12 @@ import { NgStyle } from '@angular/common';
     class: 'relative flex items-stretch flex-row',
   },
 })
-export class SideBarContainerComponent {
+export class SideBarContainerComponent implements AfterViewInit {
+  /** 초기 열림 상태 설정. 기본적으로 사이드바는 닫힘 상태. 컴포넌트 뷰 초기화 시만 적용 가능 */
+  opened = input(false, {
+    transform: booleanAttribute,
+  });
+
   isOpened = signal(false);
 
   sideBarComponent = contentChild(SideBarComponent);
@@ -26,30 +39,23 @@ export class SideBarContainerComponent {
 
       const keepSize = sideBarComponent.keepSize();
 
-      const position = sideBarComponent.position();
-
       const overlapContent = sideBarComponent.overlapContent();
 
-      const paddingOpened = `${sidebarWidth}px`;
+      const maxWidthOpened = `calc(100% - ${sidebarWidth}px)`;
 
-      const paddingClosed = keepSize ?? null;
+      const maxWidthClosed = keepSize ? `calc(100% - ${keepSize})` : null;
 
       return {
-        paddingLeft:
-          position === 'left'
-            ? !overlapContent && isOpened
-              ? paddingOpened
-              : paddingClosed
-            : null,
-        paddingRight:
-          position === 'right'
-            ? !overlapContent && isOpened
-              ? paddingOpened
-              : paddingClosed
-            : null,
+        maxWidth: !overlapContent && isOpened ? maxWidthOpened : maxWidthClosed,
       };
     } else {
       return {};
     }
   });
+
+  ngAfterViewInit() {
+    if (this.opened()) {
+      this.isOpened.set(true);
+    }
+  }
 }

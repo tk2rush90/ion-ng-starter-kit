@@ -42,6 +42,26 @@
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import "@ionic/angular/css/palettes/dark.system.css";
 
+:root,
+:root.md,
+:root.ios {
+  --ion-background-color: var(--tw-white);
+  --ion-text-color: var(--tw-black);
+  --ion-background-color-rgb: var(--tw-white-rgb);
+  --ion-text-color-rgb: var(--tw-black-rgb);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root,
+  :root.md,
+  :root.ios {
+    --ion-background-color: var(--tw-slate-800);
+    --ion-text-color: var(--tw-white);
+    --ion-background-color-rgb: var(--tw-slate-800-rgb);
+    --ion-text-color-rgb: var(--tw-white-rgb);
+  }
+}
+
 * {
   outline: 0;
 }

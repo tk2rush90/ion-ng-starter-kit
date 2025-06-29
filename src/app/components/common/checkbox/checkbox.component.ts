@@ -69,8 +69,7 @@ export class CheckboxComponent extends AppControlValueAccessor {
     const disabled = this.checkboxService.disabled();
 
     if (disabled) {
-      classes['hover:bg-black/5'] = true;
-      classes['dark:hover:bg-white/5'] = true;
+      classes['hover:bg-foreground/5'] = true;
     } else {
       classes[`hover:bg-${theme}-500/5`] = true;
       classes[`active:bg-${theme}-500/10`] = true;
@@ -92,14 +91,11 @@ export class CheckboxComponent extends AppControlValueAccessor {
     const focused = this.checkboxService.focused();
 
     if (disabled) {
-      classes['bg-black/15'] = true;
-      classes['text-black/30'] = true;
-      classes['dark:text-dark-text/30'] = true;
-      classes['dark:bg-white/15'] = true;
+      classes['bg-foreground/15'] = true;
+      classes['text-foreground/30'] = true;
 
       if (focused) {
-        classes[`border-black/15`] = true;
-        classes['dark:border-white/15'] = true;
+        classes[`border-foreground/15`] = true;
       } else {
         classes['border-transparent'] = true;
       }

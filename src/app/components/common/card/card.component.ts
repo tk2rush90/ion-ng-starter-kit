@@ -7,7 +7,7 @@ import { booleanAttribute, Component, computed, input } from '@angular/core';
   styleUrl: './card.component.scss',
   host: {
     '[class]': `classes()`,
-    class: 'bg-white dark:bg-dark-background rounded-3xl',
+    class: 'bg-background rounded-3xl',
   },
 })
 export class CardComponent {
@@ -26,8 +26,7 @@ export class CardComponent {
 
     return {
       border: withBorder,
-      'border-black/15': withBorder,
-      'dark:border-white/15': withBorder,
+      'border-foreground/15': withBorder,
       'shadow-2xl': withShadow,
     };
   });

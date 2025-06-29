@@ -15,8 +15,7 @@
         [ngClass]="{
           'text-rose-500': $index === 0,
           'text-blue-500': $index === 6,
-          'text-black/50': $index !== 0 && $index !== 6,
-          'dark:text-dark-text/50': $index !== 0 && $index !== 6,
+          'text-foreground/50': $index !== 0 && $index !== 6,
         }"
         class="flex items-center justify-center uppercase"
       >
@@ -39,7 +38,7 @@
           [ngClass]="getDateClasses(calendarDate)"
           type="button"
           tabindex="-1"
-          class="relative z-[2] flex aspect-square w-full max-w-8 items-center justify-center rounded-full text-center text-sm disabled:bg-black/[0.03] disabled:text-black/15 dark:disabled:bg-white/[0.03] dark:disabled:text-white/15"
+          class="relative z-[2] flex aspect-square w-full max-w-8 items-center justify-center rounded-full text-center text-sm disabled:bg-foreground/[0.03] disabled:text-foreground/15"
         >
           {{ calendarDate.getDate() }}
         </button>

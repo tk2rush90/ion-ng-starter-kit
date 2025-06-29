@@ -1,0 +1,24 @@
+<h1>Auto Focus</h1>
+
+<p>
+  <code>AutoFocusDirective</code>
+  can be added to focusable elements to focus the element as soon as
+  <code>ngAfterViewInit()</code>
+  is called.
+</p>
+
+<pre>
+&lt;app-form-field>
+  &lt;label>Auto Focus Input&lt;/label>
+
+  &lt;input appAutoFocus />
+&lt;/app-form-field>
+</pre>
+
+<app-card class="flex flex-col items-start justify-start p-4" withBorder>
+  <app-form-field class="w-full max-w-80">
+    <label>Auto Focus Input</label>
+
+    <input appAutoFocus />
+  </app-form-field>
+</app-card>

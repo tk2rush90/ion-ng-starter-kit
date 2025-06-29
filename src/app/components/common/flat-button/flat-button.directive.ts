@@ -39,10 +39,8 @@ export class FlatButtonDirective implements OnDestroy {
     const size = this.size();
 
     if (isDisabled) {
-      classes['bg-black/15'] = true;
-      classes['text-black/30'] = true;
-      classes['dark:text-dark-text/30'] = true;
-      classes['dark:bg-white/15'] = true;
+      classes['bg-foreground/15'] = true;
+      classes['text-foreground/30'] = true;
     } else if (mode === 'default') {
       classes[`bg-${theme}-500/10`] = true;
       classes[`hover:bg-${theme}-500/20`] = true;

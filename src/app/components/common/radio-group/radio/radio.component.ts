@@ -75,7 +75,7 @@ export class RadioComponent {
       }
 
       if (isSelected && isFocused) {
-        classes['border-black/15'] = true;
+        classes['border-foreground/15'] = true;
       } else {
         classes['border-transparent'] = true;
       }

@@ -9,7 +9,7 @@ import { BottomActionsJustify } from '../../../types/bottom-actions-justify';
   host: {
     '[class]': `classes()`,
     class:
-      'sticky bottom-0 left-0 z-50 flex items-center border-t bg-white px-4 py-3 dark:bg-dark-background',
+      'sticky bottom-0 left-0 z-50 flex items-center border-t bg-background px-4 py-3',
   },
 })
 export class BottomActionsComponent {
@@ -32,8 +32,7 @@ export class BottomActionsComponent {
 
     return {
       'border-transparent': !withBorder,
-      'border-black/15': withBorder,
-      'dark:border-white/15': withBorder,
+      'border-foreground/15': withBorder,
       'justify-between': isJustifyBetween,
       'justify-end': isJustifyRight,
       'justify-start': isJustifyLeft,

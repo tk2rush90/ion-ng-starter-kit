@@ -90,7 +90,7 @@ import { VariableColors } from '../../../utils/tailwind.utils';
   animations: [fadeInOut(), slideInOutBottomFull(), slideInBottom(), fadeIn()],
   host: {
     class:
-      'flex w-full flex-row flex-nowrap items-center justify-start gap-1 overflow-auto rounded-full bg-black/5 dark:bg-white/10 px-3 backdrop-blur-lg has-[+_*]:w-auto h-10',
+      'flex w-full flex-row flex-nowrap items-center justify-start gap-1 overflow-auto rounded-full bg-foreground/5 dark:bg-foreground/10 px-3 backdrop-blur-lg has-[+_*]:w-auto h-10',
   },
 })
 export class WysiwygEditorActionsComponent implements OnDestroy {

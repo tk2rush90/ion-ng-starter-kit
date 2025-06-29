@@ -20,7 +20,7 @@ import { FlatButtonDirective } from '../../components/common/flat-button/flat-bu
 import { ConfirmComponent } from '../../components/common/confirm/confirm.component';
 import { ModalComponent } from '../../components/common/modal/modal.component';
 import { FileHandlerDirective } from '../../components/common/file-handler/file-handler.directive';
-import { KB, MB } from '../../constants/size';
+import { KB } from '../../constants/size';
 import { ToastService } from '../../services/app/toast/toast.service';
 import { FormFieldComponent } from '../../components/common/form-field/form-field.component';
 import { AutoResizerDirective } from '../../components/common/auto-resizer/auto-resizer.directive';
@@ -66,6 +66,7 @@ import { TabItemDirective } from '../../components/common/tab-item/tab-item.dire
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { ImageComponent } from '../../components/common/image/image.component';
 import { CalendarComponent } from '../../components/common/calendar/calendar.component';
+import { IonContent } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-example-page',
@@ -104,6 +105,7 @@ import { CalendarComponent } from '../../components/common/calendar/calendar.com
     RouterLink,
     ImageComponent,
     CalendarComponent,
+    IonContent,
   ],
   templateUrl: './example-page.component.html',
   styleUrl: './example-page.component.scss',
@@ -161,7 +163,6 @@ export class ExamplePageComponent implements AfterViewInit {
     console.log(fileOrFiles);
   }
 
-  protected readonly MB = MB;
   protected readonly KB = KB;
   protected readonly CircleAlertIcon = CircleAlertIcon;
   protected readonly PartyPopperIcon = PartyPopperIcon;

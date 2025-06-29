@@ -1,0 +1,172 @@
+<h1>Bottom Actions</h1>
+
+<p>
+  <code>BottomActionsComponent</code>
+  is used to place action buttons at the bottom of modals, bottom sheets, and
+  various other elements.
+</p>
+
+<pre>
+&lt;div class="p-4">Bottom Actions&lt;/div>
+
+&lt;app-bottom-actions justify="right">
+  &lt;button
+    type="button"
+    theme="red"
+    appFlatButton>Cancel&lt;/button>
+
+  &lt;button
+    type="button"
+    appFlatButton>Confirm&lt;/button>
+&lt;/app-bottom-actions>
+</pre>
+
+<app-card class="flex flex-col items-stretch overflow-hidden" withBorder>
+  <div class="p-4">Bottom Actions</div>
+
+  <app-bottom-actions justify="right">
+    <button type="button" theme="red" appFlatButton>Cancel</button>
+
+    <button type="button" appFlatButton>Confirm</button>
+  </app-bottom-actions>
+</app-card>
+
+<h2>Attributes</h2>
+
+<h3>
+  <code>justify: 'right' | 'left' | 'between'</code>
+</h3>
+
+<p>
+  The
+  <code>justify</code>
+  attribute is a required. Arrange elements within a component to the
+  <code>'left'</code>
+  or
+  <code>'right'</code>
+  , or create gaps
+  <code>'between'</code>
+  elements.
+</p>
+
+<pre>
+&lt;div class="p-4">Justify Left&lt;/div>
+
+&lt;app-bottom-actions justify="left">
+  &lt;button
+    type="button"
+    theme="red"
+    appFlatButton>Cancel
+  &lt;/button>
+
+  &lt;button
+    type="button"
+    appFlatButton>Confirm
+  &lt;/button>
+&lt;/app-bottom-actions>
+</pre>
+
+<app-card class="flex flex-col items-stretch overflow-hidden" withBorder>
+  <div class="p-4">Justify Left</div>
+
+  <app-bottom-actions justify="left">
+    <button type="button" theme="red" appFlatButton>Cancel</button>
+
+    <button type="button" appFlatButton>Confirm</button>
+  </app-bottom-actions>
+</app-card>
+
+<pre>
+&lt;div class="p-4">Justify Right&lt;/div>
+
+&lt;app-bottom-actions justify="right">
+  &lt;button
+    type="button"
+    theme="red"
+    appFlatButton>Cancel
+  &lt;/button>
+
+  &lt;button
+    type="button"
+    appFlatButton>Confirm
+  &lt;/button>
+&lt;/app-bottom-actions>
+</pre>
+
+<app-card class="flex flex-col items-stretch overflow-hidden" withBorder>
+  <div class="p-4">Justify Right</div>
+
+  <app-bottom-actions justify="right">
+    <button type="button" theme="red" appFlatButton>Cancel</button>
+
+    <button type="button" appFlatButton>Confirm</button>
+  </app-bottom-actions>
+</app-card>
+
+<pre>
+&lt;div class="p-4">Justify Between&lt;/div>
+
+&lt;app-bottom-actions justify="between">
+  &lt;button
+    type="button"
+    theme="red"
+    appFlatButton>Cancel
+  &lt;/button>
+
+  &lt;button
+    type="button"
+    appFlatButton>Confirm
+  &lt;/button>
+&lt;/app-bottom-actions>
+</pre>
+
+<app-card class="flex flex-col items-stretch overflow-hidden" withBorder>
+  <div class="p-4">Justify Between</div>
+
+  <app-bottom-actions justify="between">
+    <button type="button" theme="red" appFlatButton>Cancel</button>
+
+    <button type="button" appFlatButton>Confirm</button>
+  </app-bottom-actions>
+</app-card>
+
+<h3>
+  <code>withBorder: boolean</code>
+</h3>
+
+<p>
+  The
+  <code>withBorder</code>
+  attribute sets the border at the top of
+  <code>BottomActionsComponent</code>
+  .
+</p>
+
+<pre>
+&lt;div class="p-4">With Border&lt;/div>
+
+&lt;app-bottom-actions
+  withBorder
+  justify="right">
+  &lt;button
+    type="button"
+    theme="red"
+    appFlatButton>Cancel
+  &lt;/button>
+
+  &lt;button
+    type="button"
+    appFlatButton>Confirm
+  &lt;/button>
+&lt;/app-bottom-actions>
+</pre>
+
+<app-card class="flex flex-col items-stretch overflow-hidden" withBorder>
+  <div class="p-4">With Border</div>
+
+  <app-bottom-actions withBorder justify="right">
+    <button type="button" theme="red" appFlatButton>Cancel</button>
+
+    <button type="button" appFlatButton>Confirm</button>
+  </app-bottom-actions>
+</app-card>

@@ -19,6 +19,8 @@ app-chip {
 }
 
 .app-icon {
+  @apply flex items-center justify-center;
+
   svg {
     @apply size-full;
   }
@@ -127,5 +129,5 @@ app-chip {
 .ProseMirror:not(.ProseMirror-focused)
   .ProseMirror-textEmpty:first-child::before {
   content: "여기에 내용을 입력하세요.";
-  @apply pointer-events-none absolute text-black/50 dark:text-dark-text/50;
+  @apply pointer-events-none absolute text-foreground/50;
 }
