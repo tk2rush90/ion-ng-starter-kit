@@ -22,6 +22,7 @@ import TokenResponse = google.accounts.oauth2.TokenResponse;
   host: {
     type: 'button',
     role: 'button',
+    tabindex: '0',
   },
   providers: [StartByGoogleIdTokenService, StartByGoogleAccessTokenService],
   hostDirectives: [
@@ -51,8 +52,6 @@ export class GoogleOauthButtonComponent {
   );
 
   private readonly signedMemberService = inject(SignedMemberService);
-
-  private readonly flatButtonDirective = inject(FlatButtonDirective);
 
   constructor() {
     this.startByGoogleIdTokenService.created

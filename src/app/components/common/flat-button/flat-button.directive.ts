@@ -21,15 +21,13 @@ import { FlatButtonSize } from '../../../types/flat-button-size';
   },
 })
 export class FlatButtonDirective implements OnDestroy {
-  theme = input<VariableColors>('blue');
+  theme = input<VariableColors | 'white'>('blue');
 
   mode = input<FlatButtonMode>('default');
 
   size = input<FlatButtonSize>('default');
 
   classes = computed(() => {
-    const classes: any = {};
-
     const theme = this.theme();
 
     const mode = this.mode();
@@ -38,34 +36,64 @@ export class FlatButtonDirective implements OnDestroy {
 
     const size = this.size();
 
-    if (isDisabled) {
-      classes['bg-foreground/15'] = true;
-      classes['text-foreground/30'] = true;
-    } else if (mode === 'default') {
-      classes[`bg-${theme}-500/10`] = true;
-      classes[`hover:bg-${theme}-500/20`] = true;
-      classes[`active:bg-${theme}-500/30`] = true;
-      classes[`focus:border-${theme}-300`] = true;
-      classes[`text-${theme}-500`] = true;
-    } else if (mode === 'fill') {
-      classes[`bg-${theme}-500`] = true;
-      classes[`hover:brightness-110`] = true;
-      classes[`active:brightness-120`] = true;
-      classes[`focus:border-${theme}-900`] = true;
-      classes[`dark:focus:border-${theme}-300`] = true;
-      classes[`text-white`] = true;
-    } else if (mode === 'transparent') {
-      classes[`hover:bg-${theme}-500/10`] = true;
-      classes[`active:bg-${theme}-500/20`] = true;
-      classes[`focus:border-${theme}-300`] = true;
-      classes[`text-${theme}-500`] = true;
-    }
+    const isWhite = theme === 'white';
 
-    if (size === 'small') {
-      classes['small'] = true;
-    }
+    const isSmallSize = size === 'small';
 
-    return classes;
+    return {
+      'bg-foreground/15': isDisabled,
+      'text-foreground/30': isDisabled,
+      // mode === 'default'
+      [`bg-${theme}-500/10`]: !isDisabled && mode === 'default' && !isWhite,
+      [`hover:bg-${theme}-500/20`]:
+        !isDisabled && mode === 'default' && !isWhite,
+      [`active:bg-${theme}-500/30`]:
+        !isDisabled && mode === 'default' && !isWhite,
+      [`focus:border-${theme}-300`]:
+        !isDisabled &&
+        (mode === 'default' || mode === 'transparent') &&
+        !isWhite,
+      [`text-${theme}-500`]: !isDisabled && mode === 'default' && !isWhite,
+      [`bg-white/10`]: !isDisabled && mode === 'default' && isWhite,
+      [`hover:bg-foreground/20`]:
+        !isDisabled &&
+        (mode === 'default' || mode === 'transparent') &&
+        isWhite,
+      [`active:bg-foreground/30`]:
+        !isDisabled &&
+        (mode === 'default' || mode === 'transparent') &&
+        isWhite,
+      [`text-foreground`]:
+        !isDisabled &&
+        (mode === 'default' || mode === 'transparent') &&
+        isWhite,
+      [`dark:focus:border-foreground/50`]:
+        !isDisabled &&
+        (mode === 'default' || mode === 'transparent') &&
+        isWhite,
+      // mode === 'fill'
+      [`bg-${theme}-500`]: !isDisabled && mode === 'fill' && !isWhite,
+      [`hover:brightness-110`]: !isDisabled && mode === 'fill' && !isWhite,
+      [`active:brightness-120`]: !isDisabled && mode === 'fill' && !isWhite,
+      [`focus:border-${theme}-900`]: !isDisabled && mode === 'fill' && !isWhite,
+      [`dark:focus:border-${theme}-300`]:
+        !isDisabled && mode === 'fill' && !isWhite,
+      [`text-white`]: !isDisabled && mode === 'fill' && !isWhite,
+      [`bg-white`]: !isDisabled && mode === 'fill' && isWhite,
+      [`dark:text-background`]: !isDisabled && mode === 'fill' && isWhite,
+      [`hover:brightness-90`]: !isDisabled && mode === 'fill' && isWhite,
+      [`active:brightness-80`]: !isDisabled && mode === 'fill' && isWhite,
+      [`dark:focus:border-background/50`]:
+        !isDisabled && mode === 'fill' && isWhite,
+      // mode === 'transparent'
+      [`hover:bg-${theme}-500/10`]:
+        !isDisabled && mode === 'transparent' && !isWhite,
+      [`active:bg-${theme}-500/20`]:
+        !isDisabled && mode === 'transparent' && !isWhite,
+      [`text-${theme}-500`]: !isDisabled && mode === 'transparent' && !isWhite,
+      // size === 'small'
+      small: isSmallSize,
+    };
   });
 
   isDisabled = signal(false);

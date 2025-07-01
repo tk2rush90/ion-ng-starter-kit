@@ -1,8 +1,8 @@
-<app-message-box [icon]="CircleQuestionMarkIcon" theme="gray">
-  메시지를 이렇게 쓰면 되는가? 메시지가 조금 크면 어떤가? 이건 너무 좀 그런가?
-</app-message-box>
-
 <ion-content>
+  <app-message-box [icon]="CircleQuestionMarkIcon" theme="gray">
+    메시지를 이렇게 쓰면 되는가? 메시지가 조금 크면 어떤가? 이건 너무 좀 그런가?
+  </app-message-box>
+
   <a [routerLink]="['/ui/components']">UI Components</a>
 
   <app-image
@@ -17,6 +17,35 @@
   <app-checkbox theme="sky">체크박스</app-checkbox>
   <div class="flex items-center justify-end">
     <app-checkbox theme="emerald"></app-checkbox>
+  </div>
+
+  <div class="flex flex-wrap items-center justify-start gap-1">
+    <button
+      type="button"
+      theme="white"
+      appFlatButton
+      class="shrink-0 grow-0 basis-auto"
+    >
+      Button
+    </button>
+    <button
+      type="button"
+      theme="white"
+      mode="fill"
+      appFlatButton
+      class="shrink-0 grow-0 basis-auto"
+    >
+      Button
+    </button>
+    <button
+      type="button"
+      theme="white"
+      mode="transparent"
+      appFlatButton
+      class="shrink-0 grow-0 basis-auto"
+    >
+      Button
+    </button>
   </div>
 
   <div class="flex flex-wrap items-center justify-start gap-1">

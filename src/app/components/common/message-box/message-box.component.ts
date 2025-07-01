@@ -23,6 +23,8 @@ export class MessageBoxComponent {
     return {
       [`bg-${theme}-500/10`]: true,
       [`text-${theme}-500`]: true,
+      [`dark:bg-${theme}-500/30`]: true,
+      [`dark:text-${theme}-300`]: true,
     };
   });
 }

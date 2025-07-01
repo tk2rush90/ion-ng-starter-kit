@@ -134,10 +134,6 @@ module.exports = {
       variants: ["hover", "active", "focus", "dark"],
     },
     {
-      pattern: /bg-(black|white)(\/(5|10|15|20|30))?/,
-      variants: ["hover", "active", "focus", "dark"],
-    },
-    {
       pattern: /text-(black|white|current)(\/(5|10|15|20|30))?/,
     },
     {
@@ -147,7 +143,8 @@ module.exports = {
     },
     {
       pattern:
-        /text-(slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-500/,
+        /text-(slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(300|500)/,
+      variants: ["dark"],
     },
   ],
 };
