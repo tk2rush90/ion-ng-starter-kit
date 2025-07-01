@@ -48,6 +48,8 @@ import {
   AppWindowIcon,
   BugIcon,
   CircleAlertIcon,
+  CircleHelpIcon,
+  CircleQuestionMarkIcon,
   GridIcon,
   LucideAngularModule,
   PanelLeftCloseIcon,
@@ -67,6 +69,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { ImageComponent } from '../../components/common/image/image.component';
 import { CalendarComponent } from '../../components/common/calendar/calendar.component';
 import { IonContent } from '@ionic/angular/standalone';
+import { MessageBoxComponent } from '../../components/common/message-box/message-box.component';
 
 @Component({
   selector: 'app-example-page',
@@ -106,6 +109,7 @@ import { IonContent } from '@ionic/angular/standalone';
     ImageComponent,
     CalendarComponent,
     IonContent,
+    MessageBoxComponent,
   ],
   templateUrl: './example-page.component.html',
   styleUrl: './example-page.component.scss',
@@ -173,4 +177,6 @@ export class ExamplePageComponent implements AfterViewInit {
   protected readonly PanelRightOpenIcon = PanelRightOpenIcon;
   protected readonly GridIcon = GridIcon;
   protected readonly AppWindowIcon = AppWindowIcon;
+  protected readonly CircleHelpIcon = CircleHelpIcon;
+  protected readonly CircleQuestionMarkIcon = CircleQuestionMarkIcon;
 }
