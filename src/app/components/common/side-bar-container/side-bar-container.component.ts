@@ -41,12 +41,27 @@ export class SideBarContainerComponent implements AfterViewInit {
 
       const overlapContent = sideBarComponent.overlapContent();
 
-      const maxWidthOpened = `calc(100% - ${sidebarWidth}px)`;
+      const widthOpened = `calc(100% - ${sidebarWidth}px)`;
 
-      const maxWidthClosed = keepSize ? `calc(100% - ${keepSize})` : null;
+      const widthClosed = keepSize ? `calc(100% - ${keepSize})` : '100%';
+
+      const isLeftPosition = sideBarComponent.position() === 'left';
+
+      const isRightPosition = sideBarComponent.position() === 'right';
 
       return {
-        maxWidth: !overlapContent && isOpened ? maxWidthOpened : maxWidthClosed,
+        paddingLeft: isLeftPosition
+          ? !overlapContent && isOpened
+            ? `${sidebarWidth}px`
+            : keepSize
+              ? keepSize
+              : '0px'
+          : null,
+        width: isRightPosition
+          ? !overlapContent && isOpened
+            ? widthOpened
+            : widthClosed
+          : '100%',
       };
     } else {
       return {};
