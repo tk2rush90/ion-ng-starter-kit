@@ -4,12 +4,12 @@ import {
   computed,
   contentChildren,
   ElementRef,
-  inject,
   input,
   OnDestroy,
   OnInit,
   output,
   signal,
+  viewChild,
 } from '@angular/core';
 import { VariableColors } from '../../../utils/tailwind.utils';
 import { IconButtonDirective } from '../icon-button/icon-button.directive';
@@ -19,7 +19,6 @@ import {
   LucideAngularModule,
 } from 'lucide-angular';
 import { AngularPlatform } from '../../../utils/platform.utils';
-import { NgStyle } from '@angular/common';
 import { TabItemDirective } from '../tab-item/tab-item.directive';
 
 /**
@@ -30,12 +29,11 @@ import { TabItemDirective } from '../tab-item/tab-item.directive';
  */
 @Component({
   selector: 'app-tab-container',
-  imports: [IconButtonDirective, LucideAngularModule, NgStyle],
+  imports: [IconButtonDirective, LucideAngularModule],
   templateUrl: './tab-container.component.html',
   styleUrl: './tab-container.component.scss',
   host: {
-    '(scroll)': `detectScroll()`,
-    class: 'relative flex items-center justify-start gap-1 overflow-auto',
+    class: 'relative flex flex-col items-stretch',
   },
 })
 export class TabContainerComponent implements OnInit, OnDestroy {
@@ -53,6 +51,9 @@ export class TabContainerComponent implements OnInit, OnDestroy {
 
   hasScroll = signal(false);
 
+  scrollContainerElementRef =
+    viewChild<ElementRef<HTMLElement>>('scrollContainer');
+
   displayLeftButton = computed(
     () => this.hasScroll() && !this.isScrollOnStart(),
   );
@@ -61,29 +62,19 @@ export class TabContainerComponent implements OnInit, OnDestroy {
     () => this.hasScroll() && !this.isScrollOnEnd(),
   );
 
-  leftButtonStyles = signal({
-    left: '0px',
-  });
-
-  rightButtonStyles = signal({
-    right: '0px',
-  });
-
   tabItemDirectiveList = contentChildren(TabItemDirective);
 
   private resizeObserver?: ResizeObserver;
 
-  private readonly elementRef: ElementRef<HTMLElement> = inject(ElementRef);
-
-  get element(): HTMLElement {
-    return this.elementRef.nativeElement;
+  get scrollContainer(): HTMLElement | undefined {
+    return this.scrollContainerElementRef()?.nativeElement;
   }
 
   ngOnInit() {
-    if (AngularPlatform.isBrowser) {
+    if (AngularPlatform.isBrowser && this.scrollContainer) {
       this.resizeObserver = new ResizeObserver(() => this.detectScroll());
 
-      this.resizeObserver.observe(this.elementRef.nativeElement);
+      this.resizeObserver.observe(this.scrollContainer);
     }
   }
 
@@ -92,39 +83,68 @@ export class TabContainerComponent implements OnInit, OnDestroy {
   }
 
   detectScroll(): void {
-    const scrollLeft = this.elementRef.nativeElement.scrollLeft;
+    if (!this.scrollContainer) {
+      return;
+    }
 
-    const width = this.elementRef.nativeElement.offsetWidth;
+    const scrollLeft = this.scrollContainer.scrollLeft;
 
-    const scrollWidth = this.elementRef.nativeElement.scrollWidth;
+    const width = this.scrollContainer.offsetWidth;
+
+    const scrollWidth = this.scrollContainer.scrollWidth;
 
     this.hasScroll.set(width < scrollWidth);
     this.isScrollOnStart.set(scrollLeft === 0);
     this.isScrollOnEnd.set(scrollLeft + width === scrollWidth);
-
-    this.leftButtonStyles.set({
-      left: `calc(${scrollLeft}px + 0.125rem)`,
-    });
-
-    this.rightButtonStyles.set({
-      right: `calc(-${scrollLeft}px + 0.125rem)`,
-    });
   }
 
   toLeft(): void {
-    this.scrollBy(
-      -this.elementRef.nativeElement.getBoundingClientRect().width / 2,
-    );
+    if (!this.scrollContainer) {
+      return;
+    }
+
+    this.scrollBy(-(this.scrollContainer.getBoundingClientRect().width / 2));
   }
 
   toRight(): void {
-    this.scrollBy(
-      this.elementRef.nativeElement.getBoundingClientRect().width / 2,
-    );
+    if (!this.scrollContainer) {
+      return;
+    }
+
+    this.scrollBy(this.scrollContainer.getBoundingClientRect().width / 2);
+  }
+
+  scrollToLeftUntil(target: HTMLElement): void {
+    if (!this.scrollContainer) {
+      return;
+    }
+
+    this.scrollContainer.scrollTo({
+      left: target.offsetLeft,
+      behavior: 'smooth',
+    });
+  }
+
+  scrollToRightUntil(target: HTMLElement): void {
+    if (!this.scrollContainer) {
+      return;
+    }
+
+    this.scrollContainer.scrollTo({
+      left:
+        target.offsetLeft +
+        target.offsetWidth -
+        this.scrollContainer.offsetWidth,
+      behavior: 'smooth',
+    });
   }
 
   scrollBy(value: number): void {
-    this.elementRef.nativeElement.scrollBy({
+    if (!this.scrollContainer) {
+      return;
+    }
+
+    this.scrollContainer.scrollBy({
       left: value,
       behavior: 'smooth',
     });

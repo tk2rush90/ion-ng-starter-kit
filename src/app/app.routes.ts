@@ -4,6 +4,7 @@ import { CAutoFocusPageComponent } from './pages/ui-components-page/c-auto-focus
 import { CAutoResizerPageComponent } from './pages/ui-components-page/c-auto-resizer-page/c-auto-resizer-page.component';
 import { CBottomActionsPageComponent } from './pages/ui-components-page/c-bottom-actions-page/c-bottom-actions-page.component';
 import { CCalendarPageComponent } from './pages/ui-components-page/c-calendar-page/c-calendar-page.component';
+import { ExamplePageComponent } from './pages/example-page/example-page.component';
 
 export const routes: Routes = [
   {
@@ -31,6 +32,10 @@ export const routes: Routes = [
         redirectTo: 'autoFocus',
       },
     ],
+  },
+  {
+    path: 'example',
+    component: ExamplePageComponent,
   },
   {
     path: '**',

@@ -58,22 +58,27 @@ export class TabItemDirective implements AfterViewInit {
   constructor() {
     effect(() => {
       // 서버사이드에서는 getBoundingClientRect()을 읽어올 수 없다
-      if (this.isActive() && AngularPlatform.isBrowser) {
+      if (
+        this.isActive() &&
+        AngularPlatform.isBrowser &&
+        this.tabContainerComponent.scrollContainer
+      ) {
         this.tabContainerComponent.tabChange.emit(this);
 
-        const itemDomRect =
-          this.elementRef.nativeElement.getBoundingClientRect();
+        const element = this.elementRef.nativeElement;
+
+        const itemDomRect = element.getBoundingClientRect();
 
         const containerDomRect =
-          this.tabContainerComponent.element.getBoundingClientRect();
+          this.tabContainerComponent.scrollContainer.getBoundingClientRect();
 
         if (itemDomRect.x < containerDomRect.x) {
-          this.tabContainerComponent.toLeft();
+          this.tabContainerComponent.scrollToLeftUntil(element);
           return;
         }
 
         if (itemDomRect.right > containerDomRect.right) {
-          this.tabContainerComponent.toRight();
+          this.tabContainerComponent.scrollToRightUntil(element);
           return;
         }
       }

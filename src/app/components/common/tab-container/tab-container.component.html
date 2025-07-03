@@ -1,7 +1,6 @@
 @if (displayLeftButton()) {
   <div
-    [ngStyle]="leftButtonStyles()"
-    class="absolute z-50 flex size-8 items-center justify-center rounded-full bg-background shadow-lg"
+    class="absolute left-0.5 top-1/2 z-10 flex size-8 -translate-y-1/2 items-center justify-center rounded-full bg-background shadow-lg"
   >
     <button (click)="toLeft()" type="button" appIconButton>
       <i-lucide [img]="ChevronLeftIcon"></i-lucide>
@@ -9,12 +8,17 @@
   </div>
 }
 
-<ng-content></ng-content>
+<div
+  #scrollContainer
+  (scroll)="detectScroll()"
+  class="scroll-container flex items-center justify-start gap-1 overflow-auto"
+>
+  <ng-content></ng-content>
+</div>
 
 @if (displayRightButton()) {
   <div
-    [ngStyle]="rightButtonStyles()"
-    class="absolute z-50 flex size-8 items-center justify-center rounded-full bg-background shadow-lg"
+    class="absolute right-0.5 top-1/2 z-10 flex size-8 -translate-y-1/2 items-center justify-center rounded-full bg-background shadow-lg"
   >
     <button (click)="toRight()" type="button" appIconButton>
       <i-lucide [img]="ChevronRightIcon"></i-lucide>
