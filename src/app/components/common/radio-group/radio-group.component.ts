@@ -39,7 +39,11 @@ import { RadioGroupDirection } from '../../../types/radio-group-direction';
 export class RadioGroupComponent extends AppControlValueAccessor {
   value = input<any>();
 
-  theme = input<VariableColors>('blue');
+  theme = input<VariableColors | 'white'>('white');
+
+  withBorder = input(false, {
+    transform: booleanAttribute,
+  });
 
   direction = input<RadioGroupDirection>('column');
 

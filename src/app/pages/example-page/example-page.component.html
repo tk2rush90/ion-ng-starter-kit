@@ -10,7 +10,10 @@
     class="size-120 rounded-3xl"
   ></app-image>
 
+  <app-checkbox>체크박스</app-checkbox>
+  <app-checkbox withBorder>체크박스</app-checkbox>
   <app-checkbox theme="blue">체크박스</app-checkbox>
+  <app-checkbox theme="blue" withBorder>체크박스</app-checkbox>
   <app-checkbox theme="blue" disabled>체크박스</app-checkbox>
   <app-checkbox theme="blue" disabled checked>체크박스</app-checkbox>
   <app-checkbox theme="red">체크박스</app-checkbox>
@@ -1599,25 +1602,25 @@
     withBorder
   >
     <div class="flex flex-col items-stretch gap-4 p-4">
-      <app-form-field theme="indigo" required>
+      <app-form-field required withBorder>
         <label>이메일</label>
 
         <input type="email" />
       </app-form-field>
 
-      <app-form-field theme="indigo" required>
+      <app-form-field required withBorder>
         <label>패스워드</label>
 
         <input type="password" />
       </app-form-field>
 
-      <app-form-field theme="indigo" required>
+      <app-form-field required withBorder>
         <label>자기소개</label>
 
         <textarea appImeInput appAutoResizer></textarea>
       </app-form-field>
 
-      <app-form-field theme="indigo" required>
+      <app-form-field required withBorder>
         <label>지역</label>
 
         <select>
@@ -1630,20 +1633,18 @@
       <app-field required>
         <label>성별</label>
 
-        <app-radio-group theme="indigo">
+        <app-radio-group withBorder>
           <app-radio value="남자">남자</app-radio>
 
           <app-radio value="여자">여자</app-radio>
         </app-radio-group>
       </app-field>
 
-      <app-checkbox theme="indigo">
-        개인 정보 처리방침에 동의합니다
-      </app-checkbox>
+      <app-checkbox withBorder>개인 정보 처리방침에 동의합니다</app-checkbox>
     </div>
 
     <app-bottom-actions justify="right">
-      <button type="submit" theme="indigo" appButton>제출하기</button>
+      <button type="submit" appButton>제출하기</button>
     </app-bottom-actions>
   </app-card>
 

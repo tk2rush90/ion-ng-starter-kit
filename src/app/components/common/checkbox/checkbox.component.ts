@@ -28,9 +28,9 @@ import { fadeInOut } from '../../../animations/fade-in-out';
     '[attr.aria-checked]': 'isChecked()',
     '[attr.data-theme]': `theme()`,
     '[class]': `classes()`,
+    '[tabindex]': `tabindex()`,
     class:
       'flex cursor-pointer select-none items-center justify-between gap-2 px-3 min-h-10 rounded-[1.25rem] py-2 transition-colors',
-    tabindex: '0',
     role: 'checkbox',
   },
   providers: [CheckboxService],
@@ -42,7 +42,7 @@ import { fadeInOut } from '../../../animations/fade-in-out';
   ],
 })
 export class CheckboxComponent extends AppControlValueAccessor {
-  theme = input<VariableColors>('blue');
+  theme = input<VariableColors | 'white'>('white');
 
   /** 초기 disabled 상태 설정 */
   disabled = input(false, {
@@ -54,11 +54,17 @@ export class CheckboxComponent extends AppControlValueAccessor {
     transform: booleanAttribute,
   });
 
+  withBorder = input(false, {
+    transform: booleanAttribute,
+  });
+
   /** Emits when `checked` status has changed */
   checkedChange = output<boolean>();
 
   /** 실제 체크 상태 */
   isChecked = computed(() => this.checkboxService.checked());
+
+  tabindex = computed(() => (this.isDisabled() ? '-1' : '0'));
 
   /** 호스트 클래스 생성 이펙트 */
   classes = computed(() => {
@@ -68,13 +74,22 @@ export class CheckboxComponent extends AppControlValueAccessor {
 
     const disabled = this.checkboxService.disabled();
 
+    const isWhite = theme === 'white';
+
     if (disabled) {
       classes['hover:bg-foreground/5'] = true;
     } else {
-      classes[`hover:bg-${theme}-500/5`] = true;
-      classes[`active:bg-${theme}-500/10`] = true;
-      classes[`dark:hover:bg-${theme}-500/10`] = true;
-      classes[`dark:active:bg-${theme}-500/15`] = true;
+      if (isWhite) {
+        classes[`hover:backdrop-brightness-90`] = true;
+        classes[`active:backdrop-brightness-80`] = true;
+        classes[`dark:hover:backdrop-brightness-150`] = true;
+        classes[`dark:active:backdrop-brightness-200`] = true;
+      } else {
+        classes[`hover:bg-${theme}-500/5`] = true;
+        classes[`active:bg-${theme}-500/10`] = true;
+        classes[`dark:hover:bg-${theme}-500/10`] = true;
+        classes[`dark:active:bg-${theme}-500/15`] = true;
+      }
     }
 
     return classes;
@@ -90,25 +105,32 @@ export class CheckboxComponent extends AppControlValueAccessor {
 
     const focused = this.checkboxService.focused();
 
+    const isWhite = theme === 'white';
+
+    const withBorder = this.withBorder();
+
     if (disabled) {
       classes['bg-foreground/15'] = true;
       classes['text-foreground/30'] = true;
-
-      if (focused) {
-        classes[`border-foreground/15`] = true;
-      } else {
-        classes['border-transparent'] = true;
-      }
+      classes['border-transparent'] = true;
     } else {
-      classes[`bg-${theme}-500/20`] = true;
-      classes[`text-${theme}-500`] = true;
-
-      if (focused) {
-        classes[`border-${theme}-500`] = true;
+      if (isWhite) {
+        classes['bg-white/50'] = true;
+        classes['text-foreground'] = true;
+        classes[`border-foreground/30`] = focused;
       } else {
-        classes['border-transparent'] = true;
+        classes[`bg-${theme}-500/20`] = true;
+        classes[`text-${theme}-500`] = true;
+        classes[`border-${theme}-500`] = focused;
       }
+
+      classes['border-transparent'] = !focused;
     }
+
+    classes['outline'] = withBorder;
+    classes['outline-1'] = withBorder;
+    classes['outline-offset-[-1px]'] = withBorder;
+    classes['outline-foreground/15'] = withBorder;
 
     return classes;
   });

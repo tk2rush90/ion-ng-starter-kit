@@ -40,15 +40,24 @@ export class RadioComponent {
 
     const theme = this.radioGroupComponent.theme();
 
+    const isWhite = theme === 'white';
+
     const isDisabled = this.isDisabled();
 
     if (isDisabled) {
       classes['hover:bg-black/5'] = true;
     } else {
-      classes[`hover:bg-${theme}-500/5`] = true;
-      classes[`active:bg-${theme}-500/10`] = true;
-      classes[`dark:hover:bg-${theme}-500/10`] = true;
-      classes[`dark:active:bg-${theme}-500/15`] = true;
+      if (isWhite) {
+        classes['hover:backdrop-brightness-90'] = true;
+        classes['active:backdrop-brightness-80'] = true;
+        classes['dark:hover:backdrop-brightness-150'] = true;
+        classes['dark:active:backdrop-brightness-200'] = true;
+      } else {
+        classes[`hover:bg-${theme}-500/5`] = true;
+        classes[`active:bg-${theme}-500/10`] = true;
+        classes[`dark:hover:bg-${theme}-500/10`] = true;
+        classes[`dark:active:bg-${theme}-500/15`] = true;
+      }
     }
 
     return classes;
@@ -65,35 +74,35 @@ export class RadioComponent {
 
     const isFocused = this.radioGroupService.focused();
 
+    const withBorder = this.radioGroupComponent.withBorder();
+
+    const isWhite = theme === 'white';
+
     if (isDisabled) {
       classes['text-black/30'] = true;
-
-      if (isFocused) {
-        classes['bg-black/30'] = true;
-      } else {
-        classes['bg-black/15'] = true;
-      }
-
-      if (isSelected && isFocused) {
-        classes['border-foreground/15'] = true;
-      } else {
-        classes['border-transparent'] = true;
-      }
+      classes['bg-black/30'] = isFocused;
+      classes['bg-black/15'] = !isFocused;
+      classes['border-transparent'] = true;
     } else {
-      classes[`text-${theme}-500`] = true;
-
-      if (isFocused) {
-        classes[`bg-${theme}-500/30`] = true;
+      if (isWhite) {
+        classes[`text-foreground`] = true;
+        classes[`bg-white/70`] = isFocused;
+        classes[`bg-white/50`] = !isFocused;
+        classes[`border-foreground/30`] = isFocused && isSelected;
       } else {
-        classes[`bg-${theme}-500/15`] = true;
+        classes[`text-${theme}-500`] = true;
+        classes[`bg-${theme}-500/30`] = isFocused;
+        classes[`bg-${theme}-500/15`] = !isFocused;
+        classes[`border-${theme}-500`] = isFocused && isSelected;
       }
 
-      if (isSelected && isFocused) {
-        classes[`border-${theme}-500`] = true;
-      } else {
-        classes['border-transparent'] = true;
-      }
+      classes['border-transparent'] = !isFocused || !isSelected;
     }
+
+    classes['outline'] = withBorder;
+    classes['outline-1'] = withBorder;
+    classes['outline-offset-[-1px]'] = withBorder;
+    classes['outline-foreground/15'] = withBorder;
 
     return classes;
   });
