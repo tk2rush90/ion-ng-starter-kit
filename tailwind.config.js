@@ -138,7 +138,7 @@ module.exports = {
     },
     {
       pattern:
-        /border-(slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(300|500|900)(\/(30))?/,
+        /border-(slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(200|300|500|900)(\/(30))?/,
       variants: ["hover", "focus", "has-[:focus]", "dark:focus"],
     },
     {

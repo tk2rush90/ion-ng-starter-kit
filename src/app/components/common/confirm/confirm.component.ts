@@ -9,8 +9,8 @@ import { OVERLAY_REF } from '../../../tokens/overlay-ref';
 import { AutoFocusDirective } from '../auto-focus/auto-focus.directive';
 import { BottomActionsComponent } from '../bottom-actions/bottom-actions.component';
 import { VariableColors } from '../../../utils/tailwind.utils';
-import { FlatButtonDirective } from '../flat-button/flat-button.directive';
-import { FlatButtonMode } from '../../../types/flat-button-mode';
+import { ButtonDirective } from '../button/button.directive';
+import { ButtonMode } from '../../../types/button-mode';
 import { WithBottomActions } from '../../../abstracts/with-bottom-actions';
 
 @Component({
@@ -19,7 +19,7 @@ import { WithBottomActions } from '../../../abstracts/with-bottom-actions';
     AutoFocusDirective,
     BottomActionsComponent,
     BottomActionsComponent,
-    FlatButtonDirective,
+    ButtonDirective,
   ],
   templateUrl: './confirm.component.html',
   styleUrl: './confirm.component.scss',
@@ -32,9 +32,9 @@ export class ConfirmComponent extends WithBottomActions {
 
   cancelTheme = input<VariableColors>('red');
 
-  confirmMode = input<FlatButtonMode>('default');
+  confirmMode = input<ButtonMode>('default');
 
-  cancelMode = input<FlatButtonMode>('default');
+  cancelMode = input<ButtonMode>('default');
 
   overrideCancelLabel = input('');
 

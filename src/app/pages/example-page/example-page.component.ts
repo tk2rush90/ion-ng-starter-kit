@@ -16,7 +16,7 @@ import {
 } from '../../services/app/overlay/overlay.service';
 import { fadeInOut } from '../../animations/fade-in-out';
 import { slideInOutBottomFull } from '../../animations/slide-in-out-bottom-full';
-import { FlatButtonDirective } from '../../components/common/flat-button/flat-button.directive';
+import { ButtonDirective } from '../../components/common/button/button.directive';
 import { ConfirmComponent } from '../../components/common/confirm/confirm.component';
 import { ModalComponent } from '../../components/common/modal/modal.component';
 import { FileHandlerDirective } from '../../components/common/file-handler/file-handler.directive';
@@ -77,7 +77,7 @@ import { MessageBoxComponent } from '../../components/common/message-box/message
     CheckboxComponent,
     BackdropComponent,
     BottomSheetComponent,
-    FlatButtonDirective,
+    ButtonDirective,
     ConfirmComponent,
     ModalComponent,
     FileHandlerDirective,

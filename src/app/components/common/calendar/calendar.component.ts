@@ -13,7 +13,7 @@ import {
   ChevronRight,
   LucideAngularModule,
 } from 'lucide-angular';
-import { FlatButtonDirective } from '../flat-button/flat-button.directive';
+import { ButtonDirective } from '../button/button.directive';
 import { VariableColors } from '../../../utils/tailwind.utils';
 import { WithBottomActions } from '../../../abstracts/with-bottom-actions';
 import { BottomActionsJustify } from '../../../types/bottom-actions-justify';
@@ -26,7 +26,7 @@ import { BottomActionsJustify } from '../../../types/bottom-actions-justify';
     BottomActionsComponent,
     IconButtonDirective,
     LucideAngularModule,
-    FlatButtonDirective,
+    ButtonDirective,
   ],
   templateUrl: './calendar.component.html',
   styleUrl: './calendar.component.scss',

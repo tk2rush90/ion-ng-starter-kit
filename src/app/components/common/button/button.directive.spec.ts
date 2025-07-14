@@ -1,8 +1,8 @@
-import { FlatButtonDirective } from './flat-button.directive';
+import { ButtonDirective } from './button.directive';
 
 describe('FlatButtonDirective', () => {
   it('should create an instance', () => {
-    const directive = new FlatButtonDirective();
+    const directive = new ButtonDirective();
     expect(directive).toBeTruthy();
   });
 });

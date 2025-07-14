@@ -12,6 +12,7 @@ import {
 import { VariableColors } from '../../../utils/tailwind.utils';
 import { AngularPlatform } from '../../../utils/platform.utils';
 import { ChildNode } from 'postcss';
+import { ChipMode } from '../../../types/chip-mode';
 
 @Component({
   selector: 'app-chip',
@@ -32,14 +33,16 @@ export class ChipComponent implements OnInit, OnDestroy {
     transform: booleanAttribute,
   });
 
-  fill = input(false, {
-    transform: booleanAttribute,
-  });
+  mode = input<ChipMode>('default');
 
   classes = computed(() => {
     const theme = this.theme();
 
-    const fill = this.fill();
+    const mode = this.mode();
+
+    const isFillMode = mode === 'fill';
+
+    const isDefaultMode = mode === 'default';
 
     const hasIcon = this.hasIcon();
 
@@ -48,17 +51,17 @@ export class ChipComponent implements OnInit, OnDestroy {
     const focusable = this.focusable();
 
     return {
-      [`bg-${theme}-500/10`]: !fill,
-      [`bg-${theme}-500`]: fill,
-      [`text-${theme}-500`]: !fill,
-      [`text-white`]: fill,
-      [`hover:bg-${theme}-500/20`]: focusable && !fill,
-      [`active:bg-${theme}-500/30`]: focusable && !fill,
-      [`focus:border-${theme}-300`]: focusable && !fill,
-      [`hover:brightness-110`]: focusable && fill,
-      [`active:brightness-120`]: focusable && fill,
-      [`focus:border-${theme}-900`]: focusable && fill,
-      [`dark:focus:border-${theme}-300`]: focusable && fill,
+      [`bg-${theme}-500/10`]: isDefaultMode,
+      [`bg-${theme}-500`]: isFillMode,
+      [`text-foreground/70`]: isDefaultMode,
+      [`text-white`]: isFillMode,
+      [`hover:bg-${theme}-500/20`]: focusable && isDefaultMode,
+      [`active:bg-${theme}-500/30`]: focusable && isDefaultMode,
+      [`focus:border-${theme}-300`]: focusable && isDefaultMode,
+      [`hover:brightness-110`]: focusable && isFillMode,
+      [`active:brightness-120`]: focusable && isFillMode,
+      [`focus:border-${theme}-900`]: focusable && isFillMode,
+      [`dark:focus:border-${theme}-300`]: focusable && isFillMode,
       'pl-1.5': hasIcon && hasPrefixedIcon,
       'pr-3': hasIcon && hasPrefixedIcon,
       'pr-1.5': hasIcon && !hasPrefixedIcon,

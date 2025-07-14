@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CardComponent } from '../../../components/common/card/card.component';
 import { BottomActionsComponent } from '../../../components/common/bottom-actions/bottom-actions.component';
-import { FlatButtonDirective } from '../../../components/common/flat-button/flat-button.directive';
+import { ButtonDirective } from '../../../components/common/button/button.directive';
 import { AsteriskIcon, LucideAngularModule } from 'lucide-angular';
 
 @Component({
@@ -9,7 +9,7 @@ import { AsteriskIcon, LucideAngularModule } from 'lucide-angular';
   imports: [
     CardComponent,
     BottomActionsComponent,
-    FlatButtonDirective,
+    ButtonDirective,
     LucideAngularModule,
   ],
   templateUrl: './c-bottom-actions-page.component.html',

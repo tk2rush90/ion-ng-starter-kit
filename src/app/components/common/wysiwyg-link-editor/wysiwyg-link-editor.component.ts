@@ -7,7 +7,7 @@ import { AutoFocusDirective } from '../auto-focus/auto-focus.directive';
 import { ImeInputDirective } from '../ime-input/ime-input.directive';
 import { OVERLAY_REF } from '../../../tokens/overlay-ref';
 import { BottomActionsComponent } from '../bottom-actions/bottom-actions.component';
-import { FlatButtonDirective } from '../flat-button/flat-button.directive';
+import { ButtonDirective } from '../button/button.directive';
 import { VariableColors } from '../../../utils/tailwind.utils';
 import { WithBottomActions } from '../../../abstracts/with-bottom-actions';
 
@@ -20,7 +20,7 @@ import { WithBottomActions } from '../../../abstracts/with-bottom-actions';
     AutoFocusDirective,
     ImeInputDirective,
     BottomActionsComponent,
-    FlatButtonDirective,
+    ButtonDirective,
   ],
   templateUrl: './wysiwyg-link-editor.component.html',
   styleUrl: './wysiwyg-link-editor.component.scss',

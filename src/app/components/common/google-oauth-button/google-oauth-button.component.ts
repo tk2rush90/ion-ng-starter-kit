@@ -11,7 +11,7 @@ import { StartByGoogleAccessTokenService } from '../../../services/app/start-by-
 import { SignedMemberService } from '../../../services/app/signed-member/signed-member.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AngularPlatform } from '../../../utils/platform.utils';
-import { FlatButtonDirective } from '../flat-button/flat-button.directive';
+import { ButtonDirective } from '../button/button.directive';
 import TokenResponse = google.accounts.oauth2.TokenResponse;
 
 @Component({
@@ -27,7 +27,7 @@ import TokenResponse = google.accounts.oauth2.TokenResponse;
   providers: [StartByGoogleIdTokenService, StartByGoogleAccessTokenService],
   hostDirectives: [
     {
-      directive: FlatButtonDirective,
+      directive: ButtonDirective,
       inputs: ['theme', 'size', 'mode'],
     },
   ],
