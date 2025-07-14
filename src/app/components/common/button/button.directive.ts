@@ -99,8 +99,7 @@ export class ButtonDirective implements OnDestroy {
     classes['outline'] = withBorder;
     classes['outline-1'] = withBorder;
     classes['outline-offset-[-1px]'] = withBorder;
-    classes['outline-foreground/15'] = isWhite || (!isWhite && !isFillMode);
-    classes['outline-foreground/30'] = isFillMode && !isWhite;
+    classes['outline-foreground/15'] = withBorder;
     classes['h-10'] = isSmallSize;
     classes['text-sm'] = isSmallSize;
     classes['px-3.5'] = isSmallSize;
