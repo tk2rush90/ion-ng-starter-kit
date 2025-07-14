@@ -18,6 +18,7 @@ import {
 } from '@angular/animations';
 import { OVERLAY_REF } from '../../../tokens/overlay-ref';
 
+/** 반드시 외부에서 애니메이션을 바인딩 해줘야 내부 애니메이션의 스코프가 부모 요소로 이동한다. */
 @Component({
   selector: 'app-side-bar-overlay',
   imports: [],

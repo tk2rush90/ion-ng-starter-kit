@@ -65,12 +65,22 @@ export class FormFieldComponent implements AfterViewInit, OnDestroy {
     transform: booleanAttribute,
   });
 
-  theme = input<VariableColors>('blue');
+  withBorder = input(false, {
+    transform: booleanAttribute,
+  });
+
+  theme = input<VariableColors | 'white'>('white');
+
+  calendarTheme = input<VariableColors>('blue');
 
   controlClasses = computed(() => {
     const theme = this.theme();
 
     const isDisabled = this.isDisabled();
+
+    const isWhite = theme === 'white';
+
+    const withBorder = this.withBorder();
 
     const classes: any = {};
 
@@ -78,10 +88,21 @@ export class FormFieldComponent implements AfterViewInit, OnDestroy {
       classes['bg-black/15'] = true;
       classes['bg-black/30'] = true;
     } else {
-      classes[`bg-${theme}-500/15`] = true;
-      classes[`hover:bg-${theme}-500/20`] = true;
-      classes[`has-[:focus]:border-${theme}-500`] = true;
+      if (isWhite) {
+        classes['bg-white'] = true;
+        classes['hover:backdrop-brightness-90'] = true;
+        classes[`has-[:focus]:border-foreground/30`] = true;
+      } else {
+        classes[`bg-${theme}-500/15`] = true;
+        classes[`hover:bg-${theme}-500/20`] = true;
+        classes[`has-[:focus]:border-${theme}-500`] = true;
+      }
     }
+
+    classes['outline'] = withBorder;
+    classes['outline-1'] = withBorder;
+    classes['outline-offset-[-1px]'] = withBorder;
+    classes['outline-foreground/15'] = withBorder;
 
     return classes;
   });
