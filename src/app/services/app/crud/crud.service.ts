@@ -1,5 +1,12 @@
-import { DestroyRef, EventEmitter, inject, Injectable } from '@angular/core';
-import { BehaviorSubject, finalize, Observable, takeUntil } from 'rxjs';
+import {
+  DestroyRef,
+  EventEmitter,
+  inject,
+  Injectable,
+  signal,
+  WritableSignal,
+} from '@angular/core';
+import { finalize, Observable, takeUntil } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -11,33 +18,33 @@ export abstract class CrudService<
   U = Data,
   D = Data,
 > {
-  createLoading$ = new BehaviorSubject(false);
+  createLoading = signal(false);
 
   created = new EventEmitter<C>();
 
   createFailed = new EventEmitter<HttpErrorResponse>();
 
-  fetchLoading$ = new BehaviorSubject(false);
+  fetchLoading = signal(false);
 
   fetched = new EventEmitter<R>();
 
   fetchFailed = new EventEmitter<HttpErrorResponse>();
 
-  updateLoading$ = new BehaviorSubject(false);
+  updateLoading = signal(false);
 
   updated = new EventEmitter<U>();
 
   updateFailed = new EventEmitter<HttpErrorResponse>();
 
-  deleteLoading$ = new BehaviorSubject(false);
+  deleteLoading = signal(false);
 
   deleted = new EventEmitter<D>();
 
   deleteFailed = new EventEmitter<HttpErrorResponse>();
 
-  data$ = new BehaviorSubject<R | null>(null);
+  data: WritableSignal<R | null> = signal<R | null>(null);
 
-  onceFetched$ = new BehaviorSubject(false);
+  onceFetched = signal(false);
 
   private cancelCreateEmitter = new EventEmitter<void>();
 
@@ -48,54 +55,6 @@ export abstract class CrudService<
   private cancelDeleteEmitter = new EventEmitter<void>();
 
   protected readonly destroyRef = inject(DestroyRef);
-
-  get createLoading(): boolean {
-    return this.createLoading$.value;
-  }
-
-  set createLoading(value: boolean) {
-    this.createLoading$.next(value);
-  }
-
-  get fetchLoading(): boolean {
-    return this.fetchLoading$.value;
-  }
-
-  set fetchLoading(value: boolean) {
-    this.fetchLoading$.next(value);
-  }
-
-  get updateLoading(): boolean {
-    return this.updateLoading$.value;
-  }
-
-  set updateLoading(value: boolean) {
-    this.updateLoading$.next(value);
-  }
-
-  get deleteLoading(): boolean {
-    return this.deleteLoading$.value;
-  }
-
-  set deleteLoading(value: boolean) {
-    this.deleteLoading$.next(value);
-  }
-
-  get data(): R | null {
-    return this.data$.value;
-  }
-
-  set data(value: R | null) {
-    this.data$.next(value);
-  }
-
-  get onceFetched(): boolean {
-    return this.onceFetched$.value;
-  }
-
-  set onceFetched(value: boolean) {
-    this.onceFetched$.next(value);
-  }
 
   /** POST 요청 처리 */
   create(...params: any[]): void {
@@ -118,16 +77,16 @@ export abstract class CrudService<
   }
 
   protected handleCreateObservable(observable: Observable<C>): void {
-    if (this.createLoading) {
+    if (this.createLoading()) {
       return;
     }
 
-    this.createLoading = true;
+    this.createLoading.set(true);
 
     observable
       .pipe(takeUntilDestroyed(this.destroyRef))
       .pipe(takeUntil(this.cancelCreateEmitter))
-      .pipe(finalize(() => (this.createLoading = false)))
+      .pipe(finalize(() => this.createLoading.set(false)))
       .subscribe({
         next: (data) => this.created.emit(data),
         error: (err: HttpErrorResponse) => this.createFailed.emit(err),
@@ -135,20 +94,20 @@ export abstract class CrudService<
   }
 
   protected handleFetchObservable(observable: Observable<R>): void {
-    if (this.fetchLoading) {
+    if (this.fetchLoading()) {
       return;
     }
 
-    this.fetchLoading = true;
+    this.fetchLoading.set(true);
 
     observable
       .pipe(takeUntilDestroyed(this.destroyRef))
       .pipe(takeUntil(this.cancelFetchEmitter))
-      .pipe(finalize(() => (this.fetchLoading = false)))
+      .pipe(finalize(() => this.fetchLoading.set(false)))
       .subscribe({
         next: (data) => {
-          this.data = data;
-          this.onceFetched = true;
+          this.data.set(data);
+          this.onceFetched.set(true);
           this.fetched.emit(data);
         },
         error: (err: HttpErrorResponse) => this.fetchFailed.emit(err),
@@ -156,16 +115,16 @@ export abstract class CrudService<
   }
 
   protected handleUpdateObservable(observable: Observable<U>): void {
-    if (this.updateLoading) {
+    if (this.updateLoading()) {
       return;
     }
 
-    this.updateLoading = true;
+    this.updateLoading.set(true);
 
     observable
       .pipe(takeUntilDestroyed(this.destroyRef))
       .pipe(takeUntil(this.cancelUpdateEmitter))
-      .pipe(finalize(() => (this.updateLoading = false)))
+      .pipe(finalize(() => this.updateLoading.set(false)))
       .subscribe({
         next: (data) => this.updated.emit(data),
         error: (err: HttpErrorResponse) => this.updateFailed.emit(err),
@@ -173,16 +132,16 @@ export abstract class CrudService<
   }
 
   protected handleDeleteObservable(observable: Observable<D>): void {
-    if (this.deleteLoading) {
+    if (this.deleteLoading()) {
       return;
     }
 
-    this.deleteLoading = true;
+    this.deleteLoading.set(true);
 
     observable
       .pipe(takeUntilDestroyed(this.destroyRef))
       .pipe(takeUntil(this.cancelDeleteEmitter))
-      .pipe(finalize(() => (this.deleteLoading = false)))
+      .pipe(finalize(() => this.deleteLoading.set(false)))
       .subscribe({
         next: (data) => this.deleted.emit(data),
         error: (err: HttpErrorResponse) => this.deleteFailed.emit(err),

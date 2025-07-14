@@ -1,58 +1,35 @@
-import { DestroyRef, EventEmitter, inject, Injectable } from '@angular/core';
-import { BehaviorSubject, finalize, Observable, takeUntil } from 'rxjs';
+import {
+  DestroyRef,
+  EventEmitter,
+  inject,
+  Injectable,
+  signal,
+  WritableSignal,
+} from '@angular/core';
+import { finalize, Observable, takeUntil } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PagingResultDto } from '../../../dto/paging-result-dto';
 
 @Injectable()
 export abstract class PagingListService<Data> {
-  fetchLoading$ = new BehaviorSubject(false);
+  fetchLoading = signal(false);
 
   fetched = new EventEmitter<PagingResultDto<Data>>();
 
   fetchFailed = new EventEmitter<HttpErrorResponse>();
 
-  data$ = new BehaviorSubject<Data[]>([]);
+  data = signal<Data[]>([]);
 
-  nextCursor$ = new BehaviorSubject<string | undefined>(undefined);
+  nextCursor: WritableSignal<string | undefined> = signal<string | undefined>(
+    undefined,
+  );
 
-  onceFetched$ = new BehaviorSubject(false);
+  onceFetched = signal(false);
 
   protected readonly destroyRef = inject(DestroyRef);
 
   private cancelFetchEmitter = new EventEmitter<void>();
-
-  get fetchLoading(): boolean {
-    return this.fetchLoading$.value;
-  }
-
-  set fetchLoading(value: boolean) {
-    this.fetchLoading$.next(value);
-  }
-
-  get data(): Data[] {
-    return this.data$.value;
-  }
-
-  set data(value: Data[]) {
-    this.data$.next(value);
-  }
-
-  get nextCursor(): string | undefined {
-    return this.nextCursor$.value;
-  }
-
-  set nextCursor(value: string | undefined) {
-    this.nextCursor$.next(value);
-  }
-
-  get onceFetched(): boolean {
-    return this.onceFetched$.value;
-  }
-
-  set onceFetched(value: boolean) {
-    this.onceFetched$.next(value);
-  }
 
   fetch(...params: any[]): void {
     throw new Error('Fetch method is not implemented');
@@ -61,21 +38,21 @@ export abstract class PagingListService<Data> {
   protected handleFetchObservable(
     observable: Observable<PagingResultDto<Data>>,
   ): void {
-    if (this.fetchLoading) {
+    if (this.fetchLoading()) {
       return;
     }
 
-    this.fetchLoading = true;
+    this.fetchLoading.set(true);
 
     observable
       .pipe(takeUntilDestroyed(this.destroyRef))
       .pipe(takeUntil(this.cancelFetchEmitter))
-      .pipe(finalize(() => (this.fetchLoading = false)))
+      .pipe(finalize(() => this.fetchLoading.set(false)))
       .subscribe({
         next: (result) => {
-          this.data = [...this.data, ...result.data];
-          this.nextCursor = result.nextCursor;
-          this.onceFetched = true;
+          this.data.update((data) => [...data, ...result.data]);
+          this.nextCursor.set(result.nextCursor);
+          this.onceFetched.set(true);
           this.fetched.emit(result);
         },
         error: (err: HttpErrorResponse) => this.fetchFailed.emit(err),
