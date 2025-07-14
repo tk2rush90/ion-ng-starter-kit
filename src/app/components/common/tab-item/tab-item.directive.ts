@@ -19,7 +19,7 @@ import { AngularPlatform } from '../../../utils/platform.utils';
     '(click)': `onHostClick()`,
     '[class]': `classes()`,
     class:
-      'flex items-center justify-center rounded-full border border-solid gap-2 px-5 h-10 transition-colors',
+      'flex items-center justify-center rounded-full border border-solid gap-2 px-5 h-12 transition-colors',
   },
 })
 export class TabItemDirective implements AfterViewInit {

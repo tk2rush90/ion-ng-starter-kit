@@ -23,7 +23,7 @@ import { ChipMode } from '../../../types/chip-mode';
     '[class]': `classes()`,
     '[tabindex]': `tabindex()`,
     class:
-      'flex items-center justify-center rounded-full gap-2 text-sm h-7 border-2 border-solid border-transparent select-none transition-colors',
+      'flex items-center justify-center rounded-full gap-2 text-sm h-8 border-2 border-solid border-transparent select-none transition-colors',
   },
 })
 export class ChipComponent implements OnInit, OnDestroy {
