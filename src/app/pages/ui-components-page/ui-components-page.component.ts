@@ -48,6 +48,14 @@ export class UiComponentsPageComponent {
       label: 'Bottom Actions',
     },
     {
+      routerLink: ['/ui/components/bottomSheet'],
+      label: 'Bottom Sheet',
+    },
+    {
+      routerLink: ['/ui/components/button'],
+      label: 'Button',
+    },
+    {
       routerLink: ['/ui/components/calendar'],
       label: 'Calendar',
     },

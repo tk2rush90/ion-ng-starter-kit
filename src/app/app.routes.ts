@@ -5,6 +5,7 @@ import { CAutoResizerPageComponent } from './pages/ui-components-page/c-auto-res
 import { CBottomActionsPageComponent } from './pages/ui-components-page/c-bottom-actions-page/c-bottom-actions-page.component';
 import { CCalendarPageComponent } from './pages/ui-components-page/c-calendar-page/c-calendar-page.component';
 import { ExamplePageComponent } from './pages/example-page/example-page.component';
+import { CBottomSheetPageComponent } from './pages/ui-components-page/c-bottom-sheet-page/c-bottom-sheet-page.component';
 
 export const routes: Routes = [
   {
@@ -22,6 +23,10 @@ export const routes: Routes = [
       {
         path: 'bottomActions',
         component: CBottomActionsPageComponent,
+      },
+      {
+        path: 'bottomSheet',
+        component: CBottomSheetPageComponent,
       },
       {
         path: 'calendar',

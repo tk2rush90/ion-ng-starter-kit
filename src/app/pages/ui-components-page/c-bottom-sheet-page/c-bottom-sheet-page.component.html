@@ -1,0 +1,119 @@
+<h1>Bottom Sheet</h1>
+
+<p>
+  <code>BottomSheetComponent</code>
+  is an overlay that slides up from the bottom. On a PC, it is displayed as a
+  modal positioned at the bottom, and on mobile, it is displayed in a form that
+  can be closed by sliding.
+</p>
+
+<p>
+  It is used in combination with
+  <code>&#64;fadeInOut</code>
+  ,
+  <code>&#64;slideInOutBottomFull</code>
+  animations.
+</p>
+
+<pre>
+&lt;button
+  (click)="openBottomSheet()"
+  type="button"
+  appButton>
+  Open Bottom Sheet
+&lt;/button>
+
+&lt;ng-template #bottomSheet>
+  &lt;app-backdrop &#64;fadeInOut>&lt;/app-backdrop>
+
+  &lt;app-bottom-sheet
+    &#64;fadeInOut
+    &#64;slideInOutBottomFull
+    class="max-w-120"
+    modalTitle="Bottom Sheet"
+    displayCloseButton
+  >
+    &lt;div class="px-4 pb-4">It's Bottom Sheet&lt;/div>
+
+    &lt;app-bottom-actions
+      justify="right"
+      withBorder>
+      &lt;button
+        (click)="closeBottomSheet()"
+        type="button"
+        theme="red"
+        appButton>
+        Close
+      &lt;/button>
+    &lt;/app-bottom-actions>
+  &lt;/app-bottom-sheet>
+&lt;/ng-template>
+</pre>
+
+<pre>
+&#64;Component (&#123;
+  selector: 'app-bottom-sheet-example',
+  imports: [
+    ButtonDirective,
+    BackdropComponent,
+    BottomSheetComponent,
+    BottomActionsComponent,
+  ],
+  templateUrl: './bottom-sheet-example.component.html',
+  styleUrl: './bottom-sheet-example.component.scss',
+  animations: [fadeInOut(), slideInOutBottomFull()],
+&#125;)
+export class BottomSheetExampleComponent &#123;
+  bottomSheetTemplateRef = viewChild&lt;TemplateRef&lt;any>>('bottomSheet');
+
+  bottomSheetOverlayRef?: OverlayRef;
+
+  private readonly destroyRef = inject(DestroyRef);
+
+  private readonly overlayService = inject(OverlayService);
+
+  openBottomSheet(): void &#123;
+    const bottomSheetTemplateRef = this.bottomSheetTemplateRef();
+
+    if (bottomSheetTemplateRef) &#123;
+      this.bottomSheetOverlayRef = this.overlayService.open(
+        bottomSheetTemplateRef,
+        &#123;
+          destroyRef: this.destroyRef,
+          onDestroy: () => delete this.bottomSheetOverlayRef,
+        &#125;,
+      );
+    &#125;
+  &#125;
+
+  closeBottomSheet(): void &#123;
+    this.bottomSheetOverlayRef?.close();
+  &#125;
+&#125;
+</pre>
+
+<app-card class="flex flex-col items-start justify-start p-4" withBorder>
+  <button (click)="openBottomSheet()" type="button" appButton>
+    Open Bottom Sheet
+  </button>
+</app-card>
+
+<ng-template #bottomSheet>
+  <app-backdrop @fadeInOut></app-backdrop>
+
+  <app-bottom-sheet
+    @fadeInOut
+    @slideInOutBottomFull
+    class="max-w-120"
+    modalTitle="Bottom Sheet"
+    displayCloseButton
+  >
+    <div class="px-4 pb-4">It's Bottom Sheet</div>
+
+    <app-bottom-actions justify="right" withBorder>
+      <button (click)="closeBottomSheet()" type="button" theme="red" appButton>
+        Close
+      </button>
+    </app-bottom-actions>
+  </app-bottom-sheet>
+</ng-template>

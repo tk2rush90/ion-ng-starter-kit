@@ -8,7 +8,7 @@ import {
   OnDestroy,
   signal,
 } from '@angular/core';
-import { VariableColors } from '../../../utils/tailwind.utils';
+import { ColorWeight, VariableColors } from '../../../utils/tailwind.utils';
 import { ButtonMode } from '../../../types/button-mode';
 import { AngularPlatform } from '../../../utils/platform.utils';
 import { ButtonSize } from '../../../types/button-size';
@@ -27,6 +27,8 @@ export class ButtonDirective implements OnDestroy {
   mode = input<ButtonMode>('default');
 
   size = input<ButtonSize>('default');
+
+  weight = input<ColorWeight>('500');
 
   withBorder = input(false, {
     transform: booleanAttribute,
@@ -57,6 +59,8 @@ export class ButtonDirective implements OnDestroy {
 
     const withBorder = this.withBorder();
 
+    const weight = this.weight();
+
     const classes: any = {};
 
     if (isDisabled) {
@@ -78,21 +82,21 @@ export class ButtonDirective implements OnDestroy {
         classes['dark:focus:border-foreground/50'] =
           isTransparentMode || isDefaultMode;
       } else {
-        classes[`bg-${theme}-500/10`] = isDefaultMode;
-        classes[`hover:bg-${theme}-500/20`] = isDefaultMode;
-        classes[`active:bg-${theme}-500/30`] = isDefaultMode;
+        classes[`bg-${theme}-${weight}/10`] = isDefaultMode;
+        classes[`hover:bg-${theme}-${weight}/20`] = isDefaultMode;
+        classes[`active:bg-${theme}-${weight}/30`] = isDefaultMode;
         classes[`focus:border-${theme}-300`] =
           isDefaultMode || isTransparentMode;
-        classes[`text-${theme}-500`] = isDefaultMode;
-        classes[`bg-${theme}-500`] = isFillMode;
+        classes[`text-${theme}-${weight}`] = isDefaultMode;
+        classes[`bg-${theme}-${weight}`] = isFillMode;
         classes[`hover:brightness-110`] = isFillMode;
         classes[`active:brightness-120`] = isFillMode;
         classes[`focus:border-${theme}-900`] = isFillMode;
         classes[`dark:focus:border-${theme}-300`] = isFillMode;
         classes[`text-white`] = isFillMode;
-        classes[`hover:bg-${theme}-500/10`] = isTransparentMode;
-        classes[`active:bg-${theme}-500/20`] = isTransparentMode;
-        classes[`text-${theme}-500`] = isTransparentMode;
+        classes[`hover:bg-${theme}-${weight}/10`] = isTransparentMode;
+        classes[`active:bg-${theme}-${weight}/20`] = isTransparentMode;
+        classes[`text-${theme}-${weight}`] = isTransparentMode;
       }
     }
 

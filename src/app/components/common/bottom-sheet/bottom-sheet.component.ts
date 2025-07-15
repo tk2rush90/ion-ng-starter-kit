@@ -25,8 +25,9 @@ import { IconButtonDirective } from '../icon-button/icon-button.directive';
   host: {
     '(scroll)': `detectScroll()`,
     '[style]': `styles()`,
+    '[class]': `classes()`,
     class:
-      'pointer-events-auto fixed bottom-0 left-0 right-0 flex w-full flex-col items-stretch overflow-auto rounded-t-3xl bg-background shadow-2xl md:bottom-4 md:left-1/2 md:w-[calc(100dvw-2rem)] md:rounded-3xl',
+      'pointer-events-auto fixed bottom-0 left-0 right-0 flex w-full flex-col items-stretch overflow-auto rounded-t-3xl bg-background shadow-2xl w-full md:bottom-4 left-1/2 md:w-[calc(100dvw-2rem)] md:rounded-3xl',
   },
 })
 export class BottomSheetComponent implements AfterViewInit, OnDestroy {
@@ -48,16 +49,20 @@ export class BottomSheetComponent implements AfterViewInit, OnDestroy {
 
   moveDragY = signal(0);
 
+  classes = computed(() => {
+    return {
+      'is-dragging': this.isDragMoved(),
+    };
+  });
+
   styles = computed(() => {
     const styles: any = {};
 
-    if (!this.isDragging()) {
-      styles.maxHeight = `calc(100dvh - ${spacingToRem(14)}rem - ${spacingToRem(4)}rem)`;
-    }
-
-    if (this.isDragMoved()) {
+    if (this.isDragging()) {
       styles.top =
         this.initialTop() + (this.moveDragY() - this.startDragY()) + 'px';
+    } else {
+      styles.maxHeight = `calc(100dvh - ${spacingToRem(14)}rem - ${spacingToRem(4)}rem)`;
     }
 
     return styles;

@@ -1,6 +1,10 @@
 // `slideInOutBottomFull` 애니메이션 적용 시 이상하게 보이는 것 방지
-@media (min-width: 768px) {
-  :host {
-    translate: -50% 0;
+:host {
+  translate: -50% 0;
+
+  &.is-dragging {
+    &::-webkit-scrollbar {
+      @apply hidden;
+    }
   }
 }
