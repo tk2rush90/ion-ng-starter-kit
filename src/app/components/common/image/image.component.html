@@ -1,6 +1,6 @@
 <img
   [ngClass]="imageClasses()"
-  [src]="src()"
+  [src]="src() + 'alsdkjfklasjf'"
   class="size-full object-cover"
   loading="lazy"
   appImageHandler
@@ -8,10 +8,12 @@
 
 @if (imageHandlerDirective()?.imageError()) {
   <div @fadeInOut class="flex size-full items-center justify-center">
-    <i-lucide
-      [img]="ImageOffIcon"
-      [absoluteStrokeWidth]="true"
-      class="size-8 text-foreground opacity-50"
-    ></i-lucide>
+    <div class="aspect-square w-2/5 max-w-8">
+      <i-lucide
+        [img]="ImageOffIcon"
+        [absoluteStrokeWidth]="true"
+        class="size-full text-foreground opacity-50"
+      ></i-lucide>
+    </div>
   </div>
 }
