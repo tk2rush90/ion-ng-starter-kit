@@ -143,3 +143,65 @@
       }
     }
     ```
+
+## Overlay
+
+- 컴포넌트 내에서 특정 오버레이를 열게 해달라고 하면 다음과 같이 구성한다.
+  - ex) some-overlay 를 오버레이로 열 수 있게 해줘.
+    ```ts
+    @Component({
+      selector: 'app-selector',
+      templateUrl: 'app-selector.component.html',
+      styleUrl: 'app-selector.component.scss',
+    })
+    export class SelectorComponent {
+      someOverlayTemplateRef = viewChild<TemplateRef<any>>('someOverlay');
+    
+      private readonly destroyRef = inject(DestroyRef);
+    
+      private readonly overlayService = inject(OverlayService);
+    
+      openSomeOverlay(): void {
+        const someOverlayTemplateRef = this.someOverlayTemplateRef();
+    
+        if (someOverlayTemplateRef) {
+          this.overlayService.open(someOverlayTemplateRef, {
+            destroyRef,  
+          })    
+        }
+      }
+    }
+    ```
+- 컴포넌트 내에서 특정 오버레이를 열고 닫을 수 있게 해달라고 하면 다음과 같이 구성한다.
+  - ex) some-overlay 를 오버레이로 열고 닫을 수 있게 해줘.
+    ```ts
+    @Component({
+      selector: 'app-selector',
+      templateUrl: 'app-selector.component.html',
+      styleUrl: 'app-selector.component.scss',
+    })
+    export class SelectorComponent {
+      someOverlayTemplateRef = viewChild<TemplateRef<any>>('someOverlay');
+    
+      someOverlayOverlayRef?: OverlayRef;
+    
+      private readonly destroyRef = inject(DestroyRef);
+    
+      private readonly overlayService = inject(OverlayService);
+    
+      openSomeOverlay(): void {
+        const someOverlayTemplateRef = this.someOverlayTemplateRef();
+    
+        if (someOverlayTemplateRef) {
+          this.someOverlayOverlayRef = this.overlayService.open(someOverlayTemplateRef, {
+            destroyRef,  
+            onDestroy: () => delete this.someOverlayOverlayRef,
+          })    
+        }
+      }
+    
+      closeSomeOverlay(): void {
+        this.someOverlayOverlayRef?.close();
+      }
+    }
+    ```
