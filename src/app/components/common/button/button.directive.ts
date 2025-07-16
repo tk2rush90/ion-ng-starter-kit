@@ -61,6 +61,8 @@ export class ButtonDirective implements OnDestroy {
 
     const weight = this.weight();
 
+    const isHeavy = parseInt(weight) > 300;
+
     const classes: any = {};
 
     if (isDisabled) {
@@ -93,7 +95,8 @@ export class ButtonDirective implements OnDestroy {
         classes[`active:brightness-120`] = isFillMode;
         classes[`focus:border-${theme}-900`] = isFillMode;
         classes[`dark:focus:border-${theme}-300`] = isFillMode;
-        classes[`text-white`] = isFillMode;
+        classes[`text-white`] = isFillMode && isHeavy;
+        classes[`text-foreground`] = isFillMode && !isHeavy;
         classes[`hover:bg-${theme}-${weight}/10`] = isTransparentMode;
         classes[`active:bg-${theme}-${weight}/20`] = isTransparentMode;
         classes[`text-${theme}-${weight}`] = isTransparentMode;

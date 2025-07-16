@@ -2,9 +2,9 @@
 
 <p>
   <code>BottomSheetComponent</code>
-  is an overlay that slides up from the bottom. On a PC, it is displayed as a
-  modal positioned at the bottom, and on mobile, it is displayed in a form that
-  can be closed by sliding.
+  is an overlay that slides up from the bottom. In the PC viewport, it appears
+  as a modal at the bottom, and in the mobile viewport, it appears as a
+  slide-to-close form.
 </p>
 
 <p>
@@ -30,10 +30,8 @@
     &#64;fadeInOut
     &#64;slideInOutBottomFull
     class="max-w-120"
-    modalTitle="Bottom Sheet"
-    displayCloseButton
   >
-    &lt;div class="px-4 pb-4">It's Bottom Sheet&lt;/div>
+    &lt;div class="p-4">It's Bottom Sheet&lt;/div>
 
     &lt;app-bottom-actions
       justify="right"
@@ -98,17 +96,134 @@ export class BottomSheetExampleComponent &#123;
   </button>
 </app-card>
 
-<ng-template #bottomSheet>
+<h2>Attributes</h2>
+
+<h3>
+  <code>modalTitle: string</code>
+</h3>
+
+<p>
+  The
+  <code>modalTitle</code>
+  attribute displays the title of the BottomSheetComponent.
+</p>
+
+<pre>
+&lt;button
+  (click)="openBottomSheet()"
+  type="button"
+  appButton>
+  Open Bottom Sheet
+&lt;/button>
+
+&lt;ng-template #bottomSheet>
+  &lt;app-backdrop &#64;fadeInOut>&lt;/app-backdrop>
+
+  &lt;app-bottom-sheet
+    &#64;fadeInOut
+    &#64;slideInOutBottomFull
+    modalTitle="Modal Title"
+    class="max-w-120"
+  >
+    &lt;div class="p-4">It's Bottom Sheet&lt;/div>
+
+    &lt;app-bottom-actions
+      justify="right"
+      withBorder>
+      &lt;button
+        (click)="closeBottomSheet()"
+        type="button"
+        theme="red"
+        appButton>
+        Close
+      &lt;/button>
+    &lt;/app-bottom-actions>
+  &lt;/app-bottom-sheet>
+&lt;/ng-template>
+</pre>
+
+<app-card class="flex flex-col items-start justify-start p-4" withBorder>
+  <button
+    (click)="openBottomSheet({ modalTitle: 'Modal Title' })"
+    type="button"
+    appButton
+  >
+    Open Bottom Sheet
+  </button>
+</app-card>
+
+<h3>
+  <code>displayCloseButton: boolean</code>
+</h3>
+
+<p>
+  The
+  <code>displayCloseButton</code>
+  attribute displays the close button in the PC viewport.
+</p>
+
+<pre>
+&lt;button
+  (click)="openBottomSheet()"
+  type="button"
+  appButton>
+  Open Bottom Sheet
+&lt;/button>
+
+&lt;ng-template #bottomSheet>
+  &lt;app-backdrop &#64;fadeInOut>&lt;/app-backdrop>
+
+  &lt;app-bottom-sheet
+    &#64;fadeInOut
+    &#64;slideInOutBottomFull
+    modalTitle="Modal Title"
+    class="max-w-120"
+    displayCloseButton
+  >
+    &lt;div class="p-4">It's Bottom Sheet&lt;/div>
+
+    &lt;app-bottom-actions
+      justify="right"
+      withBorder>
+      &lt;button
+        (click)="closeBottomSheet()"
+        type="button"
+        theme="red"
+        appButton>
+        Close
+      &lt;/button>
+    &lt;/app-bottom-actions>
+  &lt;/app-bottom-sheet>
+&lt;/ng-template>
+</pre>
+
+<app-card class="flex flex-col items-start justify-start p-4" withBorder>
+  <button
+    (click)="
+      openBottomSheet({ modalTitle: 'Modal Title', displayCloseButton: true })
+    "
+    type="button"
+    appButton
+  >
+    Open Bottom Sheet
+  </button>
+</app-card>
+
+<ng-template
+  #bottomSheet
+  let-modalTitle="modalTitle"
+  let-displayCloseButton="displayCloseButton"
+>
   <app-backdrop @fadeInOut></app-backdrop>
 
   <app-bottom-sheet
     @fadeInOut
     @slideInOutBottomFull
+    [modalTitle]="modalTitle"
+    [displayCloseButton]="displayCloseButton"
     class="max-w-120"
-    modalTitle="Bottom Sheet"
-    displayCloseButton
   >
-    <div class="px-4 pb-4">It's Bottom Sheet</div>
+    <div class="p-4">It's Bottom Sheet</div>
 
     <app-bottom-actions justify="right" withBorder>
       <button (click)="closeBottomSheet()" type="button" theme="red" appButton>

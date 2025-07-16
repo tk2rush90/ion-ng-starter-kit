@@ -1,0 +1,101 @@
+<h1>Button</h1>
+
+<p>
+  <code>ButtonDirective</code>
+  is added to the
+  <code>&lt;button></code>
+  element to create a consistent button design.
+</p>
+
+<pre></pre>
+
+<app-card class="flex flex-wrap items-start justify-start gap-1 p-4" withBorder>
+  @for (theme of themes; track theme) {
+    <button [theme]="theme" type="button" appButton class="flex-none">
+      {{ theme | titlecase }}
+    </button>
+  }
+</app-card>
+
+<app-card
+  class="flex flex-col items-stretch justify-start gap-4 p-4"
+  withBorder
+>
+  @for (theme of withOutWhite; track theme) {
+    <div class="flex flex-col items-stretch gap-1">
+      <div class="font-bold">
+        {{ theme | titlecase }}
+      </div>
+
+      <div class="flex flex-wrap items-center justify-start gap-1">
+        @for (weight of weights; track weight) {
+          <button
+            [theme]="theme"
+            [weight]="weight"
+            type="button"
+            appButton
+            class="flex-none"
+          >
+            {{ theme | titlecase }} {{ weight }}
+          </button>
+        }
+      </div>
+    </div>
+  }
+</app-card>
+
+<app-card
+  class="flex flex-col items-stretch justify-start gap-4 p-4"
+  withBorder
+>
+  @for (theme of withOutWhite; track theme) {
+    <div class="flex flex-col items-stretch gap-1">
+      <div class="font-bold">
+        {{ theme | titlecase }}
+      </div>
+
+      <div class="flex flex-wrap items-center justify-start gap-1">
+        @for (weight of weights; track weight) {
+          <button
+            [theme]="theme"
+            [weight]="weight"
+            type="button"
+            mode="fill"
+            appButton
+            class="flex-none"
+          >
+            {{ theme | titlecase }} {{ weight }}
+          </button>
+        }
+      </div>
+    </div>
+  }
+</app-card>
+
+<app-card
+  class="flex flex-col items-stretch justify-start gap-4 p-4"
+  withBorder
+>
+  @for (theme of withOutWhite; track theme) {
+    <div class="flex flex-col items-stretch gap-1">
+      <div class="font-bold">
+        {{ theme | titlecase }}
+      </div>
+
+      <div class="flex flex-wrap items-center justify-start gap-1">
+        @for (weight of weights; track weight) {
+          <button
+            [theme]="theme"
+            [weight]="weight"
+            type="button"
+            mode="transparent"
+            appButton
+            class="flex-none"
+          >
+            {{ theme | titlecase }} {{ weight }}
+          </button>
+        }
+      </div>
+    </div>
+  }
+</app-card>

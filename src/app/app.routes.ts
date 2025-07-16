@@ -6,6 +6,7 @@ import { CBottomActionsPageComponent } from './pages/ui-components-page/c-bottom
 import { CCalendarPageComponent } from './pages/ui-components-page/c-calendar-page/c-calendar-page.component';
 import { ExamplePageComponent } from './pages/example-page/example-page.component';
 import { CBottomSheetPageComponent } from './pages/ui-components-page/c-bottom-sheet-page/c-bottom-sheet-page.component';
+import { CButtonPageComponent } from './pages/ui-components-page/c-button-page/c-button-page.component';
 
 export const routes: Routes = [
   {
@@ -27,6 +28,10 @@ export const routes: Routes = [
       {
         path: 'bottomSheet',
         component: CBottomSheetPageComponent,
+      },
+      {
+        path: 'button',
+        component: CButtonPageComponent,
       },
       {
         path: 'calendar',

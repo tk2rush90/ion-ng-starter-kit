@@ -39,7 +39,10 @@ export class CBottomSheetPageComponent {
 
   private readonly overlayService = inject(OverlayService);
 
-  openBottomSheet(): void {
+  openBottomSheet({
+    modalTitle,
+    displayCloseButton,
+  }: { modalTitle?: string; displayCloseButton?: boolean } = {}): void {
     const bottomSheetTemplateRef = this.bottomSheetTemplateRef();
 
     if (bottomSheetTemplateRef) {
@@ -48,6 +51,10 @@ export class CBottomSheetPageComponent {
         {
           destroyRef: this.destroyRef,
           onDestroy: () => delete this.bottomSheetOverlayRef,
+          context: {
+            modalTitle,
+            displayCloseButton,
+          },
         },
       );
     }
