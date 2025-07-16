@@ -119,7 +119,7 @@ module.exports = {
   safelist: [
     {
       pattern:
-        /bg-(slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-((100|300|400|500|600|900)(\/(5|10|15|20|30))?)/,
+        /bg-(slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-((50|100|200|300|400|500|600|700|800|900|950)(\/(5|10|15|20|30))?)/,
       variants: [
         "hover",
         "active",
@@ -143,7 +143,7 @@ module.exports = {
     },
     {
       pattern:
-        /text-(slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(300|500)/,
+        /text-(slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(50|100|200|300|400|500|600|700|800|900|950)/,
       variants: ["dark"],
     },
   ],
