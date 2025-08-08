@@ -3,11 +3,12 @@ import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
 import { FormsModule } from '@angular/forms';
 import { Storage } from '@ionic/storage';
 import { AngularPlatform } from './utils/platform.utils';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
-  imports: [IonApp, FormsModule, IonRouterOutlet],
+  imports: [IonApp, FormsModule, IonRouterOutlet, RouterOutlet],
 })
 export class AppComponent {
   private readonly platformId = inject(PLATFORM_ID);
