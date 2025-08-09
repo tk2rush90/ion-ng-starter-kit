@@ -22,11 +22,13 @@ $ ionic cap add android
 ```shell
 # ionic build 시 마다 www 폴더의 내용이 업데이트 되므로 아래 명령어를 이용해
 # iOS, Android 프로젝트에 변경사항 반영 필요
+# `ionic build` 내부적으로 자동 실행
 $ ionic cap copy
 ```
 
 ```shell
 # iOS, Android 프로젝트 네이티브 코드의 변경이 있을 경우 아래 명령어 실행
+# `ionic build`, `ionic cap copy` 내부적으로 자동 실행
 $ ionic cap sync
 ```
 
@@ -34,6 +36,7 @@ $ ionic cap sync
 
 ```shell
 # iOS, Android에서 Live Reload 기능을 사용하려면 아래 명령어 사용
+# `ionic build`, `ionic cap copy`, `ionic cap sync` 내부적으로 자동 실행
 $ ionic cap run ios -l --external
 $ ionic cap run android -l --external
 ```
@@ -58,114 +61,22 @@ dependencies {
 }
 ```
 
-## GoogleOauthPlugin 클래스 생성
+# MainActivity
 
-아래와 같이 `GoogleOauthPlugin` 클래스를 생성합니다.
-
-
-```java
-package io.ionic.starter;
-
-import android.content.Context;
-import android.util.Log;
-
-import androidx.annotation.NonNull;
-import androidx.credentials.Credential;
-import androidx.credentials.CredentialManager;
-import androidx.credentials.CredentialManagerCallback;
-import androidx.credentials.GetCredentialRequest;
-import androidx.credentials.GetCredentialResponse;
-import androidx.credentials.PublicKeyCredential;
-import androidx.credentials.exceptions.GetCredentialException;
-
-import com.getcapacitor.JSObject;
-import com.getcapacitor.Plugin;
-import com.getcapacitor.PluginCall;
-import com.getcapacitor.PluginMethod;
-import com.getcapacitor.annotation.CapacitorPlugin;
-import com.google.android.libraries.identity.googleid.GetGoogleIdOption;
-import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-@CapacitorPlugin(name = "GoogleOauth")
-public class GoogleOauthPlugin extends Plugin {
-  CredentialManager credentialManager;
-
-  @Override
-  public void load() {
-    super.load();
-
-    this.credentialManager = CredentialManager.create(getContext());
-  }
-
-  @PluginMethod()
-  public void signIn(PluginCall call) {
-    GetGoogleIdOption getGoogleIdOption = new GetGoogleIdOption.Builder().setFilterByAuthorizedAccounts(true).setServerClientId("${GOOGLE_WEB_CLIENT_ID}").setAutoSelectEnabled(true).build();
-
-    GetCredentialRequest getCredentialRequest = new GetCredentialRequest.Builder().addCredentialOption(getGoogleIdOption).build();
-
-    Context context = getContext();
-
-    this.credentialManager.getCredentialAsync(context, getCredentialRequest, null, context.getMainExecutor(), new CredentialManagerCallback<>() {
-      @Override
-      public void onResult(GetCredentialResponse getCredentialResponse) {
-        Credential credential = getCredentialResponse.getCredential();
-
-        Log.i("Credential Type", credential.getType());
-
-        if (credential instanceof PublicKeyCredential) {
-          String authenticationResponseJson = ((PublicKeyCredential) credential).getAuthenticationResponseJson();
-
-          try {
-            call.resolve(JSObject.fromJSONObject(new JSONObject(authenticationResponseJson)));
-          } catch (JSONException e) {
-            call.reject(e.getMessage());
-          }
-        } else if (credential.getType().equals(GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL)) {
-          GoogleIdTokenCredential googleIdTokenCredential = GoogleIdTokenCredential.createFrom(credential.getData());
-
-          JSObject jsObject = new JSObject();
-
-          jsObject.put("id", googleIdTokenCredential.getId());
-          jsObject.put("idToken", googleIdTokenCredential.getIdToken());
-          jsObject.put("givenName", googleIdTokenCredential.getGivenName());
-          jsObject.put("familyName", googleIdTokenCredential.getFamilyName());
-          jsObject.put("displayName", googleIdTokenCredential.getDisplayName());
-          jsObject.put("profilePictureUri", googleIdTokenCredential.getProfilePictureUri());
-
-          call.resolve(jsObject);
-        } else {
-          call.reject("Invalid Signing Method");
-        }
-      }
-
-      @Override
-      public void onError(@NonNull GetCredentialException e) {
-        call.reject(e.getMessage());
-      }
-    });
-  }
-}
-```
-
-## 플러그인 등록
-
-`MainActivity` 클래스에서 플러그인을 등록해줍니다.
+기본 MainAc
 
 ```java
-package io.ionic.starter;
-
-import android.os.Bundle;
-
 import com.getcapacitor.BridgeActivity;
 
 public class MainActivity extends BridgeActivity {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     registerPlugin(GoogleOauthPlugin.class);
+    
     super.onCreate(savedInstanceState);
+
+    // Edge-to-edge 적용. 시스템 바 인셋에 맞춰 콘텐츠를 배치하지 않도록 설정
+    WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
   }
 }
 ```

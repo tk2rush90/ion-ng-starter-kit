@@ -1,0 +1,18 @@
+@if (toast().icon) {
+  <i-lucide
+    [ngClass]="iconClasses()"
+    [img]="toast().icon"
+    class="size-5 flex-none"
+  ></i-lucide>
+}
+
+<div
+  class="flex w-auto shrink grow basis-0 flex-col items-stretch -space-y-0.5 break-keep"
+>
+  <div [innerText]="toast().message" class="text-background"></div>
+
+  <div
+    [innerText]="toast().description"
+    class="text-sm text-background/50 empty:hidden"
+  ></div>
+</div>

@@ -1,25 +1,15 @@
-<div
-  [ngClass]="iconClasses()"
-  class="flex size-12 shrink-0 grow-0 basis-auto items-center justify-center rounded-full"
->
+<div [ngClass]="iconClasses()" class="flex-none empty:hidden">
   <ng-content select="[messageIcon]"></ng-content>
 </div>
 
-<div class="flex w-auto shrink grow basis-0 flex-col items-stretch break-keep">
-  <div [ngClass]="titleClasses()" class="text-xl font-medium">
+<div
+  class="flex w-auto shrink grow basis-0 flex-col items-stretch -space-y-1 break-keep"
+>
+  <div class="text-background">
     <ng-content select="[messageTitle]"></ng-content>
   </div>
 
-  <div class="">
+  <div class="text-sm text-background/50 empty:hidden">
     <ng-content select="[messageContent]"></ng-content>
   </div>
 </div>
-
-<button
-  (click)="close()"
-  type="button"
-  class="shrink-0 grow-0 basis-auto"
-  appIconButton
->
-  <i-lucide [img]="XIcon" class="size-5"></i-lucide>
-</button>

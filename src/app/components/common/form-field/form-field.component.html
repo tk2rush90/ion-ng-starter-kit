@@ -42,7 +42,7 @@
     </button>
   </div>
 
-  <div class="hidden items-start pt-1.5 group-has-[input[type=date]]:flex">
+  <div [ngClass]="dateButtonClasses()" class="items-start pt-1.5">
     <button
       (mousedown)="openCalendar($event)"
       type="button"

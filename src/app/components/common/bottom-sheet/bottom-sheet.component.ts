@@ -1,5 +1,4 @@
 import {
-  AfterViewInit,
   booleanAttribute,
   Component,
   computed,
@@ -14,30 +13,26 @@ import { OVERLAY_REF } from '../../../tokens/overlay-ref';
 import { animate, JSAnimation } from 'animejs';
 import { LucideAngularModule, XIcon } from 'lucide-angular';
 import { spacingToRem } from '../../../utils/tailwind.utils';
-import { NgClass } from '@angular/common';
 import { IconButtonDirective } from '../icon-button/icon-button.directive';
 
 @Component({
   selector: 'app-bottom-sheet',
-  imports: [LucideAngularModule, NgClass, IconButtonDirective],
+  imports: [LucideAngularModule, IconButtonDirective],
   templateUrl: './bottom-sheet.component.html',
   styleUrl: './bottom-sheet.component.scss',
   host: {
-    '(scroll)': `detectScroll()`,
     '[style]': `styles()`,
     '[class]': `classes()`,
     class:
-      'pointer-events-auto fixed bottom-0 left-0 right-0 flex w-full flex-col items-stretch overflow-auto rounded-t-3xl bg-background shadow-2xl w-full md:bottom-4 left-1/2 md:w-[calc(100dvw-2rem)] md:rounded-3xl',
+      'pointer-events-auto fixed bottom-0 left-0 right-0 flex w-full flex-col items-stretch overflow-auto rounded-t-3xl bg-background shadow-2xl w-full left-1/2 md:w-[calc(100dvw-2rem)] md:rounded-3xl',
   },
 })
-export class BottomSheetComponent implements AfterViewInit, OnDestroy {
+export class BottomSheetComponent implements OnDestroy {
   modalTitle = input('');
 
   displayCloseButton = input(false, {
     transform: booleanAttribute,
   });
-
-  isScrolled = signal(false);
 
   isDragging = signal(false);
 
@@ -62,24 +57,14 @@ export class BottomSheetComponent implements AfterViewInit, OnDestroy {
       styles.top =
         this.initialTop() + (this.moveDragY() - this.startDragY()) + 'px';
     } else {
-      styles.maxHeight = `calc(100dvh - ${spacingToRem(14)}rem - ${spacingToRem(4)}rem)`;
+      styles.maxHeight = `calc(100dvh - ${spacingToRem(14)}rem - ${spacingToRem(4)}rem - var(--inset-bottom) - var(--inset-top))`;
     }
 
     return styles;
   });
 
-  shadowClasses = computed(() => {
-    const isScrolled = this.isScrolled();
-
-    return {
-      'shadow-lg': isScrolled,
-    };
-  });
-
   /** AnimeJS를 이용한 애니메이션 실행을 위한 필드 */
   animatableMoveDragY = 0;
-
-  private scrollDetectTimeout: any;
 
   private cancelMouseMove?: () => void;
 
@@ -99,18 +84,8 @@ export class BottomSheetComponent implements AfterViewInit, OnDestroy {
 
   private readonly elementRef = inject(ElementRef<HTMLElement>);
 
-  ngAfterViewInit() {
-    this.scrollDetectTimeout = setTimeout(() => this.detectScroll());
-  }
-
   ngOnDestroy() {
-    clearTimeout(this.scrollDetectTimeout);
-
     this.animeInstance?.pause();
-  }
-
-  detectScroll(): void {
-    this.isScrolled.set(this.elementRef.nativeElement.scrollTop > 0);
   }
 
   startDrag(event: MouseEvent | TouchEvent): void {

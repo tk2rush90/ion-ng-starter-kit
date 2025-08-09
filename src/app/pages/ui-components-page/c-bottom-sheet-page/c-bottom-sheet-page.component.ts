@@ -16,6 +16,8 @@ import {
 } from '../../../services/app/overlay/overlay.service';
 import { fadeInOut } from '../../../animations/fade-in-out';
 import { slideInOutBottomFull } from '../../../animations/slide-in-out-bottom-full';
+import { FormFieldComponent } from '../../../components/common/form-field/form-field.component';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-c-bottom-sheet-page',
@@ -25,6 +27,8 @@ import { slideInOutBottomFull } from '../../../animations/slide-in-out-bottom-fu
     BackdropComponent,
     BottomSheetComponent,
     BottomActionsComponent,
+    FormFieldComponent,
+    NgClass,
   ],
   templateUrl: './c-bottom-sheet-page.component.html',
   styleUrl: './c-bottom-sheet-page.component.scss',
@@ -34,6 +38,11 @@ export class CBottomSheetPageComponent {
   bottomSheetTemplateRef = viewChild<TemplateRef<any>>('bottomSheet');
 
   bottomSheetOverlayRef?: OverlayRef;
+
+  bottomSheetComplexTemplateRef =
+    viewChild<TemplateRef<any>>('bottomSheetComplex');
+
+  bottomSheetComplexOverlayRef?: OverlayRef;
 
   private readonly destroyRef = inject(DestroyRef);
 
@@ -60,7 +69,25 @@ export class CBottomSheetPageComponent {
     }
   }
 
+  openBottomSheetComplex(): void {
+    const bottomSheetComplexTemplateRef = this.bottomSheetComplexTemplateRef();
+
+    if (bottomSheetComplexTemplateRef) {
+      this.bottomSheetComplexOverlayRef = this.overlayService.open(
+        bottomSheetComplexTemplateRef,
+        {
+          destroyRef: this.destroyRef,
+          onDestroy: () => delete this.bottomSheetComplexOverlayRef,
+        },
+      );
+    }
+  }
+
   closeBottomSheet(): void {
+    this.bottomSheetOverlayRef?.close();
+  }
+
+  closeBottomSheetComplex(): void {
     this.bottomSheetOverlayRef?.close();
   }
 }

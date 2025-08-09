@@ -71,6 +71,8 @@ export class FormFieldComponent implements AfterViewInit, OnDestroy {
 
   theme = input<VariableColors | 'white'>('white');
 
+  isDateControl = signal(false);
+
   calendarTheme = input<VariableColors>('blue');
 
   controlClasses = computed(() => {
@@ -117,6 +119,15 @@ export class FormFieldComponent implements AfterViewInit, OnDestroy {
   calendarTemplateRef = viewChild<TemplateRef<any>>('calendar');
 
   calendarOverlayRef?: OverlayRef;
+
+  dateButtonClasses = computed(() => {
+    const isDateControl = this.isDateControl();
+
+    return {
+      hidden: !isDateControl,
+      flex: isDateControl,
+    };
+  });
 
   private calendarCloseTimeout: any;
 
@@ -176,6 +187,18 @@ export class FormFieldComponent implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     if (AngularPlatform.isBrowser) {
+      const input = this.elementRef.nativeElement.querySelector('input');
+
+      if (input && input.type === 'date') {
+        input.type = 'text';
+        input.pattern = '\d{4}-\d{2}-\d{2}';
+        input.placeholder = input.placeholder
+          ? input.placeholder
+          : 'YYYY-MM-DD';
+
+        this.isDateControl.set(true);
+      }
+
       const select = this.elementRef.nativeElement.querySelector('select');
 
       if (select) {
@@ -315,10 +338,12 @@ export class FormFieldComponent implements AfterViewInit, OnDestroy {
   }
 
   onSelectedDateChange(dateString: string): void {
+    if (!this.isDateControl()) {
+      return;
+    }
+
     const target =
-      this.elementRef.nativeElement.querySelector<HTMLInputElement>(
-        'input[type=date]',
-      );
+      this.elementRef.nativeElement.querySelector<HTMLInputElement>('input');
 
     if (target) {
       target.value = dateString;

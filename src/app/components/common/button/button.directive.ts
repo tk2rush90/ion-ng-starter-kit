@@ -107,13 +107,13 @@ export class ButtonDirective implements OnDestroy {
     classes['outline-1'] = withBorder;
     classes['outline-offset-[-1px]'] = withBorder;
     classes['outline-foreground/15'] = withBorder;
-    classes['h-10'] = isSmallSize;
+    classes['h-8'] = isSmallSize;
     classes['text-sm'] = isSmallSize;
     classes['px-3.5'] = isSmallSize;
-    classes['h-12'] = isDefaultSize;
+    classes['h-10'] = isDefaultSize;
     classes['text-base'] = isDefaultSize;
     classes['px-5'] = isDefaultSize;
-    classes['h-14'] = isLargeSize;
+    classes['h-12'] = isLargeSize;
     classes['text-lg'] = isLargeSize;
     classes['px-6.5'] = isLargeSize;
 

@@ -1,8 +1,8 @@
-@for (_toast of toasts; track _toast) {
+@for (toast of toasts; track toast) {
   <app-toast-message
     @fadeInOut
     @scaleUpDown
-    (click)="_toast.close()"
-    [innerText]="_toast.message"
+    (click)="toast.close()"
+    [toast]="toast"
   ></app-toast-message>
 }

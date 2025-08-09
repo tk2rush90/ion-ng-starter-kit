@@ -1,17 +1,18 @@
 import { registerPlugin } from '@capacitor/core';
-import { environment } from '../../environments/environment';
 import { GoogleIdTokenPayloadDto } from '../dto/google-id-token-payload-dto';
 import TokenResponse = google.accounts.oauth2.TokenResponse;
 
 export interface GoogleOauthPlugin {
-  signIn(): Promise<TokenResponse> | Promise<GoogleIdTokenPayloadDto>;
+  signIn(options: {
+    clientId: string;
+  }): Promise<TokenResponse> | Promise<GoogleIdTokenPayloadDto>;
 }
 
 export class GoogleOAuthPluginWeb implements GoogleOauthPlugin {
-  signIn(): Promise<TokenResponse> {
+  signIn({ clientId }: { clientId: string }): Promise<TokenResponse> {
     return new Promise<TokenResponse>((resolve) => {
       const client = google.accounts.oauth2.initTokenClient({
-        client_id: environment.google.clientId,
+        client_id: clientId,
         scope: 'profile openid email',
         callback: (response) => resolve(response),
       });

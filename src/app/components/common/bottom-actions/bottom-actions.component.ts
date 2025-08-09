@@ -8,8 +8,7 @@ import { BottomActionsJustify } from '../../../types/bottom-actions-justify';
   styleUrl: './bottom-actions.component.scss',
   host: {
     '[class]': `classes()`,
-    class:
-      'sticky bottom-0 left-0 z-50 flex items-center border-t bg-background px-4 py-3',
+    class: 'flex items-center border-t bg-background px-4 py-3',
   },
 })
 export class BottomActionsComponent {

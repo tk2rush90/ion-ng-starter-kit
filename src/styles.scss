@@ -16,7 +16,7 @@
 
 /* Basic CSS for apps built with Ionic */
 @import "@ionic/angular/css/normalize.css";
-@import "@ionic/angular/css/structure.css";
+//@import "@ionic/angular/css/structure.css";
 @import "@ionic/angular/css/typography.css";
 @import "@ionic/angular/css/display.css";
 
@@ -45,11 +45,20 @@
 :root,
 :root.md,
 :root.ios {
+  // 컴포넌트에서 사용되는 백그라운드
   --ion-background-color: var(--tw-white);
+  // 컴포넌트에서 사용되는 포그라운드
   --ion-text-color: var(--tw-black);
+  // 컴포넌트에서 사용되는 백그라운드의 RGB
   --ion-background-color-rgb: var(--tw-white-rgb);
+  // 컴포넌트에서 사용되는 포그라운드의 RGB
   --ion-text-color-rgb: var(--tw-black-rgb);
+  // 앱 전체 백그라운드. 컴포넌트의 백그라운드와는 다르다.
+  --background: var(--tw-slate-100);
 }
+
+// tailwind.css에 설정된 스크린 md 사이즈와 동일하게 설정 필요
+$md: 768;
 
 @media (prefers-color-scheme: dark) {
   :root,
@@ -59,6 +68,8 @@
     --ion-text-color: var(--tw-white);
     --ion-background-color-rgb: var(--tw-slate-800-rgb);
     --ion-text-color-rgb: var(--tw-white-rgb);
+    // 앱 전체 백그라운드. 컴포넌트의 백그라운드와는 다르다.
+    --background: var(--tw-slate-800);
   }
 }
 
@@ -66,6 +77,62 @@
   outline: 0;
 }
 
-html {
-  @apply text-sm xs:text-[15px] sm:text-base;
+body {
+  background-color: var(--background);
+}
+
+html.plt-hybrid {
+  body,
+  app-side-bar-overlay {
+    padding-top: var(--inset-top);
+    padding-bottom: var(--inset-bottom);
+  }
+
+  app-modal {
+    max-height: calc(100% - (2rem + var(--inset-top) + var(--inset-bottom)));
+    translate: -50% calc(-50% + var(--inset-top) / 2);
+  }
+
+  &:not(.keyboard-opened) {
+    app-bottom-sheet {
+      @media (max-width: #{$md - 1}px) {
+        padding-bottom: var(--inset-bottom);
+      }
+    }
+
+    app-bottom-sheet {
+      @media (min-width: #{$md}px) {
+        bottom: calc(1rem + var(--inset-bottom));
+      }
+    }
+
+    app-toast-message {
+      bottom: calc(1rem + var(--inset-bottom));
+    }
+  }
+
+  &.keyboard-opened {
+    app-bottom-sheet {
+      @media (min-width: #{$md}px) {
+        bottom: 1rem;
+      }
+    }
+
+    app-toast-message {
+      bottom: 1rem;
+    }
+  }
+}
+
+html:not(.plt-hybrid) {
+  app-modal {
+    max-height: calc(100% - 2rem);
+    translate: -50% -50%;
+  }
+
+  app-bottom-sheet {
+    @media (min-width: #{$md}px) {
+      bottom: 1rem;
+    }
+  }
 }

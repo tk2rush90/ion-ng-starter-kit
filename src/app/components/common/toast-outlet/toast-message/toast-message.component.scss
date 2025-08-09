@@ -1,0 +1,7 @@
+:host {
+  translate: -50% 0;
+
+  &.ng-animating {
+    pointer-events: none;
+  }
+}

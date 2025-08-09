@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="text-sm xs:text-base lg:text-lg">
   <head>
     <meta charset="utf-8" />
     <title>ion-ng-starter-kit</title>
@@ -9,7 +9,7 @@
     <meta name="color-scheme" content="light dark" />
     <meta
       name="viewport"
-      content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+      content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, interactive-widget=resizes-content"
     />
     <meta name="format-detection" content="telephone=no" />
     <meta name="msapplication-tap-highlight" content="no" />
@@ -24,7 +24,7 @@
     <script src="https://accounts.google.com/gsi/client" async></script>
   </head>
 
-  <body>
-    <app-root></app-root>
+  <body class="flex flex-col items-stretch">
+    <app-root class="flex min-h-dvh flex-col items-stretch"></app-root>
   </body>
 </html>

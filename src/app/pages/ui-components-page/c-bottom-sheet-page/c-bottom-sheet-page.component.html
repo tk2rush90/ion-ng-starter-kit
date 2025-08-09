@@ -209,25 +209,235 @@ export class BottomSheetExampleComponent &#123;
   </button>
 </app-card>
 
-<ng-template
-  #bottomSheet
-  let-modalTitle="modalTitle"
-  let-displayCloseButton="displayCloseButton"
->
+<h2>Complex Bottom Sheet</h2>
+
+<pre>
+&lt;button
+  (click)="openBottomSheet()"
+  type="button"
+  appButton>
+  Open Bottom Sheet
+&lt;/button>
+
+&lt;ng-template #bottomSheet>
+  &lt;app-backdrop &#64;fadeInOut>&lt;/app-backdrop>
+
+  &lt;app-bottom-sheet
+    &#64;fadeInOut
+    &#64;slideInOutBottomFull
+    modalTitle="Modal Title"
+    displayCloseButton
+    class="max-w-120"
+  >
+    &lt;div
+      class="flex shrink grow flex-col items-stretch gap-4 overflow-auto px-4 pb-4"
+    >
+      &lt;app-form-field withBorder>
+        &lt;label>Name&lt;/label>
+
+        &lt;input placeholder="Input name..." />
+      &lt;/app-form-field>
+
+      &lt;app-form-field withBorder>
+        &lt;label>Age&lt;/label>
+
+        &lt;input
+          placeholder="Input age..."
+          type="number" />
+      &lt;/app-form-field>
+
+      &lt;app-form-field withBorder>
+        &lt;label>Age&lt;/label>
+
+        &lt;input
+          placeholder="Input age..."
+          type="number" />
+      &lt;/app-form-field>
+
+      &lt;div>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sit amet
+        commodo leo. Ut in tellus sagittis, lacinia ante ac, bibendum lorem.
+        Mauris turpis nulla, scelerisque ut rutrum sit amet, sodales sit amet
+        massa. Phasellus dignissim dui a ligula rhoncus varius. Curabitur
+        sagittis neque nisl, in suscipit ante dapibus non. Aliquam condimentum,
+        tellus eu mattis consequat, nisi velit blandit nunc, auctor elementum
+        enim felis in tellus. Donec ullamcorper vulputate arcu non feugiat.
+        Proin gravida ornare diam, sit amet fringilla diam dictum blandit. Morbi
+        egestas augue sit amet lacinia consequat. Suspendisse congue efficitur
+        ipsum, id mollis velit convallis nec. Donec iaculis, velit eget tempus
+        aliquet, erat mauris rutrum velit, sed luctus magna nibh a turpis. Duis
+        pretium dui augue, facilisis sagittis lorem venenatis in. Donec laoreet
+        justo vitae orci imperdiet, eget faucibus nunc euismod. Quisque pulvinar
+        vehicula magna, vitae tincidunt massa dapibus a. Aliquam gravida eros
+        enim, a convallis sapien porttitor at. Sed eget odio lacus. Nulla eu
+        sapien non nibh pharetra ultricies. Fusce dui eros, mollis sit amet
+        tincidunt nec, consequat non eros. In ornare hendrerit arcu quis
+        consectetur. Sed iaculis varius magna, iaculis feugiat quam ultrices et.
+        Quisque non dictum diam. In purus elit, consequat a interdum a, molestie
+        egestas mauris. Phasellus ex velit, maximus fringilla aliquet varius,
+        fringilla quis ex. Integer justo risus, ultrices non faucibus sit amet,
+        porta quis nisi. Quisque faucibus mollis bibendum. Phasellus tempus ac
+        erat lobortis maximus. Vivamus feugiat diam metus, lobortis suscipit
+        urna dictum at. In non efficitur quam. Sed metus massa, tincidunt eget
+        augue ut, pellentesque sollicitudin lacus. Integer nec bibendum purus.
+        Praesent fermentum quam interdum risus sodales, vel dictum ante
+        vehicula. Orci varius natoque penatibus et magnis dis parturient montes,
+        nascetur ridiculus mus. Suspendisse nec sodales dolor, vitae lobortis
+        ligula. In vitae fermentum tellus. Curabitur pellentesque magna et metus
+        semper semper. Aliquam placerat sed dui sed efficitur. Sed faucibus
+        vehicula sapien iaculis efficitur. Sed at velit dignissim, hendrerit
+        lorem sit amet, pulvinar urna. Vivamus magna elit, dictum nec dolor nec,
+        ultricies porta nulla. Suspendisse leo felis, efficitur non lobortis ut,
+        luctus consectetur massa. Vivamus at finibus nibh. Donec ac metus id
+        lectus volutpat malesuada. Sed eget magna quis est convallis tempor in
+        sit amet velit. Donec vitae nulla mi. Phasellus a dignissim elit. Nulla
+        dolor lectus, ultricies vel ante blandit, auctor venenatis odio. Nullam
+        condimentum in lorem vitae suscipit. Sed sit amet erat mollis, tempus
+        leo ut, accumsan ipsum. Donec sodales eros eu ligula ultricies molestie.
+        In in diam vulputate, volutpat mauris et, blandit tortor. Phasellus
+        lectus risus, maximus eu neque in, ultricies bibendum massa. Nulla
+        tincidunt iaculis tellus et consectetur. Fusce viverra efficitur
+        pretium. Donec vitae est quis mi tempus finibus. Aenean nec purus vitae
+        leo interdum lobortis et ac justo. Praesent vestibulum non eros eu
+        elementum. Suspendisse auctor lobortis est, vel sagittis lectus suscipit
+        nec. Quisque feugiat molestie mauris faucibus sodales.
+      &lt;/div>
+    &lt;/div>
+
+    &lt;app-bottom-actions
+      justify="right"
+      class="flex-none"
+      withBorder>
+      &lt;button
+        (click)="closeBottomSheet()"
+        type="button"
+        theme="blue"
+        mode="fill"
+        appButton
+      >
+        Confirm
+      &lt;/button>
+    &lt;/app-bottom-actions>
+  &lt;/app-bottom-sheet>
+&lt;/ng-template>
+</pre>
+
+<app-card class="flex flex-col items-start justify-start p-4" withBorder>
+  <button (click)="openBottomSheetComplex()" type="button" appButton>
+    Open Bottom Sheet
+  </button>
+</app-card>
+
+<ng-template #bottomSheet>
   <app-backdrop @fadeInOut></app-backdrop>
 
   <app-bottom-sheet
     @fadeInOut
     @slideInOutBottomFull
-    [modalTitle]="modalTitle"
-    [displayCloseButton]="displayCloseButton"
+    modalTitle="Modal Title"
     class="max-w-120"
+    displayCloseButton
   >
     <div class="p-4">It's Bottom Sheet</div>
 
     <app-bottom-actions justify="right" withBorder>
       <button (click)="closeBottomSheet()" type="button" theme="red" appButton>
         Close
+      </button>
+    </app-bottom-actions>
+  </app-bottom-sheet>
+</ng-template>
+
+<ng-template #bottomSheetComplex>
+  <app-backdrop @fadeInOut></app-backdrop>
+
+  <app-bottom-sheet
+    @fadeInOut
+    @slideInOutBottomFull
+    modalTitle="Modal Title"
+    displayCloseButton
+    class="max-w-120"
+  >
+    <div
+      class="flex shrink grow flex-col items-stretch gap-4 overflow-auto px-4 pb-4"
+    >
+      <app-form-field withBorder>
+        <label>Name</label>
+
+        <input placeholder="Input name..." />
+      </app-form-field>
+
+      <app-form-field withBorder>
+        <label>Age</label>
+
+        <input placeholder="Input age..." type="number" />
+      </app-form-field>
+
+      <app-form-field withBorder>
+        <label>Age</label>
+
+        <input placeholder="Input age..." type="number" />
+      </app-form-field>
+
+      <div>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sit amet
+        commodo leo. Ut in tellus sagittis, lacinia ante ac, bibendum lorem.
+        Mauris turpis nulla, scelerisque ut rutrum sit amet, sodales sit amet
+        massa. Phasellus dignissim dui a ligula rhoncus varius. Curabitur
+        sagittis neque nisl, in suscipit ante dapibus non. Aliquam condimentum,
+        tellus eu mattis consequat, nisi velit blandit nunc, auctor elementum
+        enim felis in tellus. Donec ullamcorper vulputate arcu non feugiat.
+        Proin gravida ornare diam, sit amet fringilla diam dictum blandit. Morbi
+        egestas augue sit amet lacinia consequat. Suspendisse congue efficitur
+        ipsum, id mollis velit convallis nec. Donec iaculis, velit eget tempus
+        aliquet, erat mauris rutrum velit, sed luctus magna nibh a turpis. Duis
+        pretium dui augue, facilisis sagittis lorem venenatis in. Donec laoreet
+        justo vitae orci imperdiet, eget faucibus nunc euismod. Quisque pulvinar
+        vehicula magna, vitae tincidunt massa dapibus a. Aliquam gravida eros
+        enim, a convallis sapien porttitor at. Sed eget odio lacus. Nulla eu
+        sapien non nibh pharetra ultricies. Fusce dui eros, mollis sit amet
+        tincidunt nec, consequat non eros. In ornare hendrerit arcu quis
+        consectetur. Sed iaculis varius magna, iaculis feugiat quam ultrices et.
+        Quisque non dictum diam. In purus elit, consequat a interdum a, molestie
+        egestas mauris. Phasellus ex velit, maximus fringilla aliquet varius,
+        fringilla quis ex. Integer justo risus, ultrices non faucibus sit amet,
+        porta quis nisi. Quisque faucibus mollis bibendum. Phasellus tempus ac
+        erat lobortis maximus. Vivamus feugiat diam metus, lobortis suscipit
+        urna dictum at. In non efficitur quam. Sed metus massa, tincidunt eget
+        augue ut, pellentesque sollicitudin lacus. Integer nec bibendum purus.
+        Praesent fermentum quam interdum risus sodales, vel dictum ante
+        vehicula. Orci varius natoque penatibus et magnis dis parturient montes,
+        nascetur ridiculus mus. Suspendisse nec sodales dolor, vitae lobortis
+        ligula. In vitae fermentum tellus. Curabitur pellentesque magna et metus
+        semper semper. Aliquam placerat sed dui sed efficitur. Sed faucibus
+        vehicula sapien iaculis efficitur. Sed at velit dignissim, hendrerit
+        lorem sit amet, pulvinar urna. Vivamus magna elit, dictum nec dolor nec,
+        ultricies porta nulla. Suspendisse leo felis, efficitur non lobortis ut,
+        luctus consectetur massa. Vivamus at finibus nibh. Donec ac metus id
+        lectus volutpat malesuada. Sed eget magna quis est convallis tempor in
+        sit amet velit. Donec vitae nulla mi. Phasellus a dignissim elit. Nulla
+        dolor lectus, ultricies vel ante blandit, auctor venenatis odio. Nullam
+        condimentum in lorem vitae suscipit. Sed sit amet erat mollis, tempus
+        leo ut, accumsan ipsum. Donec sodales eros eu ligula ultricies molestie.
+        In in diam vulputate, volutpat mauris et, blandit tortor. Phasellus
+        lectus risus, maximus eu neque in, ultricies bibendum massa. Nulla
+        tincidunt iaculis tellus et consectetur. Fusce viverra efficitur
+        pretium. Donec vitae est quis mi tempus finibus. Aenean nec purus vitae
+        leo interdum lobortis et ac justo. Praesent vestibulum non eros eu
+        elementum. Suspendisse auctor lobortis est, vel sagittis lectus suscipit
+        nec. Quisque feugiat molestie mauris faucibus sodales.
+      </div>
+    </div>
+
+    <app-bottom-actions justify="right" class="flex-none" withBorder>
+      <button
+        (click)="closeBottomSheetComplex()"
+        type="button"
+        theme="blue"
+        mode="fill"
+        appButton
+      >
+        Confirm
       </button>
     </app-bottom-actions>
   </app-bottom-sheet>

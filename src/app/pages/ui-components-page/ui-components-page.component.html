@@ -1,69 +1,120 @@
-<ion-content>
-  <div class="flex h-full flex-col items-stretch">
-    <app-side-bar-container class="h-full" opened>
-      <div class="flex flex-col items-stretch">
-        <div
-          class="sticky left-0 right-0 top-0 z-[100] flex h-14 items-center justify-between border-b border-foreground/15 bg-background pl-4 pr-2"
-        >
-          <div class="flex items-center justify-start gap-1">
-            <app-icon-appresso-symbol class="size-6"></app-icon-appresso-symbol>
+<div class="flex flex-col items-stretch">
+  <div
+    class="header sticky left-0 right-0 top-0 z-[100] flex items-center justify-between border-b border-foreground/15 bg-[var(--background)] pb-4 pl-4 pr-2"
+  >
+    <div class="flex items-center justify-start gap-1">
+      <app-icon-appresso-symbol class="size-6"></app-icon-appresso-symbol>
 
-            Appresso UI
-          </div>
+      Appresso UI
+    </div>
 
-          <button (click)="sideBar.toggle()" type="button" appIconButton>
-            <i-lucide
-              [img]="
-                sideBar.isOpened() ? PanelRightCloseIcon : PanelRightOpenIcon
-              "
-              class="scale-90"
-            ></i-lucide>
-          </button>
-        </div>
-
-        <div
-          class="prose prose-blue mx-auto flex w-full max-w-screen-md flex-col items-stretch p-4 dark:prose-invert"
-        >
-          <router-outlet></router-outlet>
-        </div>
-      </div>
-
-      <app-side-bar
-        #sideBar
-        [overlapContent]="sideBarOverlap()"
-        class="z-[100] w-full max-w-70"
-        position="right"
-        withBorder
-      >
-        <div class="flex h-14 items-center justify-between pl-5 pr-3">
-          <div class="text-xl font-bold">Components</div>
-
-          @if (sideBarOverlap()) {
-            <button (click)="sideBar.close()" type="button" appIconButton>
-              <i-lucide [img]="PanelRightCloseIcon" class="scale-90"></i-lucide>
-            </button>
-          }
-        </div>
-
-        <div
-          class="flex h-0 shrink grow basis-0 flex-col items-stretch gap-1 overflow-auto px-2 py-4"
-        >
-          @for (route of routes; track route) {
-            <a
-              #routerLinkActive="routerLinkActive"
-              [routerLink]="route.routerLink"
-              [ngClass]="{
-                'text-foreground': routerLinkActive.isActive,
-                'text-foreground/50': !routerLinkActive.isActive,
-              }"
-              class="flex items-center justify-start rounded-full px-3 py-2 text-sm hover:bg-foreground/5 active:bg-foreground/10"
-              routerLinkActive
-            >
-              {{ route.label }}
-            </a>
-          }
-        </div>
-      </app-side-bar>
-    </app-side-bar-container>
+    <button (click)="openSideBarOverlay()" type="button" appIconButton>
+      <i-lucide
+        [img]="sideBarOpened() ? PanelRightCloseIcon : PanelRightOpenIcon"
+        class="scale-90"
+      ></i-lucide>
+    </button>
   </div>
-</ion-content>
+
+  <div
+    class="prose prose-blue mx-auto flex w-full max-w-screen-md flex-col items-stretch p-4 dark:prose-invert"
+  >
+    <router-outlet></router-outlet>
+  </div>
+</div>
+
+<ng-template #sideBarOverlay>
+  <app-side-bar-overlay position="right" class="max-w-80 shadow-2xl">
+    <div class="flex h-14 items-center justify-between pl-5 pr-3">
+      <div class="text-xl font-bold">Components</div>
+
+      <button (click)="closeSideBarOverlay()" type="button" appIconButton>
+        <i-lucide [img]="PanelRightCloseIcon" class="scale-90"></i-lucide>
+      </button>
+    </div>
+
+    <div
+      class="flex h-0 shrink grow basis-0 flex-col items-stretch gap-1 overflow-auto px-2 py-4"
+    >
+      @for (route of routes; track route) {
+        <a
+          #routerLinkActive="routerLinkActive"
+          (click)="closeSideBarOverlay()"
+          [routerLink]="route.routerLink"
+          [ngClass]="{
+            'text-foreground': routerLinkActive.isActive,
+            'text-foreground/50': !routerLinkActive.isActive,
+          }"
+          class="flex items-center justify-start rounded-full px-3 py-2 text-sm hover:bg-foreground/5 active:bg-foreground/10"
+          routerLinkActive
+        >
+          {{ route.label }}
+        </a>
+      }
+    </div>
+  </app-side-bar-overlay>
+</ng-template>
+
+<!--<app-side-bar-container class="h-full overflow-auto" opened>-->
+<!--  <div class="flex flex-col items-stretch">-->
+<!--    <div-->
+<!--      class="sticky left-0 right-0 top-0 z-[100] flex h-14 items-center justify-between border-b border-foreground/15 bg-background pl-4 pr-2"-->
+<!--    >-->
+<!--      <div class="flex items-center justify-start gap-1">-->
+<!--        <app-icon-appresso-symbol class="size-6"></app-icon-appresso-symbol>-->
+
+<!--        Appresso UI-->
+<!--      </div>-->
+
+<!--      <button (click)="sideBar.toggle()" type="button" appIconButton>-->
+<!--        <i-lucide-->
+<!--          [img]="sideBar.isOpened() ? PanelRightCloseIcon : PanelRightOpenIcon"-->
+<!--          class="scale-90"-->
+<!--        ></i-lucide>-->
+<!--      </button>-->
+<!--    </div>-->
+
+<!--    <div-->
+<!--      class="prose prose-blue mx-auto flex w-full max-w-screen-md flex-col items-stretch p-4 dark:prose-invert"-->
+<!--    >-->
+<!--      <router-outlet></router-outlet>-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--  <app-side-bar-->
+<!--    #sideBar-->
+<!--    [overlapContent]="sideBarOverlap()"-->
+<!--    class="z-[100] w-full max-w-70"-->
+<!--    position="right"-->
+<!--    withBorder-->
+<!--  >-->
+<!--    <div class="flex h-14 items-center justify-between pl-5 pr-3">-->
+<!--      <div class="text-xl font-bold">Components</div>-->
+
+<!--      @if (sideBarOverlap()) {-->
+<!--        <button (click)="sideBar.close()" type="button" appIconButton>-->
+<!--          <i-lucide [img]="PanelRightCloseIcon" class="scale-90"></i-lucide>-->
+<!--        </button>-->
+<!--      }-->
+<!--    </div>-->
+
+<!--    <div-->
+<!--      class="flex h-0 shrink grow basis-0 flex-col items-stretch gap-1 overflow-auto px-2 py-4"-->
+<!--    >-->
+<!--      @for (route of routes; track route) {-->
+<!--        <a-->
+<!--          #routerLinkActive="routerLinkActive"-->
+<!--          [routerLink]="route.routerLink"-->
+<!--          [ngClass]="{-->
+<!--            'text-foreground': routerLinkActive.isActive,-->
+<!--            'text-foreground/50': !routerLinkActive.isActive,-->
+<!--          }"-->
+<!--          class="flex items-center justify-start rounded-full px-3 py-2 text-sm hover:bg-foreground/5 active:bg-foreground/10"-->
+<!--          routerLinkActive-->
+<!--        >-->
+<!--          {{ route.label }}-->
+<!--        </a>-->
+<!--      }-->
+<!--    </div>-->
+<!--  </app-side-bar>-->
+<!--</app-side-bar-container>-->

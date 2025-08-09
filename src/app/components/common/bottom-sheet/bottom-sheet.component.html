@@ -1,7 +1,6 @@
 @if (modalTitle()) {
   <div
-    [ngClass]="shadowClasses()"
-    class="sticky top-0 z-50 hidden items-center justify-between gap-4 bg-background p-4 transition-all md:flex"
+    class="hidden items-center justify-between gap-4 bg-background p-4 transition-all md:flex"
   >
     <div class="text-xl font-semibold">
       {{ modalTitle() }}
@@ -15,10 +14,7 @@
   </div>
 }
 
-<div
-  [ngClass]="shadowClasses()"
-  class="sticky top-0 z-50 flex flex-col items-center gap-4 bg-background transition-all"
->
+<div class="flex flex-col items-center gap-4 bg-background transition-all">
   <div
     (mousedown)="startDrag($event)"
     (touchstart)="startDrag($event)"

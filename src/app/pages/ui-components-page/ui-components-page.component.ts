@@ -1,8 +1,13 @@
-import { Component, signal } from '@angular/core';
-import { IonContent } from '@ionic/angular/standalone';
+import {
+  Component,
+  DestroyRef,
+  inject,
+  signal,
+  TemplateRef,
+  viewChild,
+  ViewEncapsulation,
+} from '@angular/core';
 import { IconAppressoSymbolComponent } from '../../components/icons/icon-appresso-symbol/icon-appresso-symbol.component';
-import { SideBarContainerComponent } from '../../components/common/side-bar-container/side-bar-container.component';
-import { SideBarComponent } from '../../components/common/side-bar/side-bar.component';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { NgClass } from '@angular/common';
 import { IconButtonDirective } from '../../components/common/icon-button/icon-button.directive';
@@ -12,26 +17,30 @@ import {
   PanelRightOpenIcon,
 } from 'lucide-angular';
 import { AngularPlatform } from '../../utils/platform.utils';
+import { SideBarOverlayComponent } from '../../components/common/side-bar-overlay/side-bar-overlay.component';
+import {
+  OverlayRef,
+  OverlayService,
+} from '../../services/app/overlay/overlay.service';
 
 @Component({
   selector: 'app-ui-components-page',
   imports: [
-    IonContent,
     IconAppressoSymbolComponent,
-    SideBarContainerComponent,
-    SideBarComponent,
     RouterLink,
     RouterLinkActive,
     NgClass,
     RouterOutlet,
     IconButtonDirective,
     LucideAngularModule,
+    SideBarOverlayComponent,
   ],
   templateUrl: './ui-components-page.component.html',
   styleUrl: './ui-components-page.component.scss',
   host: {
     '(window:resize)': `onWindowResize()`,
   },
+  encapsulation: ViewEncapsulation.None,
 })
 export class UiComponentsPageComponent {
   routes = [
@@ -147,6 +156,16 @@ export class UiComponentsPageComponent {
 
   sideBarOverlap = signal(false);
 
+  sideBarOverlayTemplateRef = viewChild<TemplateRef<any>>('sideBarOverlay');
+
+  sideBarOverlayRef?: OverlayRef;
+
+  sideBarOpened = signal(false);
+
+  private readonly destroyRef = inject(DestroyRef);
+
+  private readonly overlayService = inject(OverlayService);
+
   constructor() {
     this.onWindowResize();
   }
@@ -155,6 +174,30 @@ export class UiComponentsPageComponent {
     if (AngularPlatform.isBrowser) {
       this.sideBarOverlap.set(window.innerWidth < 768);
     }
+  }
+
+  openSideBarOverlay(): void {
+    const sideBarOverlayTemplateRef = this.sideBarOverlayTemplateRef();
+
+    if (sideBarOverlayTemplateRef) {
+      this.sideBarOpened.set(true);
+
+      this.sideBarOverlayRef = this.overlayService.open(
+        sideBarOverlayTemplateRef,
+        {
+          destroyRef: this.destroyRef,
+          onDestroy: () => {
+            this.sideBarOpened.set(false);
+
+            delete this.sideBarOverlayRef;
+          },
+        },
+      );
+    }
+  }
+
+  closeSideBarOverlay(): void {
+    this.sideBarOverlayRef?.close();
   }
 
   protected readonly PanelRightCloseIcon = PanelRightCloseIcon;

@@ -12,6 +12,7 @@ import { SignedMemberService } from '../../../services/app/signed-member/signed-
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AngularPlatform } from '../../../utils/platform.utils';
 import { ButtonDirective } from '../button/button.directive';
+import { environment } from '../../../../environments/environment';
 import TokenResponse = google.accounts.oauth2.TokenResponse;
 
 @Component({
@@ -86,13 +87,17 @@ export class GoogleOauthButtonComponent {
     await this.storage.set(OAUTH_PREVIOUS_URL_KEY, this.location.path(true));
 
     if (this.platform.is('hybrid')) {
-      const payload = (await GoogleOauth.signIn()) as GoogleIdTokenPayloadDto;
+      const payload = (await GoogleOauth.signIn({
+        clientId: environment.google.clientId,
+      })) as GoogleIdTokenPayloadDto;
 
       this.startByGoogleIdTokenService.create({
         idToken: payload.idToken,
       });
     } else {
-      const response = (await GoogleOauth.signIn()) as TokenResponse;
+      const response = (await GoogleOauth.signIn({
+        clientId: environment.google.clientId,
+      })) as TokenResponse;
 
       this.startByGoogleAccessTokenService.create({
         accessToken: response.access_token,

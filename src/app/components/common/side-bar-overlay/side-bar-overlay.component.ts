@@ -74,10 +74,6 @@ export class SideBarOverlayComponent implements AfterViewInit {
     const floating = this.floating();
 
     return {
-      'top-0': !floating,
-      'top-4': floating,
-      'bottom-0': !floating,
-      'bottom-4': floating,
       'left-0': isLeftPosition && !floating,
       'left-4': isLeftPosition && floating,
       'right-0': isRightPosition && !floating,
@@ -89,9 +85,13 @@ export class SideBarOverlayComponent implements AfterViewInit {
   styles = computed(() => {
     const floating = this.floating();
 
-    return {
+    const styles: any = {
       width: `calc(100dvw - ${spacingToRem(floating ? 8 : 4)}rem)`,
+      top: floating ? 'calc(1rem + var(--inset-top))' : '0px',
+      bottom: floating ? 'calc(1rem + var(--inset-bottom))' : '0px',
     };
+
+    return styles;
   });
 
   translateX = computed(() => {

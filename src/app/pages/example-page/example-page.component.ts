@@ -4,7 +4,9 @@ import {
   DestroyRef,
   ElementRef,
   inject,
+  signal,
   TemplateRef,
+  viewChild,
   viewChildren,
 } from '@angular/core';
 import { CheckboxComponent } from '../../components/common/checkbox/checkbox.component';
@@ -12,6 +14,7 @@ import { BackdropComponent } from '../../components/common/backdrop/backdrop.com
 import { BottomSheetComponent } from '../../components/common/bottom-sheet/bottom-sheet.component';
 import {
   OverlayOptions,
+  OverlayRef,
   OverlayService,
 } from '../../services/app/overlay/overlay.service';
 import { fadeInOut } from '../../animations/fade-in-out';
@@ -21,7 +24,10 @@ import { ConfirmComponent } from '../../components/common/confirm/confirm.compon
 import { ModalComponent } from '../../components/common/modal/modal.component';
 import { FileHandlerDirective } from '../../components/common/file-handler/file-handler.directive';
 import { KB } from '../../constants/size';
-import { ToastService } from '../../services/app/toast/toast.service';
+import {
+  ToastOptions,
+  ToastService,
+} from '../../services/app/toast/toast.service';
 import { FormFieldComponent } from '../../components/common/form-field/form-field.component';
 import { AutoResizerDirective } from '../../components/common/auto-resizer/auto-resizer.directive';
 import { FieldHintComponent } from '../../components/common/form-field/field-hint/field-hint.component';
@@ -68,7 +74,6 @@ import { TabItemDirective } from '../../components/common/tab-item/tab-item.dire
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { ImageComponent } from '../../components/common/image/image.component';
 import { CalendarComponent } from '../../components/common/calendar/calendar.component';
-import { IonContent } from '@ionic/angular/standalone';
 import { MessageBoxComponent } from '../../components/common/message-box/message-box.component';
 
 @Component({
@@ -108,7 +113,6 @@ import { MessageBoxComponent } from '../../components/common/message-box/message
     RouterLink,
     ImageComponent,
     CalendarComponent,
-    IonContent,
     MessageBoxComponent,
   ],
   templateUrl: './example-page.component.html',
@@ -116,7 +120,7 @@ import { MessageBoxComponent } from '../../components/common/message-box/message
   animations: [fadeInOut(), slideInOutBottomFull()],
   host: {
     class:
-      'flex min-h-dvh flex-col items-stretch gap-4 grow shrink-0 h-auto basis-auto',
+      'flex min-h-full flex-col items-stretch gap-4 grow shrink-0 h-auto basis-auto',
   },
   providers: [ProseMirrorEditorService],
 })
@@ -128,6 +132,12 @@ export class ExamplePageComponent implements AfterViewInit {
   draggableList = viewChildren('draggable', {
     read: ElementRef,
   });
+
+  modalComplexTemplateRef = viewChild<TemplateRef<any>>('modalComplex');
+
+  modalComplexOverlayRef?: OverlayRef;
+
+  showModalComplexText = signal(false);
 
   private readonly destroyRef = inject(DestroyRef);
 
@@ -157,14 +167,34 @@ export class ExamplePageComponent implements AfterViewInit {
     }
   }
 
-  openToast(message: string): void {
-    this.toastService.open({
-      message,
-    });
+  openToast(options: ToastOptions): void {
+    this.toastService.open(options);
   }
 
   fileOrFilesChange(fileOrFiles: File | File[]): void {
     console.log(fileOrFiles);
+  }
+
+  openModalComplex(): void {
+    const modalComplexTemplateRef = this.modalComplexTemplateRef();
+
+    if (modalComplexTemplateRef) {
+      this.modalComplexOverlayRef = this.overlayService.open(
+        modalComplexTemplateRef,
+        {
+          destroyRef: this.destroyRef,
+          onDestroy: () => delete this.modalComplexOverlayRef,
+        },
+      );
+    }
+  }
+
+  closeModalComplex(): void {
+    this.modalComplexOverlayRef?.close();
+  }
+
+  toggleModalComplexText(): void {
+    this.showModalComplexText.update((value) => !value);
   }
 
   protected readonly KB = KB;

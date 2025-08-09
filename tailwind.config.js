@@ -109,6 +109,7 @@ module.exports = {
           "--tw-white": colors.white,
           "--tw-black": colors.black,
           "--tw-slate-800": colors.slate["800"],
+          "--tw-slate-100": colors.slate["100"],
           "--tw-white-rgb": hexToRgb(colors.white),
           "--tw-black-rgb": hexToRgb(colors.black),
           "--tw-slate-800-rgb": hexToRgb(colors.slate["800"]),

@@ -1,0 +1,11 @@
+html.scrolled {
+  .header {
+    padding-top: calc(1rem + var(--inset-top));
+  }
+}
+
+html:not(.scrolled) {
+  .header {
+    padding-top: 1rem;
+  }
+}
