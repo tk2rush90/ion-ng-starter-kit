@@ -29,6 +29,10 @@ export class ImeInputDirective extends AppControlValueAccessor {
     this.elementRef.nativeElement.value = obj;
   }
 
+  constructor() {
+    super();
+  }
+
   /** Update value immediately after keydown or keyup */
   updateValueImmediately(event: Event): void {
     this.updateValue(
