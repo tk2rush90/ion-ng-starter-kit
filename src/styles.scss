@@ -90,7 +90,8 @@ html.plt-hybrid {
 
   app-modal {
     max-height: calc(100% - (2rem + var(--inset-top) + var(--inset-bottom)));
-    translate: -50% calc(-50% + var(--inset-top) / 2);
+    translate: -50%
+      calc(-50% + (var(--inset-top) / 2) - (var(--inset-bottom) / 2));
   }
 
   &:not(.keyboard-opened) {
