@@ -13,6 +13,7 @@ import { CheckIcon, LucideAngularModule } from 'lucide-angular';
 import { NgClass } from '@angular/common';
 import { VariableColors } from '../../../utils/tailwind.utils';
 import { fadeInOut } from '../../../animations/fade-in-out';
+import { ButtonSize } from '../../../types/button-size';
 
 /** A component of checkbox with label and button */
 @Component({
@@ -54,6 +55,9 @@ export class CheckboxComponent extends AppControlValueAccessor {
     transform: booleanAttribute,
   });
 
+  /** 버튼 사이즈 사용 */
+  size = input<ButtonSize>('default');
+
   withBorder = input(false, {
     transform: booleanAttribute,
   });
@@ -76,6 +80,14 @@ export class CheckboxComponent extends AppControlValueAccessor {
 
     const isWhite = theme === 'white';
 
+    const size = this.size();
+
+    const isSmallSize = size === 'small';
+
+    const isDefaultSize = size === 'default';
+
+    const isLargeSize = size === 'large';
+
     if (disabled) {
       classes['hover:bg-foreground/5'] = true;
     } else {
@@ -92,6 +104,19 @@ export class CheckboxComponent extends AppControlValueAccessor {
       }
     }
 
+    classes['min-h-8'] = isSmallSize;
+    classes['text-sm'] = isSmallSize;
+    classes['px-3.5'] = isSmallSize;
+    classes['py-1'] = isSmallSize;
+    classes['min-h-10'] = isDefaultSize;
+    classes['text-base'] = isDefaultSize;
+    classes['px-5'] = isDefaultSize;
+    classes['py-2'] = isDefaultSize;
+    classes['min-h-12'] = isLargeSize;
+    classes['text-lg'] = isLargeSize;
+    classes['px-6.5'] = isLargeSize;
+    classes['py-3'] = isLargeSize;
+
     return classes;
   });
 
@@ -106,6 +131,14 @@ export class CheckboxComponent extends AppControlValueAccessor {
     const focused = this.checkboxService.focused();
 
     const isWhite = theme === 'white';
+
+    const size = this.size();
+
+    const isSmallSize = size === 'small';
+
+    const isDefaultSize = size === 'default';
+
+    const isLargeSize = size === 'large';
 
     const withBorder = this.withBorder();
 
@@ -131,8 +164,30 @@ export class CheckboxComponent extends AppControlValueAccessor {
     classes['outline-1'] = withBorder;
     classes['outline-offset-[-1px]'] = withBorder;
     classes['outline-foreground/15'] = withBorder;
+    classes['size-5'] = isSmallSize;
+    classes['rounded-md'] = isSmallSize;
+    classes['size-5.5'] = isDefaultSize;
+    classes['rounded-lg'] = isDefaultSize;
+    classes['size-6'] = isLargeSize;
+    classes['rounded-xl'] = isLargeSize;
 
     return classes;
+  });
+
+  checkClasses = computed(() => {
+    const size = this.size();
+
+    const isSmallSize = size === 'small';
+
+    const isDefaultSize = size === 'default';
+
+    const isLargeSize = size === 'large';
+
+    return {
+      'size-3.5': isSmallSize,
+      'size-4': isDefaultSize,
+      'size-4.5': isLargeSize,
+    };
   });
 
   private readonly checkboxService = inject(CheckboxService);
