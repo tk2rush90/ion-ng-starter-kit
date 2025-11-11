@@ -1,24 +1,19 @@
-import {
-  Component,
-  DOCUMENT,
-  inject,
-  PLATFORM_ID,
-  Renderer2,
-  signal,
-} from '@angular/core';
+import { Component, DOCUMENT, inject, Renderer2, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Storage } from '@ionic/storage';
-import { AngularPlatform } from './utils/platform.utils';
 import { RouterOutlet } from '@angular/router';
 import { Keyboard, KeyboardInfo } from '@capacitor/keyboard';
-import { Platform } from '@ionic/angular/standalone';
+import { IonApp } from '@ionic/angular/standalone';
 import { DeviceInsets } from './plugins/device-insets-plugin';
 import { Insets } from './data/insets';
+import { AngularPlatformService } from './services/app/angular-platform/angular-platform.service';
+import { IonicPlatformService } from './services/app/ionic-platform/ionic-platform.service';
+import { OverlayService } from './services/app/overlay/overlay.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
-  imports: [FormsModule, RouterOutlet],
+  imports: [FormsModule, RouterOutlet, IonApp],
   host: {
     '(window:scroll)': `detectScroll()`,
   },
@@ -26,25 +21,25 @@ import { Insets } from './data/insets';
 export class AppComponent {
   isInsetsReady = signal(false);
 
-  private readonly platformId = inject(PLATFORM_ID);
-
   private readonly storage = inject(Storage);
-
-  private readonly platform = inject(Platform);
 
   private readonly document = inject(DOCUMENT);
 
   private readonly renderer = inject(Renderer2);
 
-  constructor() {
-    AngularPlatform.setPlatformId(this.platformId);
+  private readonly angularPlatformService = inject(AngularPlatformService);
 
-    if (AngularPlatform.isBrowser) {
+  private readonly ionicPlatformService = inject(IonicPlatformService);
+
+  private readonly overlayService = inject(OverlayService);
+
+  constructor() {
+    if (this.angularPlatformService.isPlatformBrowser()) {
       this.storage.create();
       this.detectScroll();
     }
 
-    if (this.platform.is('hybrid')) {
+    if (this.ionicPlatformService.isHybrid()) {
       DeviceInsets.getInsets().then((insets) => {
         for (const position in insets) {
           this.document.documentElement.style.setProperty(

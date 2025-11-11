@@ -1,7 +1,10 @@
 import { Logger } from './logger.utils';
 import { AngularPlatform } from './platform.utils';
 
-/** Utility class for local storage with static methods */
+/**
+ * Utility class for local storage with static methods
+ * @deprecated
+ */
 export class LocalStorage {
   /** Logger */
   private static readonly _logger = new Logger('LocalStorageService');

@@ -61,6 +61,20 @@ module.exports = {
         110: 1.1,
         120: 1.2,
       },
+      fontSize: {
+        "3xs": [
+          "0.5rem",
+          {
+            lineHeight: "0.5rem",
+          },
+        ],
+        "2xs": [
+          "0.625rem",
+          {
+            lineHeight: "0.75rem",
+          },
+        ],
+      },
       spacing: spacings(),
       screens: {
         xs: "375px",

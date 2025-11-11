@@ -10,8 +10,9 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 import { OverlayOutletComponent } from '../../../components/common/overlay-outlet/overlay-outlet.component';
-import { AngularPlatform } from '../../../utils/platform.utils';
 import { OVERLAY_REF } from '../../../tokens/overlay-ref';
+import { AngularPlatformService } from '../angular-platform/angular-platform.service';
+import { isNodeInClass } from '../../../utils/node.utils';
 
 /** Options to open overlay */
 export interface OverlayOptions {
@@ -90,9 +91,11 @@ export class OverlayService implements OnDestroy {
 
   private readonly applicationRef = inject(ApplicationRef);
 
+  private readonly angularPlatformService = inject(AngularPlatformService);
+
   constructor() {
     this.eventTimeout = setTimeout(() => {
-      if (AngularPlatform.isBrowser) {
+      if (this.angularPlatformService.isPlatformBrowser()) {
         window.addEventListener(
           'mousedown',
           (event) => {
@@ -119,7 +122,10 @@ export class OverlayService implements OnDestroy {
 
                   // 클릭 가능한 요소 그 어떤 것에도 mousedown 이 일어나지 않았을 경우만 close 가능한 OverlayRef 으로 지정
                   if (
-                    clickableRootNodes.every((_node) => !_node.contains(target))
+                    clickableRootNodes.every(
+                      (_node) => !_node.contains(target),
+                    ) &&
+                    !isNodeInClass(target, 'ignore-overlay-close')
                   ) {
                     this.closeableOverlayRefs.push(_overlayRef);
                   }
@@ -174,7 +180,10 @@ export class OverlayService implements OnDestroy {
                     ) || [];
 
                   if (
-                    clickableRootNodes.some((_node) => _node.contains(target))
+                    clickableRootNodes.some((_node) =>
+                      _node.contains(target),
+                    ) ||
+                    isNodeInClass(target, 'ignore-overlay-close')
                   ) {
                     return;
                   } else if (this.closeableOverlayRefs.includes(_overlayRef)) {
