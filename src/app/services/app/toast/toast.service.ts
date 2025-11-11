@@ -10,8 +10,6 @@ import {
 import { ToastOutletComponent } from '../../../components/common/toast-outlet/toast-outlet.component';
 import { TranslateService } from '@ngx-translate/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { VariableColors } from '../../../utils/tailwind.utils';
-import { LucideIconData } from 'lucide-angular';
 
 /** An interface of toast message */
 export interface ToastMessage {
@@ -21,15 +19,14 @@ export interface ToastMessage {
   /** 하단에 표시될 작은 설명 */
   description: string;
 
-  theme: VariableColors;
-
-  icon?: LucideIconData;
-
   /** Duration in milliseconds until auto close */
   duration: number;
 
   /** Timeout timer assigned to toast message */
   timeout: any;
+
+  /** 추가 클래스 */
+  classes: string;
 
   /** Close toast method */
   close: () => void;
@@ -39,8 +36,7 @@ export interface ToastOptions {
   message: string;
   description?: string;
   duration?: number;
-  icon?: LucideIconData;
-  theme?: VariableColors;
+  classes?: string;
 }
 
 @Injectable({
@@ -81,18 +77,16 @@ export class ToastService implements OnDestroy {
 
   open({
     message,
-    duration = Infinity,
-    theme = 'blue',
+    duration = 5000,
     description = '',
-    icon,
+    classes = '',
   }: ToastOptions): ToastMessage {
     // Create ToastMessage.
     const toastMessage: ToastMessage = {
-      theme,
       description,
-      icon,
       message,
       duration,
+      classes,
       timeout:
         duration === Infinity
           ? undefined
@@ -113,9 +107,8 @@ export class ToastService implements OnDestroy {
   openTranslated({
     message,
     duration = Infinity,
-    theme = 'blue',
     description = '',
-    icon,
+    classes = '',
   }: ToastOptions): Promise<ToastMessage> {
     return new Promise((resolve) => {
       this.translateService
@@ -125,9 +118,8 @@ export class ToastService implements OnDestroy {
           const toastMessage = this.open({
             message: translatedMessage,
             duration,
-            theme,
             description,
-            icon,
+            classes,
           });
 
           resolve(toastMessage);

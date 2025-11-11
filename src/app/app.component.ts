@@ -8,7 +8,6 @@ import { DeviceInsets } from './plugins/device-insets-plugin';
 import { Insets } from './data/insets';
 import { AngularPlatformService } from './services/app/angular-platform/angular-platform.service';
 import { IonicPlatformService } from './services/app/ionic-platform/ionic-platform.service';
-import { OverlayService } from './services/app/overlay/overlay.service';
 
 @Component({
   selector: 'app-root',
@@ -30,8 +29,6 @@ export class AppComponent {
   private readonly angularPlatformService = inject(AngularPlatformService);
 
   private readonly ionicPlatformService = inject(IonicPlatformService);
-
-  private readonly overlayService = inject(OverlayService);
 
   constructor() {
     if (this.angularPlatformService.isPlatformBrowser()) {

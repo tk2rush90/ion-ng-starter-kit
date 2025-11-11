@@ -40,10 +40,6 @@ import { IconQuotePlusComponent } from '../../icons/icon-quote-plus/icon-quote-p
 import { BackdropComponent } from '../backdrop/backdrop.component';
 import { BottomSheetComponent } from '../bottom-sheet/bottom-sheet.component';
 import { WysiwygLinkEditorComponent } from '../wysiwyg-link-editor/wysiwyg-link-editor.component';
-import { fadeInOut } from '../../../animations/fade-in-out';
-import { slideInOutBottomFull } from '../../../animations/slide-in-out-bottom-full';
-import { slideInBottom } from '../../../animations/slide-in-bottom';
-import { fadeIn } from '../../../animations/fade-in';
 import { OVERLAY_REF } from '../../../tokens/overlay-ref';
 import {
   BoldIcon,
@@ -87,7 +83,6 @@ import { VariableColors } from '../../../utils/tailwind.utils';
   ],
   templateUrl: './wysiwyg-editor-actions.component.html',
   styleUrl: './wysiwyg-editor-actions.component.scss',
-  animations: [fadeInOut(), slideInOutBottomFull(), slideInBottom(), fadeIn()],
   host: {
     class:
       'flex w-full flex-row flex-nowrap items-center justify-start gap-1 overflow-auto rounded-full bg-foreground/5 dark:bg-foreground/10 px-3 backdrop-blur-lg has-[+_*]:w-auto h-10',

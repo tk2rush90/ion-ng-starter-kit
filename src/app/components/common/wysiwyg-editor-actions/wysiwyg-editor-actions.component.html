@@ -5,14 +5,13 @@
       isCursorInHeading()
     ) {
       <button
-        @fadeIn
-        @slideInBottom
         (mousedown)="
           $event.stopPropagation(); $event.preventDefault(); toggleParagraph()
         "
-        appIconButton
+        animate.enter="fade-in-slide-in-bottom"
         class="relative *:scale-90"
         type="button"
+        appIconButton
       >
         <i-lucide [img]="PilcrowIcon"></i-lucide>
       </button>
@@ -20,14 +19,13 @@
 
     @if (hasBlockNode("code_block") && isCursorInCodeBlock()) {
       <button
-        @fadeIn
-        @slideInBottom
         (mousedown)="
           $event.stopPropagation(); $event.preventDefault(); addParagraph()
         "
-        appIconButton
+        animate.enter="fade-in-slide-in-bottom"
         class="relative *:scale-90"
         type="button"
+        appIconButton
       >
         <app-icon-pilcrow-plus></app-icon-pilcrow-plus>
       </button>
@@ -35,23 +33,21 @@
 
     @if (hasBlockNode("heading")) {
       <button
-        @fadeIn
-        @slideInBottom
         (mousedown)="
           $event.stopPropagation(); $event.preventDefault(); toggleHeading(2)
         "
         [ngClass]="getButtonEffectClasses(isCursorInHeading(2))"
         [theme]="isCursorInHeading(2) ? theme() : 'transparent'"
-        appIconButton
+        animate.enter="fade-in-slide-in-bottom"
         class="relative *:scale-90 after:absolute after:left-1/2 after:top-0.5 after:block after:size-1 after:-translate-x-1/2 after:rounded-full after:bg-current after:transition-all after:content-['']"
         type="button"
+        appIconButton
       >
         <i-lucide [img]="Heading1Icon"></i-lucide>
       </button>
 
       <button
-        @fadeIn
-        @slideInBottom
+        animate.enter="fade-in-slide-in-bottom"
         (mousedown)="
           $event.stopPropagation(); $event.preventDefault(); toggleHeading(3)
         "
@@ -65,8 +61,7 @@
       </button>
 
       <button
-        @fadeIn
-        @slideInBottom
+        animate.enter="fade-in-slide-in-bottom"
         (mousedown)="
           $event.stopPropagation(); $event.preventDefault(); toggleHeading(4)
         "
@@ -82,8 +77,7 @@
 
     @if (hasBlockNode("code_block") && !isCursorInCodeBlock()) {
       <button
-        @fadeIn
-        @slideInBottom
+        animate.enter="fade-in-slide-in-bottom"
         (mousedown)="
           $event.stopPropagation(); $event.preventDefault(); setCodeBlock()
         "
@@ -98,8 +92,7 @@
     @if (hasBlockNode("blockquote")) {
       @if (isCursorInBlockquote()) {
         <button
-          @fadeIn
-          @slideInBottom
+          animate.enter="fade-in-slide-in-bottom"
           (mousedown)="
             $event.stopPropagation();
             $event.preventDefault();
@@ -113,8 +106,7 @@
         </button>
 
         <button
-          @fadeIn
-          @slideInBottom
+          animate.enter="fade-in-slide-in-bottom"
           (mousedown)="
             $event.stopPropagation();
             $event.preventDefault();
@@ -128,8 +120,7 @@
         </button>
       } @else {
         <button
-          @fadeIn
-          @slideInBottom
+          animate.enter="fade-in-slide-in-bottom"
           (mousedown)="
             $event.stopPropagation();
             $event.preventDefault();
@@ -150,8 +141,7 @@
   ) {
     @if (!isCursorInList("ordered_list")) {
       <button
-        @fadeIn
-        @slideInBottom
+        animate.enter="fade-in-slide-in-bottom"
         (mousedown)="
           $event.stopPropagation(); $event.preventDefault(); insertOrderedList()
         "
@@ -164,8 +154,7 @@
 
     @if (!isCursorInList("bullet_list")) {
       <button
-        @fadeIn
-        @slideInBottom
+        animate.enter="fade-in-slide-in-bottom"
         (mousedown)="
           $event.stopPropagation(); $event.preventDefault(); insertBulletList()
         "
@@ -178,8 +167,7 @@
 
     @if (isCursorInList("ordered_list") || isCursorInList("bullet_list")) {
       <button
-        @fadeIn
-        @slideInBottom
+        animate.enter="fade-in-slide-in-bottom"
         (mousedown)="
           $event.stopPropagation(); $event.preventDefault(); outdentList()
         "
@@ -191,8 +179,7 @@
 
       @if (!isFirstListItem()) {
         <button
-          @fadeIn
-          @slideInBottom
+          animate.enter="fade-in-slide-in-bottom"
           (mousedown)="
             $event.stopPropagation(); $event.preventDefault(); indentList()
           "
@@ -210,8 +197,7 @@
     (hasBlockNode("code_block") && !isCursorInCodeBlock())
   ) {
     <button
-      @fadeIn
-      @slideInBottom
+      animate.enter="fade-in-slide-in-bottom"
       (mousedown)="
         $event.stopPropagation(); $event.preventDefault(); toggleBold()
       "
@@ -225,8 +211,7 @@
     </button>
 
     <button
-      @fadeIn
-      @slideInBottom
+      animate.enter="fade-in-slide-in-bottom"
       (mousedown)="
         $event.stopPropagation(); $event.preventDefault(); toggleItalic()
       "
@@ -240,8 +225,7 @@
     </button>
 
     <button
-      @fadeIn
-      @slideInBottom
+      animate.enter="fade-in-slide-in-bottom"
       (mousedown)="
         $event.stopPropagation(); $event.preventDefault(); toggleUnderline()
       "
@@ -255,8 +239,7 @@
     </button>
 
     <button
-      @fadeIn
-      @slideInBottom
+      animate.enter="fade-in-slide-in-bottom"
       (mousedown)="
         $event.stopPropagation(); $event.preventDefault(); toggleLineThrough()
       "
@@ -271,8 +254,7 @@
 
     @if (isExpanded()) {
       <button
-        @fadeIn
-        @slideInBottom
+        animate.enter="fade-in-slide-in-bottom"
         (mousedown)="
           $event.stopPropagation(); $event.preventDefault(); toggleCode()
         "
@@ -288,8 +270,7 @@
 
     @if (isLink() || isExpanded()) {
       <button
-        @fadeIn
-        @slideInBottom
+        animate.enter="fade-in-slide-in-bottom"
         (mousedown)="
           $event.stopPropagation(); $event.preventDefault(); openLinkEditor()
         "
@@ -305,8 +286,7 @@
 
     @if (isLink()) {
       <button
-        @fadeIn
-        @slideInBottom
+        animate.enter="fade-in-slide-in-bottom"
         (mousedown)="
           $event.stopPropagation(); $event.preventDefault(); removeLink()
         "
@@ -321,15 +301,9 @@
 }
 
 <ng-template #linkEditor let-url="url">
-  <app-backdrop @fadeInOut></app-backdrop>
+  <app-backdrop></app-backdrop>
 
-  <app-bottom-sheet
-    @fadeInOut
-    @slideInOutBottomFull
-    class="md:max-w-sm"
-    modalTitle="링크"
-    displayCloseButton
-  >
+  <app-bottom-sheet class="md:max-w-sm" modalTitle="링크" displayCloseButton>
     <app-wysiwyg-link-editor
       (saved)="onLinkSaved($event)"
       [url]="url"

@@ -1,8 +1,3 @@
 @for (toast of toasts; track toast) {
-  <app-toast-message
-    @fadeInOut
-    @scaleUpDown
-    (click)="toast.close()"
-    [toast]="toast"
-  ></app-toast-message>
+  <app-toast-message [toast]="toast"></app-toast-message>
 }

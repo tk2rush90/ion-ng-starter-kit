@@ -4,7 +4,7 @@
   class="flex flex-col items-stretch"
 >
   <div class="flex flex-col items-stretch px-4 pb-4">
-    <app-form-field [theme]="theme()">
+    <div class="flex flex-col items-stretch">
       <label>URL</label>
 
       <input
@@ -17,9 +17,9 @@
       />
 
       @if (formGroup.hasError("required", "url")) {
-        <app-field-error>URL을 입력해주세요</app-field-error>
+        <div>URL을 입력해주세요</div>
       }
-    </app-form-field>
+    </div>
   </div>
 
   <app-bottom-actions
@@ -29,9 +29,7 @@
     <button
       (click)="$event.stopPropagation()"
       [disabled]="formGroup.invalid"
-      [theme]="theme()"
       type="submit"
-      appButton
     >
       저장하기
     </button>

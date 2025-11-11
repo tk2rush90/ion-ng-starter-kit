@@ -23,6 +23,8 @@ import { IconButtonDirective } from '../icon-button/icon-button.directive';
   host: {
     '[style]': `styles()`,
     '[class]': `classes()`,
+    'animate.enter': 'fade-in slide-in-bottom-full',
+    'animate.leave': 'fade-out slide-out-bottom-full',
     class:
       'pointer-events-auto fixed bottom-0 left-0 right-0 flex w-full flex-col items-stretch overflow-auto rounded-t-3xl bg-background shadow-2xl w-full left-1/2 md:w-[calc(100dvw-2rem)] md:rounded-3xl',
   },

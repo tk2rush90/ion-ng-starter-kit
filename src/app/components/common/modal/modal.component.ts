@@ -9,6 +9,8 @@ import { LucideAngularModule, XIcon } from 'lucide-angular';
   templateUrl: './modal.component.html',
   styleUrl: './modal.component.scss',
   host: {
+    'animate.enter': 'fade-in-slide-in-bottom',
+    'animate.leave': 'fade-out-slide-out-bottom',
     class:
       'pointer-events-auto fixed left-1/2 top-1/2 flex w-[calc(100dvw-2rem)] flex-col items-stretch overflow-auto rounded-3xl bg-background shadow-2xl',
   },

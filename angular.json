@@ -45,7 +45,8 @@
               "src/styles.scss",
               "src/theme/variables.scss",
               "src/font.scss",
-              "src/components.scss"
+              "src/components.scss",
+              "src/common.scss"
             ],
             "scripts": [],
             "browser": "src/main.ts",

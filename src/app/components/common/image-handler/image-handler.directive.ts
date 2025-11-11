@@ -6,7 +6,7 @@ import {
   OnDestroy,
   signal,
 } from '@angular/core';
-import { AngularPlatform } from '../../../utils/platform.utils';
+import { AngularPlatformService } from '../../../services/app/angular-platform/angular-platform.service';
 
 /**
  * A directive to load image element.
@@ -48,8 +48,10 @@ export class ImageHandlerDirective implements OnDestroy {
 
   private readonly elementRef = inject(ElementRef<HTMLElement>);
 
+  private readonly angularPlatformService = inject(AngularPlatformService);
+
   constructor() {
-    if (AngularPlatform.isBrowser) {
+    if (this.angularPlatformService.isPlatformBrowser()) {
       this.mutationObserver = new MutationObserver((records) => {
         records.forEach((_record) => {
           if (_record.attributeName?.toLowerCase() === 'src') {

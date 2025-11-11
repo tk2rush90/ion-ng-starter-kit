@@ -10,7 +10,6 @@ import {
   output,
   viewChild,
 } from '@angular/core';
-import { AngularPlatform } from '../../../utils/platform.utils';
 import {
   EmptyContentNodeView,
   getEditorJson,
@@ -22,6 +21,7 @@ import { NgClass } from '@angular/common';
 import { EditorView } from 'prosemirror-view';
 import { keymap } from 'prosemirror-keymap';
 import { EditorState } from 'prosemirror-state';
+import { AngularPlatformService } from '../../../services/app/angular-platform/angular-platform.service';
 
 /** WYSIWYG 에디터. <ng-content>로 액션 버튼 사용 가능 */
 @Component({
@@ -59,12 +59,17 @@ export class WysiwygEditorComponent implements AfterViewInit, OnDestroy {
 
   private readonly proseMirrorEditorService = inject(ProseMirrorEditorService);
 
+  private readonly angularPlatformService = inject(AngularPlatformService);
+
   ngAfterViewInit() {
     this.proseMirrorEditorService.state = this.state();
 
     const editorContainerElementRef = this.editorContainerElementRef();
 
-    if (AngularPlatform.isBrowser && editorContainerElementRef) {
+    if (
+      this.angularPlatformService.isPlatformBrowser() &&
+      editorContainerElementRef
+    ) {
       this.readyEmitTimeout = setTimeout(() => {
         this.proseMirrorEditorService.view = new EditorView(
           editorContainerElementRef.nativeElement,

@@ -2,7 +2,6 @@ import { Component, computed, input, viewChild } from '@angular/core';
 import { ImageHandlerDirective } from '../image-handler/image-handler.directive';
 import { NgClass } from '@angular/common';
 import { ImageOffIcon, LucideAngularModule } from 'lucide-angular';
-import { fadeInOut } from '../../../animations/fade-in-out';
 
 @Component({
   selector: 'app-image',
@@ -13,7 +12,6 @@ import { fadeInOut } from '../../../animations/fade-in-out';
     '[class]': `classes()`,
     class: 'overflow-hidden block',
   },
-  animations: [fadeInOut()],
 })
 export class ImageComponent {
   src = input.required<any>();
@@ -35,5 +33,6 @@ export class ImageComponent {
   });
 
   imageHandlerDirective = viewChild(ImageHandlerDirective);
+
   protected readonly ImageOffIcon = ImageOffIcon;
 }

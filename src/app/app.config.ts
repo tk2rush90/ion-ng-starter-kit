@@ -23,7 +23,6 @@ import {
 } from '@angular/common/http';
 import { authInterceptor } from './interceptors/auth.interceptor';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideTranslateService, TranslateLoader } from '@ngx-translate/core';
 
 const httpTranslateLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (
@@ -38,7 +37,6 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes, withPreloading(PreloadAllModules)),
     importProvidersFrom(IonicStorageModule.forRoot()),
     provideClientHydration(withEventReplay()),
-    provideAnimations(),
     provideTranslateService({
       defaultLanguage: 'ko',
       loader: {

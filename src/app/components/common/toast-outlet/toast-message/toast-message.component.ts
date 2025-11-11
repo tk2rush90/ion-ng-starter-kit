@@ -1,37 +1,54 @@
-import { Component, computed, input } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  computed,
+  input,
+  OnDestroy,
+  signal,
+} from '@angular/core';
 import { ToastMessage } from '../../../../services/app/toast/toast.service';
-import { NgClass } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
 
 /** Toast message component */
 @Component({
   selector: 'app-toast-message',
-  imports: [NgClass, LucideAngularModule],
+  imports: [LucideAngularModule],
   templateUrl: './toast-message.component.html',
   styleUrl: './toast-message.component.scss',
   host: {
     '[class]': `classes()`,
+    'animate.enter': 'toast-message-up',
+    'animate.leave': 'toast-message-down',
     class:
-      'fixed flex items-center left-1/2 pointer-events-auto w-[calc(100dvw-2rem)] max-w-100 cursor-pointer select-none break-all rounded-2xl p-4 text-white gap-2',
+      'w-[calc(100dvw-2rem)] relative flex flex-col ion-align-items-center pointer-events-none',
   },
 })
-export class ToastMessageComponent {
+export class ToastMessageComponent implements AfterViewInit, OnDestroy {
   toast = input.required<ToastMessage>();
 
-  iconClasses = computed(() => {
-    const theme = this.toast().theme;
-
-    return {
-      [`text-${theme}-500`]: true,
-      [`dark:text-${theme}-100`]: true,
-    };
-  });
-
   classes = computed(() => {
-    const theme = this.toast().theme;
+    const toast = this.toast();
 
-    return {
-      [`bg-${theme}-900`]: true,
-    };
+    const classes: any = {};
+
+    toast.classes.split(' ').forEach((klass) => {
+      classes[klass] = true;
+    });
+
+    return classes;
   });
+
+  isVisible = signal(false);
+
+  ngAfterViewInit() {
+    this.isVisible.set(true);
+  }
+
+  ngOnDestroy() {
+    this.isVisible.set(false);
+  }
+
+  close() {
+    this.toast().close();
+  }
 }
