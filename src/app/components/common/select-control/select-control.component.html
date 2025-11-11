@@ -1,0 +1,42 @@
+<div
+  #parentHostElement
+  (focus)="isFocused.set(true)"
+  (blur)="onTouched(); isFocused.set(false)"
+  (click)="toggleOptions(selectControlOptionTemplateRef)"
+  (keydown.arrowUp)="toggleOptions(selectControlOptionTemplateRef)"
+  (keydown.arrowDown)="toggleOptions(selectControlOptionTemplateRef)"
+  (keydown.space)="toggleOptions(selectControlOptionTemplateRef)"
+  (keydown.enter)="toggleOptions(selectControlOptionTemplateRef)"
+  [ngClass]="classes()"
+  tabindex="1"
+  class="flex h-13 cursor-pointer flex-col items-stretch rounded-md border transition-all"
+>
+  <div
+    [ngClass]="renderedInnerClasses()"
+    class="flex size-full items-center gap-2 border pl-4 pr-2 transition-all"
+  >
+    @if (selectedOptionItemComponent(); as selectedOptionItemComponent) {
+      <div
+        [innerText]="selectedOptionItemComponent.label"
+        class="flex-1 truncate"
+      ></div>
+    } @else {
+      <div
+        [innerText]="placeholder()"
+        class="flex-1 truncate text-black/50"
+      ></div>
+    }
+
+    <i-lucide [img]="ChevronDownIcon" class="size-4 flex-none"></i-lucide>
+  </div>
+</div>
+
+<ng-template #selectControlOptionTemplateRef>
+  <app-select-control-option-overlay
+    (clickBack)="closeSelectControlOption()"
+    [parentHostElement]="parentHostElement"
+    [priority]="inheritPriority() + 5"
+  >
+    <ng-content select="app-select-control-option-item"></ng-content>
+  </app-select-control-option-overlay>
+</ng-template>
