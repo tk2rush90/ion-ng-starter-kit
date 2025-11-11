@@ -10,9 +10,9 @@ import {
   OnDestroy,
 } from '@angular/core';
 import { CarouselItemDirective } from './carousel-item/carousel-item.directive';
-import { AngularPlatform } from '../../../utils/platform.utils';
-import { Platform } from '@ionic/angular/standalone';
 import { animate, JSAnimation } from 'animejs';
+import { AngularPlatformService } from '../../../services/app/angular-platform/angular-platform.service';
+import { IonicPlatformService } from '../../../services/app/ionic-platform/ionic-platform.service';
 
 @Directive({
   selector: '[appCarousel]',
@@ -64,13 +64,15 @@ export class CarouselDirective implements OnDestroy {
 
   private readonly elementRef = inject(ElementRef<HTMLDivElement>);
 
-  private readonly platform = inject(Platform);
+  private readonly angularPlatformService = inject(AngularPlatformService);
+
+  private readonly ionicPlatformService = inject(IonicPlatformService);
 
   constructor() {
     this.startSliding = this.startSliding.bind(this);
     this.moveSlide = this.moveSlide.bind(this);
 
-    if (AngularPlatform.isBrowser) {
+    if (this.angularPlatformService.isPlatformBrowser()) {
       this.elementRef.nativeElement.addEventListener(
         'mousedown',
         this.startSliding,
@@ -97,7 +99,7 @@ export class CarouselDirective implements OnDestroy {
   }
 
   ngOnDestroy() {
-    if (AngularPlatform.isBrowser) {
+    if (this.angularPlatformService.isPlatformBrowser()) {
       this.elementRef.nativeElement.removeEventListener(
         'mousedown',
         this.startSliding,
@@ -175,8 +177,9 @@ export class CarouselDirective implements OnDestroy {
       this.storedX += this.movedX - this.startX;
 
       if (
-        (this.movedX - this.startX === 0 && this.platform.is('mobile')) ||
-        this.platform.is('tablet')
+        (this.movedX - this.startX === 0 &&
+          this.ionicPlatformService.isMobile()) ||
+        this.ionicPlatformService.isTablet()
       ) {
         const anchors = this.elementRef.nativeElement.querySelectorAll('a');
 

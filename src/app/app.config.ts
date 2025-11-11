@@ -1,4 +1,8 @@
-import { ApplicationConfig, importProvidersFrom } from '@angular/core';
+import {
+  ApplicationConfig,
+  importProvidersFrom,
+  provideZonelessChangeDetection,
+} from '@angular/core';
 import {
   PreloadAllModules,
   provideRouter,
@@ -37,6 +41,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes, withPreloading(PreloadAllModules)),
     importProvidersFrom(IonicStorageModule.forRoot()),
     provideClientHydration(withEventReplay()),
+    provideZonelessChangeDetection(),
     provideTranslateService({
       defaultLanguage: 'ko',
       loader: {

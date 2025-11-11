@@ -5,7 +5,7 @@ import {
   inject,
   OnDestroy,
 } from '@angular/core';
-import { AngularPlatform } from '../../../utils/platform.utils';
+import { AngularPlatformService } from '../../../services/app/angular-platform/angular-platform.service';
 
 @Directive({
   selector: '[appAutoFocus]',
@@ -16,8 +16,10 @@ export class AutoFocusDirective implements AfterViewInit, OnDestroy {
 
   private readonly elementRef = inject(ElementRef<HTMLElement>);
 
+  private readonly angularPlatformService = inject(AngularPlatformService);
+
   ngAfterViewInit() {
-    if (AngularPlatform.isBrowser) {
+    if (this.angularPlatformService.isPlatformBrowser()) {
       // NG0100 오류 방지를 위해 `setTimeout()` 사용
       this.focusTimeout = setTimeout(() => {
         this.elementRef.nativeElement.focus();

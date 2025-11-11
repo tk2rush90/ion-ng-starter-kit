@@ -10,9 +10,9 @@ import {
   signal,
 } from '@angular/core';
 import { VariableColors } from '../../../utils/tailwind.utils';
-import { AngularPlatform } from '../../../utils/platform.utils';
 import { ChildNode } from 'postcss';
 import { ChipMode } from '../../../types/chip-mode';
+import { AngularPlatformService } from '../../../services/app/angular-platform/angular-platform.service';
 
 @Component({
   selector: 'app-chip',
@@ -80,8 +80,10 @@ export class ChipComponent implements OnInit, OnDestroy {
 
   private readonly elementRef = inject(ElementRef);
 
+  private readonly angularPlatformService = inject(AngularPlatformService);
+
   ngOnInit() {
-    if (AngularPlatform.isBrowser) {
+    if (this.angularPlatformService.isPlatformBrowser()) {
       this.mutationObserver = new MutationObserver(() => {
         this.hasIcon.set(false);
         this.hasPrefixedIcon.set(false);

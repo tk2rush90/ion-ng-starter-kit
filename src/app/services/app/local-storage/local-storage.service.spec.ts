@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ClickDetectorService } from './click-detector.service';
+import { LocalStorageService } from './local-storage.service';
 
-describe('ClickDetectorService', () => {
-  let service: ClickDetectorService;
+describe('LocalStorageService', () => {
+  let service: LocalStorageService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(ClickDetectorService);
+    service = TestBed.inject(LocalStorageService);
   });
 
   it('should be created', () => {

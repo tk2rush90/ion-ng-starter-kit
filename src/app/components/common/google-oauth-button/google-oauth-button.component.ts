@@ -4,15 +4,14 @@ import { OAUTH_PREVIOUS_URL_KEY } from '../../../constants/storage-keys';
 import { Location } from '@angular/common';
 import { Storage } from '@ionic/storage';
 import { GoogleOauth } from '../../../plugins/google-oauth-plugin';
-import { Platform } from '@ionic/angular/standalone';
 import { GoogleIdTokenPayloadDto } from '../../../dto/google-id-token-payload-dto';
 import { StartByGoogleIdTokenService } from '../../../services/app/start-by-google-id-token/start-by-google-id-token.service';
 import { StartByGoogleAccessTokenService } from '../../../services/app/start-by-google-access-token/start-by-google-access-token.service';
 import { SignedMemberService } from '../../../services/app/signed-member/signed-member.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { AngularPlatform } from '../../../utils/platform.utils';
-import { ButtonDirective } from '../button/button.directive';
 import { environment } from '../../../../environments/environment';
+import { AngularPlatformService } from '../../../services/app/angular-platform/angular-platform.service';
+import { IonicPlatformService } from '../../../services/app/ionic-platform/ionic-platform.service';
 import TokenResponse = google.accounts.oauth2.TokenResponse;
 
 @Component({
@@ -21,17 +20,10 @@ import TokenResponse = google.accounts.oauth2.TokenResponse;
   templateUrl: './google-oauth-button.component.html',
   styleUrl: './google-oauth-button.component.scss',
   host: {
-    type: 'button',
     role: 'button',
     tabindex: '0',
   },
   providers: [StartByGoogleIdTokenService, StartByGoogleAccessTokenService],
-  hostDirectives: [
-    {
-      directive: ButtonDirective,
-      inputs: ['theme', 'size', 'mode'],
-    },
-  ],
 })
 export class GoogleOauthButtonComponent {
   loginSuccess = output();
@@ -42,8 +34,6 @@ export class GoogleOauthButtonComponent {
 
   private readonly storage = inject(Storage);
 
-  private readonly platform = inject(Platform);
-
   private readonly startByGoogleIdTokenService = inject(
     StartByGoogleIdTokenService,
   );
@@ -53,6 +43,10 @@ export class GoogleOauthButtonComponent {
   );
 
   private readonly signedMemberService = inject(SignedMemberService);
+
+  private readonly angularPlatformService = inject(AngularPlatformService);
+
+  private readonly ionicPlatformService = inject(IonicPlatformService);
 
   constructor() {
     this.startByGoogleIdTokenService.created
@@ -72,13 +66,13 @@ export class GoogleOauthButtonComponent {
     this.startByGoogleIdTokenService.createFailed
       .pipe(takeUntilDestroyed())
       .subscribe((err) =>
-        this.loginError.emit(err.error[AngularPlatform.locale]),
+        this.loginError.emit(err.error[this.angularPlatformService.locale()]),
       );
 
     this.startByGoogleAccessTokenService.createFailed
       .pipe(takeUntilDestroyed())
       .subscribe((err) =>
-        this.loginError.emit(err.error[AngularPlatform.locale]),
+        this.loginError.emit(err.error[this.angularPlatformService.locale()]),
       );
   }
 
@@ -86,7 +80,7 @@ export class GoogleOauthButtonComponent {
   async onHostClick(): Promise<void> {
     await this.storage.set(OAUTH_PREVIOUS_URL_KEY, this.location.path(true));
 
-    if (this.platform.is('hybrid')) {
+    if (this.ionicPlatformService.isHybrid()) {
       const payload = (await GoogleOauth.signIn({
         clientId: environment.google.clientId,
       })) as GoogleIdTokenPayloadDto;

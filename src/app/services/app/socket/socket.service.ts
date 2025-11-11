@@ -1,7 +1,7 @@
-import { Inject, Injectable, NgZone } from '@angular/core';
-import { AngularPlatform } from '../../../utils/platform.utils';
+import { inject, Injectable, NgZone } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
 import { SOCKET_CONNECTION_URI } from '../../../tokens/socket-connection-uri';
+import { AngularPlatformService } from '../angular-platform/angular-platform.service';
 
 /** Socket service */
 @Injectable({
@@ -14,11 +14,14 @@ export class SocketService {
   /** Socket client */
   private socket?: Socket;
 
-  constructor(
-    @Inject(SOCKET_CONNECTION_URI) private readonly uri: string,
-    private readonly ngZone: NgZone,
-  ) {
-    if (AngularPlatform.isBrowser) {
+  private readonly uri = inject<string>(SOCKET_CONNECTION_URI);
+
+  private readonly ngZone = inject(NgZone);
+
+  private readonly angularPlatformService = inject(AngularPlatformService);
+
+  constructor() {
+    if (this.angularPlatformService) {
       this.ngZone.runOutsideAngular(() => {
         this.socket = io(this.uri, {
           closeOnBeforeunload: true,
@@ -34,7 +37,7 @@ export class SocketService {
    * @param listener - Listener to be called on event triggered.
    */
   on(eventName: string, listener: (...payload: any) => void): void {
-    if (AngularPlatform.isBrowser) {
+    if (this.angularPlatformService.isPlatformBrowser()) {
       // Switch on event.
       this.socket?.on(eventName, listener);
 
@@ -48,7 +51,7 @@ export class SocketService {
    * @param eventName - Event name.
    */
   off(eventName: string): void {
-    if (AngularPlatform.isBrowser) {
+    if (this.angularPlatformService.isPlatformBrowser()) {
       // Switch off event.
       this.socket?.off(eventName, this.listenersMap.get(eventName));
 
@@ -63,7 +66,7 @@ export class SocketService {
    * @param payload - Any payload to pass.
    */
   emit(eventName: string, ...payload: any): void {
-    if (AngularPlatform.isBrowser) {
+    if (this.angularPlatformService.isPlatformBrowser()) {
       this.socket?.emit(eventName, ...payload);
     }
   }

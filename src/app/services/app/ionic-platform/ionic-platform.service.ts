@@ -10,4 +10,12 @@ export class IonicPlatformService {
   isHybrid() {
     return this.platform.is('hybrid');
   }
+
+  isTablet() {
+    return this.platform.is('tablet');
+  }
+
+  isMobile() {
+    return this.platform.is('mobile');
+  }
 }
